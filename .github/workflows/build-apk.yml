@@ -1,0 +1,59 @@
+# Crée l'APK signée de Tifa Nature. À lancer à la main : onglet « Actions » > « Créer l'APK » > « Run workflow ».
+name: Créer l'APK
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 21 }
+      - name: Vérifier les clés de signature
+        env:
+          KS: ${{ secrets.TIFA_KEYSTORE_B64 }}
+          KP: ${{ secrets.TIFA_KEYSTORE_PASSWORD }}
+          KA: ${{ secrets.TIFA_KEY_ALIAS }}
+        run: |
+          if [ -z "$KS" ] || [ -z "$KP" ] || [ -z "$KA" ]; then
+            echo "::error::Les clés de signature (secrets TIFA_*) sont absentes. L'APK ne peut pas être signée."; exit 1
+          fi
+      - run: npm ci
+      - run: node scripts/copy-vendor.js
+      - name: Adresse des mises à jour sur place
+        run: sed -i "s#__UPDATE_MANIFEST_URL__#https://raw.githubusercontent.com/${{ github.repository }}/ota/manifest.json#" www/js/config.js
+      - name: Numéro de version
+        id: v
+        run: |
+          echo "code=$(grep -oP 'VERSION_CODE:\s*\K[0-9]+' www/js/config.js)" >> "$GITHUB_OUTPUT"
+          echo "name=$(grep -oP "VERSION_WEB:\s*'\K[^']+" www/js/config.js)" >> "$GITHUB_OUTPUT"
+      - run: npx cap sync android
+      - name: Clé de signature
+        env: { KS: "${{ secrets.TIFA_KEYSTORE_B64 }}" }
+        run: echo "$KS" | base64 -d > "$RUNNER_TEMP/tifa.keystore"
+      - name: Compiler l'APK
+        working-directory: android
+        env:
+          TIFA_KEYSTORE: ${{ runner.temp }}/tifa.keystore
+          TIFA_KEYSTORE_PASSWORD: ${{ secrets.TIFA_KEYSTORE_PASSWORD }}
+          TIFA_KEY_ALIAS: ${{ secrets.TIFA_KEY_ALIAS }}
+          TIFA_KEY_PASSWORD: ${{ secrets.TIFA_KEY_PASSWORD }}
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon -PtifaVersionCode=${{ steps.v.outputs.code }} -PtifaVersionName=${{ steps.v.outputs.name }}
+      - name: Nommer l'APK
+        run: |
+          mkdir out
+          cp android/app/build/outputs/apk/release/*.apk out/Tifa-Nature.apk
+          "$ANDROID_HOME"/build-tools/*/apksigner verify --print-certs out/Tifa-Nature.apk | head -3
+      - uses: actions/upload-artifact@v4
+        with: { name: Tifa-Nature-APK, path: out/Tifa-Nature.apk }
+      - name: Publier dans « Releases » (téléchargement facile depuis le téléphone)
+        env: { GH_TOKEN: "${{ github.token }}" }
+        run: |
+          gh release delete apk-latest --yes --cleanup-tag || true
+          gh release create apk-latest out/Tifa-Nature.apk --title "Tifa Nature ${{ steps.v.outputs.name }} (APK)" --notes "APK signée, version ${{ steps.v.outputs.name }}."

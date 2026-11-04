@@ -1,0 +1,17 @@
+{
+  "appId": "fr.tifanature.app",
+  "appName": "Tifa Nature",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false
+  },
+  "plugins": {
+    "CapacitorHttp": { "enabled": true },
+    "SplashScreen": {
+      "launchShowDuration": 1500,
+      "launchAutoHide": true,
+      "backgroundColor": "#f4f1e8",
+      "showSpinner": false
+    }
+  }
+}
