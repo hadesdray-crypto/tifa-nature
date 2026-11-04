@@ -1,0 +1,29 @@
+/* Musique : lecteur, mini-lecteur, ambiances. Utilise les variables du thème en cours. */
+.mu-ico { width: 1.5em; height: 1.5em; flex: 0 0 auto; }
+.mu-tabs { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0 0 .8rem; }
+.mu-tabs .chip { min-height: 2.75rem; }
+.mu-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .1rem; flex: 1 1 4.5rem; min-width: 0; min-height: 3.2rem; padding: .4rem .5rem; border-radius: 1rem; border: 2px solid var(--line); background: var(--card); color: var(--primary-d); font: inherit; font-size: .82rem; font-weight: 700; line-height: 1.15; text-align: center; cursor: pointer; }
+.mu-btn span { display: block; max-width: 100%; }
+.mu-btn.big { background: var(--primary); border-color: var(--primary); color: var(--primary-t); }
+.mu-btn.on { background: var(--soft); border-color: var(--primary); }
+.mu-btn.danger { border-color: var(--bad); color: var(--bad); }
+.mu-btn[disabled] { opacity: .45; }
+.mu-btn:active { transform: scale(.98); }
+.mu-main, .mu-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin: .6rem 0 0; }
+.mu-main .mu-btn { min-height: 4rem; flex-basis: 5.5rem; }
+.mu-title { font-family: var(--serif); font-size: 1.15rem; font-weight: 600; margin: 0 0 .4rem; }
+.mu-name { display: block; font-family: var(--serif); }
+.mu-track { margin-bottom: .6rem; } .mu-track.now, .mu-amb.now { border-color: var(--primary); border-width: 2px; }
+.mu-range { width: 100%; min-height: 2.75rem; margin: .1rem 0; accent-color: var(--primary); }
+.mu-gap { margin-bottom: .5rem; }
+.mu-body .notice .chip { margin-left: .3rem; }
+#musique-mini { flex: 0 0 auto; max-height: 45vh; overflow-y: auto; background: var(--card); border-top: 2px solid var(--primary); padding: .3rem .5rem .4rem; box-shadow: 0 -4px 12px rgba(0, 0, 0, .08); }
+#musique-mini[hidden] { display: none; }
+.mu-mini-t { margin-bottom: .2rem; }
+.mu-open { display: flex; align-items: center; gap: .4rem; min-height: 44px; text-decoration: none; color: var(--primary-d); font-size: min(1rem, 4.4vw); }
+.mu-open .mu-ico { width: 1.2em; height: 1.2em; }
+.mu-open b { flex: 1 1 0; font-family: var(--serif); line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mu-more { flex: 0 0 auto; font-size: min(.8rem, 4vw); font-weight: 700; text-decoration: underline; }
+.mu-mini-b { display: flex; flex-wrap: nowrap; gap: .3rem; }
+.mu-mini-b .mu-btn { min-height: 48px; flex: 1 1 0; padding: .2rem .15rem; font-size: min(.78rem, 4.2vw); border-radius: .8rem; }
+.mu-mini-b .mu-ico { width: min(1.5em, 6vw); height: min(1.5em, 6vw); }

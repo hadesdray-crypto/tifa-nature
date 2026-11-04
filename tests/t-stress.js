@@ -23,5 +23,5 @@ module.exports = async function ({ L, browser, base }) {
   L.check('gestes au hasard : jamais d\'écran vide (' + empty + ')', empty === 0);
   L.check('endurance : mémoire stable (' + Math.round(mem0 / 1e6) + ' → ' + Math.round(mem1 / 1e6) + ' Mo)', !mem0 || mem1 < mem0 * 4 + 30e6);
   await p.evaluate(() => { location.hash = '#/accueil'; }); await L.sleep(300);
-  L.check('endurance : l\'appli répond encore', (await p.evaluate(() => document.getElementById('view').innerText)).includes('Bonjour'));
+  L.check('endurance : l\'appli répond encore', (await p.evaluate(() => document.getElementById('view').innerText)).match(/Bonjour|Bon après-midi|Bonsoir/));
 };

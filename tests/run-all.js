@@ -10,6 +10,10 @@ const STEPS = [
   ['(h) jardin et carnet', './t-jardin', null],
   ['(h) planning région assistant', './t-planning', null],
   ['(h) calculs météo', './t-calculs', null],
+  ['(h) feuille', './t-feuille', null],
+  ['(h) gestes', './t-gestes', null],
+  ['(h) musique', './t-musique', null],
+  ['(h) labo', './t-labo', null],
   ['(h) hasard et endurance', './t-stress', null],
   ['(h) mise à jour', './t-update', null],
 ];

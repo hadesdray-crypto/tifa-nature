@@ -32,8 +32,8 @@ body { background: var(--bg); }
 .search-fake { display: block; margin-top: .85rem; padding: .85rem 1rem; border-radius: 999px; background: #fff; color: var(--muted); text-decoration: none; font-size: 1rem; box-shadow: 0 4px 12px rgba(0, 0, 0, .18); min-height: 3rem; }
 
 /* Bandeau « À semer maintenant » */
-.strip-h { display: flex; justify-content: space-between; align-items: baseline; margin: 1.1rem .2rem .45rem; }
-.strip-h h2 { margin: 0; font-size: 1.15rem; } .strip-h a { font-size: .9rem; color: var(--primary); font-weight: 600; }
+.strip-h { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: .2rem .8rem; margin: 1.1rem .2rem .45rem; }
+.strip-h h2 { margin: 0; font-size: 1.15rem; } .strip-h a { white-space: nowrap; font-size: .9rem; color: var(--primary); font-weight: 600; }
 .strip { display: flex; gap: .55rem; overflow-x: auto; padding: .1rem .1rem .6rem; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; margin: 0 -.2rem; }
 .strip a { flex: 0 0 auto; scroll-snap-align: start; min-width: 6.4rem; max-width: 9rem; padding: .7rem .8rem; border-radius: 1.1rem; background: var(--card); box-shadow: var(--shadow); text-decoration: none; color: var(--text); border-top: 4px solid var(--leaf); }
 .strip a b { display: block; font-family: var(--serif); color: var(--primary-d); font-size: 1rem; line-height: 1.2; overflow-wrap: break-word; }

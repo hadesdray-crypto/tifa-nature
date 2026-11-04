@@ -63,7 +63,7 @@
   /* ---------- Stockage (localStorage + copie native de sécurité) ---------- */
   var KEY = 'tifa.v1';
   function defaults() {
-    return { v: 1, installId: '', settings: { theme: 'zen', scale: 1, voiceOn: true, voiceId: '', rate: 0.95, region: null }, pots: [], garden: null, journal: [], flags: {}, licence: null, ota: {}, lastCheck: 0, diagHistory: [], meteo: null, tasks: [], planAuto: {}, ahist: [] };
+    return { v: 1, installId: '', settings: { theme: 'zen', scale: 1, voiceOn: true, voiceId: '', rate: 0.95, region: null }, pots: [], garden: null, journal: [], flags: {}, licence: null, ota: {}, lastCheck: 0, diagHistory: [], meteo: null, tasks: [], planAuto: {}, ahist: [], feuille: null, gestes: null, musique: null, labo: null };
   }
   T.store = {
     s: defaults(), timer: null,

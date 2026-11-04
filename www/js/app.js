@@ -67,8 +67,9 @@
     var step = 0, m;
     var steps = [
       { t: 'Bienvenue dans Tifa Nature', h: '<p>Votre compagnon de jardinage pour la maison et la petite cour.</p><ul><li>Reconnaître une plante avec une photo</li><li>Comprendre pourquoi elle est malade, et que faire</li><li>Placer chaque pot au soleil ou à l\'ombre</li><li>Des conseils simples, mois par mois</li></ul>' },
+      { t: 'Feuille, votre compagne', h: '<p>Feuille est là pour vous aider partout : elle explique chaque écran, vous prévient du gel ou de l\'arrosage, et vous guide pour rempoter ou faire des boutures.</p><ul><li>Touchez-la pour son menu</li><li>Vous pouvez la déplacer, la ranger, la rappeler</li><li>Elle parle, et vous choisissez sa voix (fille ou garçon)</li></ul><p class="small muted">Tout se règle dans « Plus », puis « Feuille ».</p>' },
       { t: 'Comment s\'en servir', h: '<ol class="steps"><li>Les boutons du bas changent de section.</li><li>Touchez « Écouter » pour entendre un conseil.</li><li>Tout marche sans internet, sauf l\'analyse de photo et les mises à jour.</li><li>Le menu « Plus » règle la taille du texte et la voix.</li></ol>' },
-      { t: 'L\'appareil photo', h: '<p>Pour reconnaître vos plantes, l\'application a besoin de l\'appareil photo. Le téléphone va vous poser la question <b>une seule fois</b>.</p><p class="small muted">Vos photos restent sur votre téléphone. Elles ne partent que si vous demandez une analyse, avec internet.</p>' }
+      { t: 'Les accès du téléphone', h: '<p>Pour tout faire marcher, l\'application demande <b>une seule fois</b> : l\'appareil photo (reconnaître une plante), le micro (écouter le jardin), le Bluetooth (sondes de plantes) et les capteurs. Vous pouvez refuser : le reste marche quand même.</p><p class="small muted">Vos photos restent sur votre téléphone. Elles ne partent que si vous demandez une analyse, avec internet.</p>' }
     ];
     function show() {
       var s = steps[step], last = step === steps.length - 1, btns = [];
@@ -80,7 +81,7 @@
     }
     function finish() {
       var st = T.store.s; st.flags.onboarded = true; T.store.save();
-      T.native.askPermissionsOnce().then(function () {}, function () {}).then(function () { m.close(); T.render(); });
+      T.native.askPermissionsOnce().then(function () {}, function () {}).then(function () { try { return T.labo && T.labo.askAll ? T.labo.askAll() : null; } catch (e) { return null; } }).then(function () {}, function () {}).then(function () { m.close(); T.render(); });
     }
     show();
   }

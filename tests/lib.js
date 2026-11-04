@@ -52,8 +52,8 @@ async function newPage(browser, base, dev, opts) {
   return page;
 }
 /* Saute la présentation de première ouverture */
-async function skipOnboarding(page) {
-  await page.evaluate(() => { T.store.s.flags.onboarded = true; T.store.save(); const m = T.modalStack[0]; if (m) m.close(); });
+async function skipOnboarding(page, keepFeuille) {
+  await page.evaluate((keep) => { if (!keep) { const d = new Date(), p = (n) => String(n).padStart(2, '0'); T.store.s.feuille = Object.assign({}, T.store.s.feuille || {}, { tourDone: true, lastGreet: d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) }); } T.store.s.flags.onboarded = true; T.store.save(); const m = T.modalStack[0]; if (m) m.close(); }, !!keepFeuille);
 }
 /* Contrôle de débordement : rien ne dépasse de l'écran, aucun bouton hors écran */
 async function overflow(page) {

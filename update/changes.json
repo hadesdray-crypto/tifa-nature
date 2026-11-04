@@ -1,12 +1,8 @@
 { "changes": [
- "Nouveau visuel botanique : accueil vert, tuiles colorées, barre du bas arrondie.",
- "Voix : une molette pour choisir la voix (filles / garçons, avec ou sans connexion), qui s'entend en faisant défiler.",
- "72 nouvelles fiches de plantes (160 au total).",
- "Mon jardin : plan de la cour avec soleil et ombre, plantes à placer.",
- "Mon planning : arrosages et tâches du mois, rappels.",
- "Carnet de culture : notes et photos, comparaison des saisons.",
- "Assistant hors connexion : posez une question, la réponse arrive avec la fiche.",
- "Météo du jardin : alertes gel, chaleur et pluie.",
- "Calculettes : arrosage, terreau, engrais, distances, pH.",
- "Calendrier adapté à votre région."
+ "Nouveau : Feuille, votre compagne. Elle explique chaque écran, vous prévient (gel, arrosage, tâches) et se range ou se rappelle quand vous voulez.",
+ "Feuille parle avec la voix de votre choix, en fille ou en garçon, avec un mode enfant, des heures calmes et plusieurs niveaux d'insistance.",
+ "Nouveau : Gestes du jardinier, 34 procédures pas à pas à lire ou à écouter (rempotage, boutures, marcottage, semis, taille, compost…).",
+ "Nouveau : Labo des plantes, pour écouter le jardin, mesurer la lumière, suivre le soleil, analyser une feuille et lire une sonde Bluetooth.",
+ "Nouveau : Musique et ambiances du jardin (pluie, ruisseau, oiseaux…), vos propres titres et des playlists.",
+ "Au premier lancement, l'appli demande une seule fois les accès : appareil photo, micro, Bluetooth."
 ] }

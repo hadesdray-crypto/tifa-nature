@@ -13,7 +13,8 @@ const files = {
   '@capacitor/network/dist/plugin.js': 'cap-network.js',
   '@capacitor/splash-screen/dist/plugin.js': 'cap-splash.js',
   '@capacitor/status-bar/dist/plugin.js': 'cap-statusbar.js',
-  '@capacitor-community/text-to-speech/dist/plugin.js': 'cap-tts.js'
+  '@capacitor-community/text-to-speech/dist/plugin.js': 'cap-tts.js',
+  '@capacitor-community/bluetooth-le/dist/plugin.js': 'cap-ble.js'
 };
 for (const [src, dst] of Object.entries(files)) {
   fs.copyFileSync(path.join(root, 'node_modules', src), path.join(out, dst));

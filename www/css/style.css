@@ -109,7 +109,7 @@ label.lbl { display: block; font-weight: 700; margin: .7rem 0 .3rem; }
 .modal-body { padding: .3rem 1rem .6rem; overflow-y: auto; flex: 1 1 auto; -webkit-overflow-scrolling: touch; }
 .modal-foot { display: flex; flex-wrap: wrap; gap: .5rem; padding: .7rem 1rem calc(.8rem + var(--sab)); border-top: 1px solid var(--line); flex: 0 0 auto; max-height: 45vh; overflow-y: auto; background: var(--card); }
 .modal-foot .btn { flex: 1 1 min(8rem, 100%); }
-#toast { position: fixed; left: 50%; bottom: calc(5.2rem + var(--sab)); transform: translateX(-50%) translateY(1rem); max-width: 90vw; padding: .65rem 1.1rem; border-radius: 999px; background: var(--primary-d); color: #fff; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 60; text-align: center; }
+#toast { position: fixed; left: 50%; bottom: calc(5.2rem + var(--sab)); transform: translateX(-50%) translateY(1rem); max-width: 90vw; padding: .65rem 1.1rem; border-radius: 1rem; text-align: center; background: var(--primary-d); color: #fff; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 60; text-align: center; }
 #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 #incompat { position: fixed; inset: 0; z-index: 99; background: var(--bg); display: flex; align-items: center; justify-content: center; padding: 1rem; overflow: auto; }
