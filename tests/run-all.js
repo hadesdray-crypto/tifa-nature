@@ -6,6 +6,12 @@ const STEPS = [
   ['(e) affichages', './t-display', 'affichages'],
   ['(f) modes', './t-display', 'modes'],
   ['(g) recherches', './t-search', null],
+  ['(h) parcours', './t-flows', null],
+  ['(h) jardin et carnet', './t-jardin', null],
+  ['(h) planning région assistant', './t-planning', null],
+  ['(h) calculs météo', './t-calculs', null],
+  ['(h) hasard et endurance', './t-stress', null],
+  ['(h) mise à jour', './t-update', null],
 ];
 (async () => {
   const only = process.argv.slice(2);

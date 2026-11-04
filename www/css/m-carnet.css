@@ -1,0 +1,8 @@
+/* Tifa Nature - « Carnet de culture ». Réutilise les cartes et boutons du thème botanique. */
+.cn-note { border-left: 5px solid var(--leaf); }
+.cn-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+.cn-photo { max-height: 14rem; }
+.cn-season { margin: 1rem .2rem .4rem; color: var(--accent); font-family: var(--serif); }
+.cn-note .row .btn { flex: 1 1 7rem; }
+textarea.field { resize: vertical; min-height: 7rem; font: inherit; }
+select.field { appearance: auto; }

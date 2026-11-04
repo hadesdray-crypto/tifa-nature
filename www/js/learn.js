@@ -61,10 +61,13 @@
   function calPage(mois) {
     var c = L.month(mois);
     if (!c) return { title: 'Calendrier', html: '<div class="notice warn">Ce mois n\'existe pas.</div>' };
-    var h = monthChips(mois) + '<div class="card"><h2>' + T.esc(c.nom) + '</h2><p>' + T.esc(c.resume) + '</p><div class="row">' + T.voice.button(c.nom + '. ' + c.resume + ' À faire : ' + c.aFaire.join('. '), 'Écouter le mois') + '</div></div>';
-    h += '<div class="card"><h3>À faire dans la cour</h3><ul>' + T.list(c.aFaire) + '</ul></div>';
-    h += '<div class="card"><h3>À semer</h3>' + nameChips(c.semer) + '<h3>À planter</h3>' + nameChips(c.planter) + '<h3>À récolter</h3>' + nameChips(c.recolter) + '</div>';
-    h += '<div class="card"><h3>À protéger</h3><ul>' + T.list(c.proteger) + '</ul></div>';
+    /* Région : on consulte le mois de référence décalé (ex. nord : en avril on lit les conseils de mars). Sans région, rien ne change. */
+    var R = T.region, reg = R ? R.current() : null, ref = reg ? L.month(R.refMonth(mois)) || c : c, rec = reg ? L.month(R.refMonth(mois, 'recolte')) || c : c;
+    var h = monthChips(mois) + '<div class="card"><h2>' + T.esc(c.nom) + '</h2><p>' + T.esc(c.resume) + '</p><div class="row">' + T.voice.button(c.nom + '. ' + c.resume + ' À faire : ' + ref.aFaire.join('. '), 'Écouter le mois') + '</div></div>';
+    if (R) h += R.summaryHtml() + '<div class="row" style="margin-bottom:.8rem"><button class="btn block" data-act="regionpick">' + (reg ? 'Changer ma région' : 'Choisir ma région') + '</button></div>';
+    h += '<div class="card"><h3>À faire dans la cour</h3><ul>' + T.list(ref.aFaire) + '</ul></div>';
+    h += '<div class="card"><h3>À semer</h3>' + nameChips(ref.semer) + '<h3>À planter</h3>' + nameChips(ref.planter) + '<h3>À récolter</h3>' + nameChips(rec.recolter) + '</div>';
+    h += '<div class="card"><h3>À protéger</h3><ul>' + T.list(ref.proteger) + '</ul></div>';
     if (c.astuce) h += '<div class="notice ok"><b>Astuce :</b> ' + T.esc(c.astuce) + '</div>';
     return { title: 'Calendrier : ' + c.nom, html: h };
   }

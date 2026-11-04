@@ -63,6 +63,7 @@ async function overflow(page) {
     document.querySelectorAll('#view *, #tabs *, #topbar *, .modal *').forEach((el) => {
       const r = el.getBoundingClientRect(); if (!r.width || !r.height) return;
       const st = getComputedStyle(el); if (st.visibility === 'hidden' || st.display === 'none') return;
+      if (el.closest('.strip')) { if (el.classList.contains('strip') && (r.right > W + 1 || r.left < -1)) bad.push('bandeau défilant plus large que l\'écran'); return; }
       if (r.right > W + 1 || r.left < -1) bad.push((el.tagName + '.' + el.className + ' hors écran à droite/gauche: ' + Math.round(r.left) + '→' + Math.round(r.right)).slice(0, 120));
     });
     document.querySelectorAll('.modal-foot').forEach((f) => { const r = f.getBoundingClientRect(); if (r.bottom > H + 1) bad.push('boutons de fenêtre hors écran'); });

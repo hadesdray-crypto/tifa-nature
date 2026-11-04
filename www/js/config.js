@@ -2,8 +2,8 @@
    Les valeurs « __…__ » sont remplacées automatiquement par GitHub Actions. */
 window.TIFA_CONFIG = {
   NOM: 'Tifa Nature',
-  VERSION_WEB: '1.0.0',
-  VERSION_CODE: 1,                /* numéro de version des fichiers de l'appli (augmente à chaque mise à jour) */
+  VERSION_WEB: '1.1.0',
+  VERSION_CODE: 2,                /* numéro de version des fichiers de l'appli (augmente à chaque mise à jour) */
 
   /* Reconnaissance par photo (Pl@ntNet). Clé à créer sur my.plantnet.org puis à coller ici.
      Tant que la clé est vide, l'appli utilise le mode guidé hors connexion. */

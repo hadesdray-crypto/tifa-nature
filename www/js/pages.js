@@ -3,16 +3,28 @@
   'use strict';
   var T = window.T, LG = window.TIFA_LEGAL || {};
 
+  function sf(f, d) { try { var v = f(); return v == null ? d : v; } catch (e) { return d; } }
   /* ---------- Accueil ---------- */
   T.route(/^\/accueil$/, 'accueil', function () {
     var hr = new Date().getHours(), hello = hr < 12 ? 'Bonjour' : (hr < 18 ? 'Bon après-midi' : 'Bonsoir');
-    var cm = T.learn.month(T.monthNow()), tip = T.learn.tipOfDay(), due = T.pots.dueCount(), h = '';
-    h += '<div class="hero"><h2>' + hello + '</h2><p>Votre petit jardin, en toute sérénité.</p></div>';
+    var pl = sf(function () { return T.planning.todayCount(); }, 0), cm = T.learn.month(T.monthNow()), tip = T.learn.tipOfDay(), due = T.pots.dueCount(), h = '';
+    var dn = new Date(), JOURS = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+    h += '<div class="hero"><h2>' + hello + '</h2><p class="date">' + JOURS[dn.getDay()] + ' ' + dn.getDate() + ' ' + T.MOIS[dn.getMonth()].toLowerCase() + '</p><p>Votre petit jardin, en toute sérénité.</p><a class="search-fake" href="#/trouver">Chercher une plante ou un conseil…</a></div>';
+    var now = T.monthNow(), sow = T.D.plantes.filter(function (p) { return (p.semis || []).indexOf(now) >= 0 || (p.plantation || []).indexOf(now) >= 0; }).slice(0, 14);
+    if (sow.length) h += '<div class="strip-h"><h2>À semer ou planter maintenant</h2><a href="#/calendrier">Calendrier</a></div><div class="strip">' + sow.map(function (p) { return '<a href="#/plante/' + T.esc(p.id) + '" class="' + ((p.semis || []).indexOf(now) >= 0 ? '' : 'k-plant') + '"><b>' + T.esc(p.nom) + '</b><i>' + ((p.semis || []).indexOf(now) >= 0 ? 'Semis' : 'Plantation') + '</i></a>'; }).join('') + '</div>';
     h += '<div class="big-grid">' +
-      '<a class="big tint" href="#/photo"><b>Reconnaître une plante</b><span>Avec une photo</span></a>' +
-      '<a class="big tint" href="#/maladie"><b>Ma plante est malade</b><span>Cause et solution</span></a>' +
-      '<a class="big" href="#/pots"><b>Mes pots</b><span>Soleil ou ombre ?</span></a>' +
-      '<a class="big" href="#/trouver"><b>Chercher une plante</b><span>' + T.D.plantes.length + ' fiches</span></a></div>';
+      '<a class="big t1" href="#/photo"><b>Reconnaître une plante</b><span>Avec une photo</span></a>' +
+      '<a class="big t2" href="#/maladie"><b>Ma plante est malade</b><span>Cause et solution</span></a>' +
+      '<a class="big t3" href="#/pots"><b>Mes pots</b><span>Soleil ou ombre ?</span></a>' +
+      '<a class="big t5" href="#/trouver"><b>Chercher une plante</b><span>' + T.D.plantes.length + ' fiches</span></a>' +
+      '<a class="big t4" href="#/jardin"><b>Mon jardin</b><span>' + T.esc(sf(function () { return T.jardin.summary(); }, 'Plan de la cour')) + '</span></a>' +
+      '<a class="big t6" href="#/planning"><b>Mon planning</b><span>' + (pl ? pl + ' à faire' : 'Rien d\'urgent') + '</span></a>' +
+      '<a class="big t7" href="#/carnet"><b>Carnet de culture</b><span>Notes et photos</span></a>' +
+      '<a class="big t8" href="#/assistant"><b>Poser une question</b><span>Réponse sans connexion</span></a></div>';
+    var al = sf(function () { return T.meteo.alertText(); }, '');
+    h += '<a class="item" href="#/meteo"><b>Météo du jardin</b><i>' + T.esc(al || 'Gel, canicule, pluie : les alertes') + '</i></a>';
+    h += '<a class="item" href="#/calculs"><b>Calculettes</b><i>Arrosage, terreau, engrais, distances, pH</i></a>';
+    if (!sf(function () { return T.store.s.settings.region; }, '')) h += '<a class="item" href="#/calendrier"><b>Choisir ma région</b><i>Les dates s\'adaptent à votre climat</i></a>';
     if (due) h += '<a class="item" href="#/pots"><b>' + due + ' pot' + (due > 1 ? 's' : '') + ' à vérifier</b><i>Voir l\'arrosage dans Mes pots</i></a>';
     if (cm) h += '<div class="card"><h3>Ce mois-ci : ' + T.esc(cm.nom) + '</h3><p>' + T.esc(cm.resume) + '</p><ul>' + T.list(cm.aFaire.slice(0, 3)) + '</ul><a class="btn block" href="#/calendrier/' + cm.mois + '">Voir tout le mois</a></div>';
     if (tip) h += '<h2>Conseil du jour</h2>' + T.learn.tipCard(tip);
@@ -23,7 +35,7 @@
   function link(href, t, s) { return '<a class="item" href="' + href + '"><b>' + T.esc(t) + '</b>' + (s ? '<i>' + T.esc(s) + '</i>' : '') + '</a>'; }
   T.route(/^\/plus$/, 'plus', function () {
     var h = '<div class="hero"><h2>Plus</h2><p>Réglages, aide et informations.</p></div>';
-    h += link('#/reglages', 'Réglages', 'Taille du texte, apparence, voix') + link('#/aide', 'Comment ça marche', 'Le tour de l\'application') +
+    h += link('#/jardin', 'Mon jardin', 'Plan de la cour') + link('#/planning', 'Mon planning', 'Tâches et rappels') + link('#/carnet', 'Carnet de culture', 'Notes et photos') + link('#/assistant', 'Poser une question', 'Assistant sans connexion') + link('#/meteo', 'Météo du jardin', 'Alertes gel, chaleur, pluie') + link('#/calculs', 'Calculettes', 'Arrosage, terreau, engrais, pH') + link('#/calendrier', 'Calendrier et ma région', 'Dates adaptées au climat') + link('#/reglages', 'Réglages', 'Taille du texte, apparence, voix') + link('#/aide', 'Comment ça marche', 'Le tour de l\'application') +
       link('#/aide-installation', 'Si l\'installation ou l\'appli est bloquée', 'Samsung, Play Protect, économie de batterie') +
       link('#/maj', 'Mises à jour', 'Rechercher une nouvelle version') + link('#/licence', 'Licence', T.licence.valid ? 'Activée' : 'Activation') +
       link('#/legal/mentions', 'Mentions légales') + link('#/legal/cgu', 'Conditions d\'utilisation') + link('#/legal/confidentialite', 'Politique de confidentialité') + link('#/apropos', 'À propos');

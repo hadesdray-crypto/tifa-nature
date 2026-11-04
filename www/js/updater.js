@@ -99,7 +99,8 @@
   /* ---------- 3) Installation ---------- */
   function rmDir(rel) { return P().FS.rmdir({ path: rel, directory: dirData(), recursive: true }).catch(function () {}); }
   U.download = function (m, onProgress) {
-    var base = baseUrl(m), tmp = OTA + '/tmp-' + m.versionCode, files = m.files, total = files.reduce(function (s, f) { return s + (f.size || 1); }, 0), done = 0, i = 0;
+    var base; try { base = baseUrl(m); } catch (e) { return Promise.reject(e); }
+    var tmp = OTA + '/tmp-' + m.versionCode, files = m.files, total = files.reduce(function (s, f) { return s + (f.size || 1); }, 0), done = 0, i = 0;
     function next() {
       if (i >= files.length) return Promise.resolve();
       var f = files[i++], rel = tmp + '/' + f.path;

@@ -1,1 +1,12 @@
-{ "changes": ["Première version de Tifa Nature."] }
+{ "changes": [
+ "Nouveau visuel botanique : accueil vert, tuiles colorées, barre du bas arrondie.",
+ "Voix : une molette pour choisir la voix (filles / garçons, avec ou sans connexion), qui s'entend en faisant défiler.",
+ "72 nouvelles fiches de plantes (160 au total).",
+ "Mon jardin : plan de la cour avec soleil et ombre, plantes à placer.",
+ "Mon planning : arrosages et tâches du mois, rappels.",
+ "Carnet de culture : notes et photos, comparaison des saisons.",
+ "Assistant hors connexion : posez une question, la réponse arrive avec la fiche.",
+ "Météo du jardin : alertes gel, chaleur et pluie.",
+ "Calculettes : arrosage, terreau, engrais, distances, pH.",
+ "Calendrier adapté à votre région."
+] }

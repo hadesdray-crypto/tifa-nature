@@ -63,7 +63,7 @@
   /* ---------- Stockage (localStorage + copie native de sécurité) ---------- */
   var KEY = 'tifa.v1';
   function defaults() {
-    return { v: 1, installId: '', settings: { theme: 'zen', scale: 1, voiceOn: true, voiceId: '', rate: 0.95 }, pots: [], flags: {}, licence: null, ota: {}, lastCheck: 0, diagHistory: [] };
+    return { v: 1, installId: '', settings: { theme: 'zen', scale: 1, voiceOn: true, voiceId: '', rate: 0.95, region: null }, pots: [], garden: null, journal: [], flags: {}, licence: null, ota: {}, lastCheck: 0, diagHistory: [], meteo: null, tasks: [], planAuto: {}, ahist: [] };
   }
   T.store = {
     s: defaults(), timer: null,
@@ -77,7 +77,14 @@
           try {
             var o = JSON.parse(r), d = defaults();
             Object.keys(d).forEach(function (k) { if (o[k] !== undefined) d[k] = o[k]; });
-            d.settings = Object.assign(defaults().settings, o.settings || {});
+            /* champs ajoutés par les modules (jardin, carnet, planning…) : on les garde tels quels */
+            Object.keys(o).forEach(function (k) { if (d[k] === undefined) d[k] = o[k]; });
+            d.settings = Object.assign(defaults().settings, (o.settings && typeof o.settings === 'object') ? o.settings : {});
+            /* données au mauvais format : on remet les bonnes formes plutôt que de planter */
+            if (!Array.isArray(d.pots)) d.pots = [];
+            d.pots = d.pots.filter(function (x) { return x && typeof x === 'object'; });
+            if (!Array.isArray(d.diagHistory)) d.diagHistory = [];
+            ['flags', 'ota'].forEach(function (k) { if (!d[k] || typeof d[k] !== 'object' || Array.isArray(d[k])) d[k] = {}; });
             self.s = d;
           } catch (e) { /* données illisibles : on repart de zéro sans planter */ }
         }
