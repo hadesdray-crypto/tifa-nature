@@ -14,13 +14,10 @@ jobs:
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: 21 }
       - name: Vérifier les clés de signature
-        env:
-          KS: ${{ secrets.TIFA_KEYSTORE_B64 }}
-          KP: ${{ secrets.TIFA_KEYSTORE_PASSWORD }}
-          KA: ${{ secrets.TIFA_KEY_ALIAS }}
+        env: { KEYS: "${{ secrets.TIFA_KEYS }}" }
         run: |
-          if [ -z "$KS" ] || [ -z "$KP" ] || [ -z "$KA" ]; then
-            echo "::error::Les clés de signature (secrets TIFA_*) sont absentes. L'APK ne peut pas être signée."; exit 1
+          if [ -z "$KEYS" ]; then
+            echo "::error::Le secret TIFA_KEYS (clés de signature) est absent : l'APK ne peut pas être signée. Voir le guide."; exit 1
           fi
       - run: npm ci
       - run: node scripts/copy-vendor.js
@@ -33,15 +30,18 @@ jobs:
           echo "name=$(grep -oP "VERSION_WEB:\s*'\K[^']+" www/js/config.js)" >> "$GITHUB_OUTPUT"
       - run: npx cap sync android
       - name: Clé de signature
-        env: { KS: "${{ secrets.TIFA_KEYSTORE_B64 }}" }
-        run: echo "$KS" | base64 -d > "$RUNNER_TEMP/tifa.keystore"
+        env: { KEYS: "${{ secrets.TIFA_KEYS }}" }
+        run: |
+          # Format du secret : ligne 1 = mot de passe, ligne 2 = fichier de clés en base64.
+          printf '%s\n' "$KEYS" | sed -n 2p | base64 -d > "$RUNNER_TEMP/tifa.keystore"
+          echo "TIFA_PW=$(printf '%s\n' "$KEYS" | sed -n 1p)" >> "$GITHUB_ENV"
       - name: Compiler l'APK
         working-directory: android
         env:
           TIFA_KEYSTORE: ${{ runner.temp }}/tifa.keystore
-          TIFA_KEYSTORE_PASSWORD: ${{ secrets.TIFA_KEYSTORE_PASSWORD }}
-          TIFA_KEY_ALIAS: ${{ secrets.TIFA_KEY_ALIAS }}
-          TIFA_KEY_PASSWORD: ${{ secrets.TIFA_KEY_PASSWORD }}
+          TIFA_KEYSTORE_PASSWORD: ${{ env.TIFA_PW }}
+          TIFA_KEY_ALIAS: tifa
+          TIFA_KEY_PASSWORD: ${{ env.TIFA_PW }}
         run: |
           chmod +x gradlew
           ./gradlew assembleRelease --no-daemon -PtifaVersionCode=${{ steps.v.outputs.code }} -PtifaVersionName=${{ steps.v.outputs.name }}
