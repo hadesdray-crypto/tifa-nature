@@ -117,7 +117,7 @@
       h += '<label class="lbl">Que montre la photo ?</label><div class="chips">' + ORGANS.map(function (o) { return '<button class="chip' + (I.organ === o[0] ? ' on' : '') + '" data-act="organ" data-val="' + o[0] + '" aria-pressed="' + (I.organ === o[0]) + '">' + o[1] + '</button>'; }).join('') + '</div>';
       h += '<button class="btn primary block" data-act="identgo"' + (st !== 'ok' || I.busy ? ' disabled' : '') + '>Reconnaître cette plante</button>';
     }
-    if (st === 'nokey') h += '<div class="notice"><b>Reconnaissance précise gratuite</b><br>Pour reconnaître une plante avec le meilleur outil existant, activez-la une seule fois.</div><a class="btn primary block" href="#/photo/precise">Activer la reconnaissance précise</a><p class="muted small">Sans cela, le mode guidé ci-dessous fonctionne sans connexion.</p>';
+    if (st === 'nokey') h += '<div class="notice"><b>Option : reconnaissance précise gratuite</b><br>Si vous le souhaitez, vous pouvez brancher le service Pl@ntNet, une seule fois.</div><a class="btn primary block" href="#/photo/precise">Découvrir cette option</a><p class="muted small">Sans cela, le mode guidé ci-dessous fonctionne sans connexion.</p>';
     else if (st === 'offline') h += '<div class="notice warn">Pas de connexion internet : la reconnaissance par photo est en pause. Utilisez le mode guidé ci-dessous.</div>';
     if (I.busy) h += '<div class="notice"><b>Analyse en cours…</b> Cela peut prendre quelques secondes.</div>';
     if (I.error) h += '<div class="notice bad">' + T.esc(I.error) + '</div>';

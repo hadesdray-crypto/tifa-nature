@@ -32,11 +32,11 @@ module.exports = async function ({ L, browser, base }) {
     st.calls = []; st.mode = 'ok';
     const p = await mk(dev, sc);
     await go(p, '#/photo');
-    L.check(dev + ' bouton « Activer la reconnaissance précise » présent sans clé', await p.evaluate(() => !!document.querySelector('a[href="#/photo/precise"]')));
+    L.check(dev + ' bouton « Découvrir cette option » présent sans clé', await p.evaluate(() => !!document.querySelector('a[href="#/photo/precise"]')));
     await go(p, '#/photo/precise');
     let t = await txt(p);
-    L.check(dev + ' explications 3 étapes + lien du site', /1\. Créer un compte/.test(t) && /3\. La coller/.test(t) && await p.evaluate(() => !!document.querySelector('a[href^="https://my.plantnet.org"][target="_blank"]')));
-    L.check(dev + ' une seule fois annoncé', /une seule fois/i.test(t));
+    L.check(dev + ' explications 3 étapes + lien du site', /Étape possible 1/.test(t) && /Étape possible 3/.test(t) && await p.evaluate(() => !!document.querySelector('a[href^="https://my.plantnet.org"][target="_blank"]')));
+    L.check(dev + ' une seule fois annoncé', /plus rien à refaire/i.test(t));
     L.check(dev + ' aucun débordement', (await L.overflow(p)).length === 0);
     /* vide, trop court, mauvais */
     await act(p, 'pncheck'); L.check(dev + ' champ vide -> message', /Collez d'abord/.test(await txt(p)));

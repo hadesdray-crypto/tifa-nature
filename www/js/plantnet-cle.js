@@ -43,14 +43,14 @@
       h += '<p class="muted small">Votre clé reste sur ce téléphone. Les photos envoyées pour la reconnaissance sont traitées par Pl@ntNet.</p>';
       return h;
     }
-    h += '<div class="card"><h2>Photo précise</h2><p>Gratuite, avec le meilleur outil existant (Pl@ntNet), pour un usage privé. À faire <b>une seule fois</b> : ensuite, il suffit de prendre une photo.</p></div>';
-    h += '<div class="card"><h3>1. Créer un compte gratuit</h3>' + link('https://my.plantnet.org/signup', 'Créer mon compte (site Pl@ntNet)') + '<p class="muted small">Remplissez le formulaire d\'inscription (« Sign up »). Si le site demande de confirmer votre adresse e-mail, faites-le, puis connectez-vous.</p></div>';
-    h += '<div class="card"><h3>2. Copier votre clé</h3>' + link('https://my.plantnet.org/settings/api-key', 'Ouvrir la page de ma clé') + '<p class="muted small">Si aucune clé n\'est affichée, touchez le bouton pour la générer (« Generate »). Copiez ensuite la clé : une longue suite de lettres et de chiffres.</p></div>';
-    h += '<div class="card"><h3>3. La coller ici</h3><label class="lbl" for="pn-key">Ma clé</label><input id="pn-key" class="input" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="140" placeholder="Collez la clé ici" value="' + T.esc(ST.val) + '" data-pnkey="1">' +
+    h += '<div class="card"><h2>Photo précise (facultatif)</h2><p>Si vous le souhaitez, il est possible d\'utiliser gratuitement, pour votre usage privé, le service de reconnaissance Pl@ntNet. C\'est un site indépendant de cette application. Une fois la clé ajoutée, il n\'y a plus rien à refaire. Vous pouvez aussi ne rien faire : le mode guidé reste disponible.</p></div>';
+    h += '<div class="card"><h3>Étape possible 1 : un compte gratuit</h3>' + link('https://my.plantnet.org/signup', 'Voir l\'inscription Pl@ntNet') + '<p class="muted small">Le site propose de créer un compte (« Sign up »), éventuellement avec confirmation de l\'adresse e-mail.</p></div>';
+    h += '<div class="card"><h3>Étape possible 2 : la clé</h3>' + link('https://my.plantnet.org/settings/api-key', 'Voir la page de la clé') + '<p class="muted small">Une fois connecté, cette page permet de générer (« Generate ») puis de copier la clé : une longue suite de lettres et de chiffres.</p></div>';
+    h += '<div class="card"><h3>Étape possible 3 : l\'ajouter ici</h3><label class="lbl" for="pn-key">Ma clé</label><input id="pn-key" class="input" type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="140" placeholder="Collez la clé ici" value="' + T.esc(ST.val) + '" data-pnkey="1">' +
       '<div class="row"><button class="btn grow" data-act="pnpaste">Coller</button><button class="btn primary grow" data-act="pncheck"' + (ST.busy ? ' disabled' : '') + '>Valider ma clé</button></div>';
     if (ST.busy) h += '<div class="notice"><b>Vérification en cours…</b></div>';
     if (ST.msg) h += '<div class="notice ' + (ST.kind || '') + '" role="status">' + T.esc(ST.msg) + '</div>';
-    h += '</div>';
+    h += '</div><p class="muted small">Pl@ntNet est un service indépendant de Tifa Nature : son usage relève de ses propres conditions.</p>';
     return h;
   }
   T.act.pnpaste = function () {
