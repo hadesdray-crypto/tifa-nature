@@ -31,13 +31,14 @@
   T.act.photoget = function (el) { T.photoFlow(el.getAttribute('data-ctx') === 'diag' ? T.diag : I, el.getAttribute('data-src')); };
 
   /* ---------- Service Pl@ntNet ---------- */
+  PN.key = function () { var u = T.store && T.store.s && T.store.s.plantnet; return (u && u.key) || T.cfg.PLANTNET_API_KEY || ''; };
   PN.status = function () {
-    if (!T.cfg.PLANTNET_API_KEY) return 'nokey';
+    if (!PN.key()) return 'nokey';
     if (!T.native.online) return 'offline';
     return 'ok';
   };
   PN.post = function (path, field, blob, organ) {
-    var url = T.cfg.PLANTNET_URL + path + '?api-key=' + encodeURIComponent(T.cfg.PLANTNET_API_KEY) + '&lang=fr&nb-results=5';
+    var url = T.cfg.PLANTNET_URL + path + '?api-key=' + encodeURIComponent(PN.key()) + '&lang=fr&nb-results=5';
     function build() { var fd = new FormData(); fd.append(field, blob, 'photo.jpg'); fd.append('organs', organ || 'auto'); return fd; }
     function parse(status, text) {
       if (status === 404) return { results: [] };
@@ -106,7 +107,7 @@
     if (PN.status() !== 'ok') { T.toast('La reconnaissance par photo n\'est pas disponible pour le moment.'); return; }
     I.busy = true; I.error = ''; I.results = null; T.render(true);
     PN.identify(I.blob, I.organ).then(function (j) { I.results = (j && j.results) || []; }, function (e) {
-      I.error = (e && e.status === 429) ? 'Le service de reconnaissance est très demandé aujourd\'hui. Réessayez plus tard, ou utilisez le mode guidé.' : 'La reconnaissance n\'a pas pu se faire (connexion ou service indisponible). Utilisez le mode guidé ci-dessous.';
+      I.error = (e && (e.status === 401 || e.status === 403)) ? 'Votre clé n\'est plus acceptée. Remettez-en une depuis « Reconnaissance précise ».' : (e && e.status === 429) ? 'Le service de reconnaissance est très demandé aujourd\'hui. Réessayez plus tard, ou utilisez le mode guidé.' : 'La reconnaissance n\'a pas pu se faire (connexion ou service indisponible). Utilisez le mode guidé ci-dessous.';
     }).then(function () { I.busy = false; T.render(true); });
   };
 
@@ -116,14 +117,14 @@
       h += '<label class="lbl">Que montre la photo ?</label><div class="chips">' + ORGANS.map(function (o) { return '<button class="chip' + (I.organ === o[0] ? ' on' : '') + '" data-act="organ" data-val="' + o[0] + '" aria-pressed="' + (I.organ === o[0]) + '">' + o[1] + '</button>'; }).join('') + '</div>';
       h += '<button class="btn primary block" data-act="identgo"' + (st !== 'ok' || I.busy ? ' disabled' : '') + '>Reconnaître cette plante</button>';
     }
-    if (st === 'nokey') h += '<div class="notice">La reconnaissance par photo n\'est pas activée dans cette version. Le mode guidé ci-dessous fonctionne sans connexion.</div>';
+    if (st === 'nokey') h += '<div class="notice"><b>Reconnaissance précise gratuite</b><br>Pour reconnaître une plante avec le meilleur outil existant, activez-la une seule fois.</div><a class="btn primary block" href="#/photo/precise">Activer la reconnaissance précise</a><p class="muted small">Sans cela, le mode guidé ci-dessous fonctionne sans connexion.</p>';
     else if (st === 'offline') h += '<div class="notice warn">Pas de connexion internet : la reconnaissance par photo est en pause. Utilisez le mode guidé ci-dessous.</div>';
     if (I.busy) h += '<div class="notice"><b>Analyse en cours…</b> Cela peut prendre quelques secondes.</div>';
     if (I.error) h += '<div class="notice bad">' + T.esc(I.error) + '</div>';
     h += '</div>';
     if (I.results) {
       if (!I.results.length) h += '<div class="notice warn">Aucune plante reconnue sur cette photo. Essayez une photo plus nette, avec une seule feuille ou fleur bien visible.</div>';
-      else h += '<h2>Résultats possibles</h2><p class="muted small">Résultat indicatif : comparez toujours avec la fiche et votre plante.</p>' + I.results.slice(0, 4).map(resultCard).join('');
+      else h += '<h2>Résultats possibles</h2><p class="muted small">Propulsé par Pl@ntNet.</p><p class="muted small">Résultat indicatif : comparez toujours avec la fiche et votre plante.</p>' + I.results.slice(0, 4).map(resultCard).join('');
     }
     var cand = guided(), anyG = I.guide.cat || I.guide.lieu || I.guide.fleurit;
     h += '<div class="card"><h2>Mode guidé (sans connexion)</h2><p class="muted small">Répondez aux questions : l\'application propose des pistes parmi ses fiches.</p>' +
@@ -134,6 +135,7 @@
       h += '<h2>' + cand.length + ' piste' + (cand.length > 1 ? 's' : '') + '</h2>' + (cand.length ? cand.slice(0, 20).map(T.search.item).join('') : '<div class="notice warn">Aucune fiche ne correspond. Changez une réponse (par exemple « Je ne sais pas »).</div>');
       if (cand.length > 20) h += '<p class="muted small">Répondez à plus de questions pour réduire la liste.</p>';
     }
+    if (st !== 'nokey') h += '<p class="muted small"><a href="#/photo/precise">Reconnaissance précise : activée. Gérer ma clé</a></p>';
     if (I.photo || anyG || I.results) h += '<button class="btn block" data-act="identreset">Recommencer</button>';
     return { title: 'Reconnaître une plante', html: h };
   });

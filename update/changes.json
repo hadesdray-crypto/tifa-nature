@@ -1,7 +1,6 @@
 { "changes": [
- "Nouveau : au toucher du mot « Toxique » sur une fiche, une fenêtre explique pourquoi la plante est toxique, pour qui, que faire, avec les sources.",
- "Nouveau : « Dans l'assiette » dit si chaque plante est comestible, avec un résumé au toucher et des idées de recettes.",
- "Nouveau : Insectes du jardin, 56 fiches d'amis et d'indésirables, et un jeu Ami ou ennemi.",
- "Nouveau : Découvertes sur les plantes dans le Labo, avec le niveau de preuve et les mythes démentis.",
- "Corrections : de nombreuses fiches, gestes et calculs ont été relus et rectifiés."
+ "Nouveau : « Photo précise ». Créez une fois un compte gratuit Pl@ntNet, collez votre clé, et reconnaissez toutes vos plantes en prenant une photo.",
+ "La clé est vérifiée tout de suite, gardée sur votre téléphone, et vous pouvez la retirer quand vous voulez.",
+ "Toucher « Toxique » ou « Comestible » sur une fiche explique pourquoi, avec les précautions et les sources.",
+ "Nouveau : Insectes du jardin, Dans l'assiette et Découvertes sur les plantes."
 ] }
