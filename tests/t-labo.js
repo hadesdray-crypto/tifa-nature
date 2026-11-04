@@ -172,10 +172,10 @@ module.exports = async function ({ L, browser, base }) {
   await L.skipOnboarding(p);
   await p.evaluate(() => { window.__said = []; T.voice.speak = (t) => { window.__said.push(t); return Promise.resolve(true); }; });
   L.check('labo : aucune permission demandée au chargement (micro non appelé)', !(await p.evaluate(() => window.__F.micCalls)));
-  L.check('labo : T.labo.tools() liste 8 outils avec liens', await p.evaluate(() => T.labo.tools().length === 8 && T.labo.tools().every((t) => /^#\/labo\//.test(t.href) && t.nom)));
+  L.check('labo : T.labo.tools() liste 9 outils avec liens', await p.evaluate(() => T.labo.tools().length === 9 && T.labo.tools().every((t) => /^#\/labo\//.test(t.href) && t.nom)));
   await go(p, '#/labo');
   let t = await text(p);
-  L.check('labo : page d\'accueil avec les 8 outils et le bouton « Préparer les accès »', (await p.evaluate(() => document.querySelectorAll('#view a.item').length)) === 8 && /Préparer les accès/.test(t) && /Wi-Fi et le Bluetooth ne servent pas/.test(t));
+  L.check('labo : page d\'accueil avec les 9 outils et le bouton « Préparer les accès »', (await p.evaluate(() => document.querySelectorAll('#view a.item').length)) === 9 && /Préparer les accès/.test(t) && /Wi-Fi et le Bluetooth ne servent pas/.test(t));
   L.check('labo : champ T.store.s.labo présent après ouverture d\'un outil', (await go(p, '#/labo/lumiere'), await p.evaluate(() => typeof T.store.s.labo === 'object')));
   for (const id of ['ecouter', 'lumiere', 'feuille', 'soleil', 'capteur', 'chant']) {
     await go(p, '#/labo/' + id);
@@ -419,7 +419,7 @@ module.exports = async function ({ L, browser, base }) {
   L.check('science : chaque fiche a « sait / ne sait pas », « avec un téléphone ? », une source, la voix, aucun emoji', allOk, detail);
   L.check('science : chaque fiche cite une source datée ou nommée (champ source)', await p.evaluate(() => T.labo.science.every((f) => f.source.length > 30 && /\d{4}|Plant Physiology/.test(f.source) && f.sait.length >= 1 && f.saitpas.length >= 1 && f.tel.length > 20)));
   await go(p, '#/labo/science/ultrasons'); t = await text(p);
-  L.check('science : fiche ultrasons = Khait et al., Cell 2023, 40-80 kHz, téléphone incapable', /Khait/.test(t) && /Cell, 2023/.test(t) && /40 et 80 kHz/.test(t) && /Non\. Les micros de téléphone/.test(t));
+  L.check('science : fiche ultrasons = Khait et al., Cell 2023, 20-100 kHz, téléphone incapable', /Khait/.test(t) && /Cell, 2023/.test(t) && /20 et 100 kHz/.test(t) && /Non\. Les micros de téléphone/.test(t));
   await go(p, '#/labo/science/electrique'); t = await text(p);
   L.check('science : signal électrique -> électrodes + amplificateur, jamais sur le secteur', /électrodes/.test(t) && /amplificateur/.test(t) && /secteur/.test(t));
   await click(p, '[data-act="lb-sci-note"]');
@@ -430,6 +430,107 @@ module.exports = async function ({ L, browser, base }) {
   L.check('enfant : 3 expériences avec matériel, étapes, ce qu\'on regarde, question', (await p.evaluate(() => document.querySelectorAll('#view .card').length)) === 3 && /Matériel/.test(t) && /On regarde/.test(t) && /Pour réfléchir/.test(t) && /phototropisme|lumière/i.test(t) && /sensitive/i.test(t) && /coton/i.test(t) && /ne jamais manger crus/.test(t));
   await click(p, '[data-act="lb-kid-note"]');
   L.check('enfant : « Noter dans le carnet » ajoute l\'expérience', await p.evaluate(() => T.carnet.all().some((n) => /Expérience/.test(n.texte))));
+
+  /* ================= 9b. Découvertes incroyables ================= */
+  const dec = await p.evaluate(() => { const d = T.decouvertes; return { n: d.items.length, items: d.items.map((f) => ({ id: f.id, cat: f.cat, niveau: f.niveau, titre: f.titre, accroche: f.accroche, quoi: f.quoi, c: f.certain.length, d: f.discute.length, src: f.src.map((x) => ({ t: x.t, u: x.u })), json: JSON.stringify(f) })), cats: d.cats.map((c) => c.id), levels: Object.keys(d.levels) }; });
+  L.check('découvertes : au moins 18 découvertes + au moins 4 mythes (total >= 24)', dec.n >= 24 && dec.items.filter((f) => f.cat !== 'mythe').length >= 18 && dec.items.filter((f) => f.cat === 'mythe').length >= 4, String(dec.n));
+  L.check('découvertes : identifiants uniques, lisibles par la route (a-z, 0-9, _)', new Set(dec.items.map((f) => f.id)).size === dec.n && dec.items.every((f) => /^[a-z0-9_]+$/.test(f.id)));
+  L.check('découvertes : chaque fiche a titre, accroche, texte, certain, discuté, niveau valide, catégorie valide', dec.items.every((f) => f.titre.length > 10 && f.accroche.length > 20 && f.quoi.length > 80 && f.c >= 1 && f.d >= 1 && dec.levels.indexOf(f.niveau) >= 0 && dec.cats.indexOf(f.cat) >= 0), dec.items.filter((f) => !(f.titre.length > 10 && f.accroche.length > 20 && f.quoi.length > 80 && f.c >= 1 && f.d >= 1)).map((f) => f.id).join());
+  L.check('découvertes : chaque fiche cite au moins une source nommée, les adresses sont en https', dec.items.every((f) => f.src.length >= 1 && f.src.every((x) => x.t.length > 20 && (!x.u || /^https:\/\/[a-z0-9.-]+\//i.test(x.u)))), dec.items.filter((f) => !f.src.every((x) => x.t.length > 20 && (!x.u || /^https:\/\//.test(x.u)))).map((f) => f.id).join());
+  L.check('découvertes : chaque fiche (hors mythes) a au moins une adresse de source ouverte pendant la vérification', dec.items.every((f) => f.src.some((x) => x.u)), dec.items.filter((f) => !f.src.some((x) => x.u)).map((f) => f.id).join());
+  L.check('découvertes : aucun emoji, aucune adresse e-mail, aucun numéro de téléphone dans les données', dec.items.every((f) => !EMOJI.test(f.json) && !/@|\b0[1-9]( ?\d{2}){4}\b/.test(f.json)));
+  L.check('découvertes : fiches demandées présentes (Kirlian, Mozart, Backster, douleur, Khait, Veits, dionée, sensitive, Pando, pétunia, mousse ISS...)', ['kirlian', 'mozart', 'backster', 'douleur', 'clics', 'nectar', 'dionee', 'sensitive_apprend', 'pando', 'petunia', 'mousse_iss', 'silene', 'dattier', 'vieux_arbres', 'gravite', 'parents', 'quantique', 'mycorhizes_reseau', 'vibrations', 'volatils_armoise', 'anesthesie', 'racines_choix'].every((id) => dec.items.some((f) => f.id === id)));
+  L.check('découvertes : les sujets très débattus ne sont jamais marqués « solide » (Kirlian non, Gagliano discuté, mycorhizes discuté, Pando discuté, quantique discuté)', (() => { const g = (id) => dec.items.filter((f) => f.id === id)[0].niveau; return g('kirlian') === 'non' && g('sensitive_apprend') === 'discute' && g('mycorhizes_reseau') === 'discute' && g('pando') === 'discute' && g('quantique') === 'discute' && g('mozart') === 'non' && g('backster') === 'non'; })());
+  L.check('découvertes : la mousse de l\'ISS est datée de 2025 (et pas 2024), Silene « environ 30 000 ans »', dec.items.filter((f) => f.id === 'mousse_iss')[0].json.indexOf('2025') > 0 && dec.items.filter((f) => f.id === 'mousse_iss')[0].json.indexOf('2024') < 0 && /30 000 ans/.test(dec.items.filter((f) => f.id === 'silene')[0].titre));
+
+  /* accueil du Labo + liste */
+  await go(p, '#/labo'); t = await text(p);
+  L.check('découvertes : l\'accueil du Labo met « Découvertes incroyables » en premier, bien visible', await p.evaluate(() => { const a = document.querySelector('#view a.item'); return !!a && /Découvertes incroyables/.test(a.innerText) && a.classList.contains('lb-star') && a.getAttribute('href') === '#/labo/decouvertes'; }));
+  L.check('découvertes : T.labo.tools() contient « decouvertes » avec son lien', await p.evaluate(() => T.labo.tools().some((x) => x.id === 'decouvertes' && x.href === '#/labo/decouvertes')));
+  await go(p, '#/labo/decouvertes'); t = await text(p);
+  const nItems = await p.evaluate(() => document.querySelectorAll('#lb-dlist a.item').length);
+  L.check('découvertes : la liste montre toutes les fiches, une étiquette de niveau (mot + forme) sur chacune', nItems === dec.n && await p.evaluate(() => Array.prototype.every.call(document.querySelectorAll('#lb-dlist a.item'), (a) => { const b = a.querySelector('.lb-lvl'); return b && b.querySelector('svg') && /Preuve solide|Preuve discutée|Non démontré/.test(b.innerText); })), String(nItems));
+  L.check('découvertes : la fiche Kirlian est en tête de liste', await p.evaluate(() => document.querySelector('#lb-dlist a.item').getAttribute('href') === '#/labo/decouvertes/kirlian'));
+  L.check('découvertes : la légende explique les trois niveaux (solide, discuté, non démontré)', /Comment lire les étiquettes/.test(t) && /Preuve solide/.test(t) && /Preuve discutée/.test(t) && /Non démontré/.test(t));
+  L.check('découvertes : les trois formes d\'étiquette sont différentes (forme distincte, pas seulement la couleur)', await p.evaluate(() => { const f = (k) => { const s = document.querySelector('.lb-lvl-' + k + ' svg'); return s ? s.innerHTML : ''; }; return f('solide') && f('discute') && f('non') && new Set([f('solide'), f('discute'), f('non')]).size === 3; }));
+
+  /* recherche */
+  const typeQ = async (q) => { await p.evaluate((q) => { const i = document.getElementById('lb-dq'); i.value = q; i.dispatchEvent(new Event('input', { bubbles: true })); }, q); await L.sleep(200); return p.evaluate(() => ({ n: document.querySelectorAll('#lb-dlist a.item').length, first: (document.querySelector('#lb-dlist a.item b') || { innerText: '' }).innerText, t: document.getElementById('lb-dlist').innerText })); };
+  let q1 = await typeQ('kirlian');
+  L.check('découvertes : recherche « kirlian » -> la fiche Kirlian', q1.n >= 1 && /Kirlian/.test(q1.first), JSON.stringify(q1.n));
+  q1 = await typeQ('arbre');
+  L.check('découvertes : recherche « arbre » -> plusieurs fiches (Pando, vieux arbres...)', q1.n >= 3, String(q1.n));
+  const qa = await typeQ('écureuil'), qb = await typeQ('ECUREUIL');
+  L.check('découvertes : la recherche ignore accents et majuscules', qa.n >= 1 && qa.n === qb.n, qa.n + '/' + qb.n);
+  q1 = await typeQ('non démontré');
+  L.check('découvertes : on peut chercher par niveau de preuve (« non démontré »)', q1.n >= 4 && q1.n < dec.n, String(q1.n));
+  q1 = await typeQ('zzzqqq');
+  L.check('découvertes : recherche sans résultat -> message clair et bouton « Tout afficher »', q1.n === 0 && /Aucune fiche ne correspond/.test(q1.t) && await p.evaluate(() => !!document.querySelector('[data-act="lb-dreset"]')));
+  await click(p, '[data-act="lb-dreset"]');
+  L.check('découvertes : « Tout afficher » remet toute la liste et vide la case', await p.evaluate((n) => document.querySelectorAll('#lb-dlist a.item').length === n && document.getElementById('lb-dq').value === '', dec.n));
+  await click(p, '[data-act="lb-dcat"][data-v="mythe"]');
+  L.check('découvertes : thème « Mythes à démêler » ne garde que les mythes, le bouton est marqué actif', await p.evaluate((n) => { const l = document.querySelectorAll('#lb-dlist a.item'); const b = document.querySelector('[data-act="lb-dcat"][data-v="mythe"]'); return l.length === n && b.classList.contains('on') && b.getAttribute('aria-pressed') === 'true'; }, dec.items.filter((f) => f.cat === 'mythe').length));
+  q1 = await typeQ('mozart');
+  L.check('découvertes : thème + recherche se combinent (mythes + « mozart »)', q1.n === 1 && /Mozart/.test(q1.first), JSON.stringify(q1));
+  await click(p, '[data-act="lb-dcat"][data-v=""]');
+  q1 = await typeQ('');
+  L.check('découvertes : vider la case de recherche et choisir « Tout » remet toute la liste', q1.n === dec.n, String(q1.n));
+
+  /* chaque fiche s'affiche */
+  let badIds = [], badMsg = '';
+  for (const f of dec.items) {
+    await go(p, '#/labo/decouvertes/' + f.id);
+    const r = await p.evaluate((f) => { const v = document.getElementById('view'), t = v.innerText; const m = f.cat === 'mythe'; return { t, ok: t.indexOf(f.titre) >= 0 && (m ? /Ce qu'on raconte/.test(t) && /Ce que la science montre/.test(t) : /Ce qu'on a découvert/.test(t) && /Ce qui est certain/.test(t)) && /Ce qui (est|reste) discuté/.test(t) && /Sources/.test(t) && !!v.querySelector('.lb-lvl svg') && /Preuve solide|Preuve discutée|Non démontré/.test(t) && !!v.querySelector('[data-act="speak"]') && !!v.querySelector('[data-act="lb-dec-note"]') && !!v.querySelector('a[href="#/labo/decouvertes"]'), links: Array.prototype.every.call(v.querySelectorAll('a.lb-open'), (a) => a.getAttribute('target') === '_blank' && /noopener/.test(a.getAttribute('rel')) && /^https:\/\//.test(a.getAttribute('href'))), srcN: v.querySelectorAll('.lb-srcs li').length }; }, f);
+    if (!r.ok || !r.links || r.srcN !== f.src.length || EMOJI.test(r.t)) { badIds.push(f.id); badMsg += f.id + ':' + r.ok + '/' + r.links + '/' + r.srcN + ' '; }
+  }
+  L.check('découvertes : chacune des ' + dec.n + ' fiches s\'affiche (titre, certain/discuté, niveau, sources, voix, carnet, retour), liens https externes, aucun emoji', badIds.length === 0, badMsg);
+  await go(p, '#/labo/decouvertes/kirlian'); t = await text(p);
+  L.check('Kirlian : explique la décharge de couronne, l\'humidité, la pression, la tension, la feuille fantôme', /effet de couronne/.test(t) && /humidité/.test(t) && /pression/.test(t) && /tension/.test(t) && /feuille fantôme|Feuille fantôme/.test(t));
+  L.check('Kirlian : dit clairement que l\'énergie qui reste n\'est pas démontrée, sans moquerie', /Non démontré/.test(t) && /n'est donc pas démontrée/.test(t) && !/ridicule|stupide|imbécile|crédule|naïf/i.test(t));
+  L.check('Kirlian : sécurité claire (jamais de haute tension chez soi, dizaines de milliers de volts) + expérience sans danger (pesée)', /JAMAIS de photo Kirlian chez vous/.test(t) && /dizaines de milliers de volts/.test(t) && /Sécurité/.test(t) && /balance de cuisine/.test(t));
+  L.check('Kirlian : le vrai à côté (signaux électriques, champ des fleurs, lumière ultrafaible) et la chaleur infrarouge', /signaux électriques/.test(t) && /champ électrique/.test(t) && /extrêmement faible/.test(t) && /infrarouge/.test(t));
+  L.check('Kirlian : sources citées (Pehek, Boyers et Tiller, psi, Skeptic\'s Dictionary, physique du Texas)', /Pehek/.test(t) && /Boyers/.test(t) && /Skeptic/.test(t) && /Texas/.test(t));
+  await go(p, '#/labo/decouvertes/sensitive_apprend'); t = await text(p);
+  L.check('sensitive : le débat est dit (Biegler, preuves insuffisantes, aucune répétition indépendante connue) et niveau « discutée »', /Biegler/.test(t) && /insuffisantes/.test(t) && /Preuve discutée/.test(t));
+  await go(p, '#/labo/decouvertes/mycorhizes_reseau'); t = await text(p);
+  L.check('mycorhizes : nuance Karst 2023 (arbres-mères non prouvés) et réponse de Simard', /Karst/.test(t) && /aucune preuve publiée/.test(t) && /Simard/.test(t));
+  await go(p, '#/labo/decouvertes/pando'); t = await text(p);
+  L.check('Pando : âge incertain, pré-publication non relue, estimation de poids', /non relue/.test(t) && /très incertain/.test(t) && /estimation/.test(t));
+  await go(p, '#/labo/decouvertes/clics'); t = await text(p);
+  L.check('clics : 20-100 kHz, 10 cm, cause non prouvée (cavitation), « message » non établi', /20 et 100 kHz/.test(t) && /10 cm/.test(t) && /cavitation/.test(t) && /message/.test(t));
+
+  /* voix, carnet, hors connexion, liens, erreurs */
+  await go(p, '#/labo/decouvertes/dionee');
+  await p.evaluate(() => { window.__said = []; T.voice.speak = (tt) => { window.__said.push(tt); return Promise.resolve(true); }; });
+  await click(p, '[data-act="speak"]');
+  L.check('découvertes : « Écouter la fiche » lit le titre, le niveau, le certain et le discuté', await p.evaluate(() => { const s = window.__said[window.__said.length - 1] || ''; return /dionée/i.test(s) && /Niveau de preuve/.test(s) && /Ce qui est certain/.test(s) && /Ce qui est discuté/.test(s) && !/https?:/.test(s) && s.length > 300; }), await p.evaluate(() => (window.__said[window.__said.length - 1] || '').slice(0, 120)));
+  const before = await p.evaluate(() => T.carnet.all().length);
+  await click(p, '[data-act="lb-dec-note"]');
+  L.check('découvertes : « Ajouter au carnet » ajoute la fiche avec son niveau de preuve', await p.evaluate((b) => T.carnet.all().length === b + 1 && /Découverte lue : La dionée/.test(T.carnet.all().slice(-1)[0].texte) && /Niveau de preuve/.test(T.carnet.all().slice(-1)[0].texte), before));
+  const off = await p.evaluate(() => { const prev = Object.getOwnPropertyDescriptor(Navigator.prototype, 'onLine'); Object.defineProperty(navigator, 'onLine', { get: () => false, configurable: true }); const a = document.querySelector('a.lb-open'); const ev = { d: false, preventDefault() { this.d = true; } }; T.act['lb-dopen'](a, ev); const toast = (document.getElementById('toast') || { textContent: '' }).textContent; delete navigator.onLine; return { d: ev.d, toast }; });
+  L.check('découvertes : hors connexion, un lien externe ne s\'ouvre pas et un message clair s\'affiche', off.d === true && /internet/.test(off.toast), JSON.stringify(off));
+  const ferr = await p.evaluate(() => { const old = T.feuille; const out = {}; try { T.feuille = { say() { throw new Error('boom'); }, isOn() { return true; } }; location.hash = '#/labo/decouvertes/clics'; out.a = true; } catch (e) { out.a = false; } return new Promise((res) => setTimeout(() => { out.t = (document.getElementById('view') || { innerText: '' }).innerText.length; T.feuille = old; res(out); }, 300)); });
+  L.check('découvertes : si Feuille plante ou est absente, la fiche s\'affiche quand même', ferr.a && ferr.t > 500, JSON.stringify(ferr));
+  await p.evaluate(() => { const old = T.feuille; window.__oldF = old; T.feuille = undefined; location.hash = '#/labo/decouvertes/gravite'; });
+  await L.sleep(300);
+  L.check('découvertes : sans objet Feuille du tout, la fiche gravité s\'affiche', (await text(p)).length > 500 && /statolithes|gravité/i.test(await text(p)));
+  await p.evaluate(() => { T.feuille = window.__oldF; });
+  await go(p, '#/labo/decouvertes/inconnue_totale');
+  L.check('découvertes : fiche inconnue -> liste (pas d\'écran vide)', (await p.evaluate((n) => document.querySelectorAll('#lb-dlist a.item').length === n, dec.n)));
+  const nodata = await p.evaluate(() => { const d = T.decouvertes; T.decouvertes = undefined; try { location.hash = '#/labo/decouvertes'; } catch (e) {} return new Promise((res) => setTimeout(() => { const t = document.getElementById('view').innerText; T.decouvertes = d; res(t); }, 300)); });
+  L.check('découvertes : sans fichier de données, message clair et retour au Labo (pas d\'écran vide, pas d\'erreur)', /ne sont pas disponibles/.test(nodata) && /Retour au Labo/.test(nodata), nodata.slice(0, 80));
+  await go(p, '#/labo/science'); t = await text(p);
+  L.check('science : la liste renvoie vers les Découvertes', /Découvertes incroyables/.test(t) && await p.evaluate(() => !!document.querySelector('#view a.item[href="#/labo/decouvertes"]')));
+
+  /* exactitude des anciennes fiches et constantes de référence */
+  const acc = await p.evaluate(() => { const S = {}; T.labo.science.forEach((f) => { S[f.id] = f; }); const M = T.labo.miflora; return { ult: S.ultrasons.sait.join(' ') + S.ultrasons.source, sens: S.sensitive.saitpas.join(' '), nyc: S.nyctinastie.source + S.nyctinastie.saitpas.join(' '), el: S.electrique.tel, myc: S.mycorhizes.saitpas.join(' '), uu: [M.SERVICE, M.CHAR_MODE, M.CHAR_DATA, M.CHAR_BATT, M.MODE_ON.join()] }; });
+  L.check('exactitude : ultrasons = 20-100 kHz (plus « 40-80 kHz »), 10 cm, cavitation', /20 et 100 kHz/.test(acc.ult) && !/40 et 80/.test(acc.ult) && /Cell, 2023/.test(acc.ult));
+  L.check('exactitude : sensitive = débat Biegler, nyctinastie = source Minorsky (plus de « rosée / lune » non vérifiés)', /insuffisantes/.test(acc.sens) && /Minorsky/.test(acc.nyc) && !/rosée|lune/.test(acc.nyc));
+  L.check('exactitude : signaux électriques = millivolts à dizaines de millivolts (adouci)', /quelques dizaines de millivolts/.test(acc.el));
+  L.check('exactitude : Mi Flora = service 00001204, caractéristiques 1a00/1a01/1a02, activation A0 1F (confirmés sur la documentation d\'un projet libre)', JSON.stringify(acc.uu) === JSON.stringify(['00001204-0000-1000-8000-00805f9b34fb', '00001a00-0000-1000-8000-00805f9b34fb', '00001a01-0000-1000-8000-00805f9b34fb', '00001a02-0000-1000-8000-00805f9b34fb', '160,31']), JSON.stringify(acc.uu));
+  const sunref = await p.evaluate(() => { const A = T.labo, o = {}; [['mars', 2026, 3, 20, 353.7, 1083.3], ['juin', 2026, 6, 21, 227.0, 1197.9], ['sept', 2026, 9, 23, 338.4, 1066.7], ['dec', 2026, 12, 21, 461.2, 956.1]].forEach(([n, y, m, d, r, s]) => { const x = A.sun(y, m, d, 48.85, 2.35); o[n] = [x.riseUTC - r, x.setUTC - s]; }); return o; });
+  L.check('soleil : Paris aux solstices et équinoxes, écart avec l\'algorithme complet de la NOAA <= 2,5 minutes (lever et coucher)', Object.keys(sunref).every((k) => Math.abs(sunref[k][0]) <= 2.5 && Math.abs(sunref[k][1]) <= 2.5), JSON.stringify(sunref));
+  L.check('découvertes : aucune erreur JS sur cette série', clean(p).length === 0, clean(p).join(' | '));
   await go(p, '#/labo/nimportequoi');
   L.check('labo : outil inconnu -> page de repli avec retour', /n'existe pas/.test(await text(p)));
 
@@ -486,6 +587,12 @@ module.exports = async function ({ L, browser, base }) {
     await pg.evaluate(() => T.closeModal());
     await pgo('#/labo/capteur'); await chk('capteur avec dernière lecture');
     await pgo('#/labo/chant'); await chk('chant');
+    await pgo('#/labo/decouvertes'); await chk('découvertes (liste)');
+    await pg.evaluate(() => { const i = document.getElementById('lb-dq'); i.value = 'arbre'; i.dispatchEvent(new Event('input', { bubbles: true })); }); await L.sleep(200); await chk('découvertes (recherche « arbre »)');
+    await pg.evaluate(() => { const i = document.getElementById('lb-dq'); i.value = 'zzzqqq'; i.dispatchEvent(new Event('input', { bubbles: true })); }); await L.sleep(200); await chk('découvertes (aucun résultat)');
+    for (const id of ['kirlian', 'mycorhizes_reseau', 'vieux_arbres', 'sensitive_apprend', 'anesthesie']) { await pgo('#/labo/decouvertes/' + id); await chk('découvertes (fiche ' + id + ')'); }
+    await pg.evaluate(() => { document.querySelector('.lb-open').scrollIntoView(); const r = document.querySelector('.lb-open').getBoundingClientRect(); window.__lbo = r.width > 0 && r.height >= 40; });
+    L.check(dev + ' @200 % : bouton de lien source de taille tactile (>= 40 px de haut)', await pg.evaluate(() => window.__lbo));
     await pgo('#/labo/science'); await chk('science (liste)');
     await pgo('#/labo/science/mycorhizes'); await chk('science (fiche)');
     await pgo('#/labo/enfant'); await chk('expériences avec l\'enfant');

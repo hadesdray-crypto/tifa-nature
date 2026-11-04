@@ -42,7 +42,7 @@
   function spacingList() {
     return SPACING.map(function (s) { var p = T.plante ? T.plante(s[0]) : null; return { id: s[0], nom: (p && p.nom) || s[1], cm: s[2] }; });
   }
-  var PH = { hortensia: { nom: 'l\'hortensia', min: 5.5, max: 6.5 }, myrtillier: { nom: 'le myrtillier', min: 4.5, max: 5.5 }, lavande: { nom: 'la lavande', min: 6.5, max: 8 }, potager: { nom: 'le potager', min: 6, max: 7 } };
+  var PH = { hortensia: { nom: 'l\'hortensia', min: 5.5, max: 6.5 }, myrtillier: { nom: 'le myrtillier', min: 4.5, max: 5.5 }, lavande: { nom: 'la lavande', min: 6.5, max: 8.5 }, potager: { nom: 'le potager', min: 6, max: 7 } };
 
   function seasonNow() { var m = T.monthNow(); return m >= 3 && m <= 5 ? 'printemps' : (m >= 6 && m <= 8 ? 'ete' : (m >= 9 && m <= 11 ? 'automne' : 'hiver')); }
 
@@ -63,8 +63,8 @@
         var drain = v.haut <= 20 ? 2 : (v.haut <= 40 ? 3 : 5), soilH = v.haut - 2 - drain;
         var litres = ceil(area * soilH / 1000 * 1.1), sacs = ceil(litres / 40), billes = area * drain / 1000;
         return { big: litres + ' litres de terreau (' + plural(sacs, 'sac', 'sacs') + ' de 40 litres)',
-          text: 'Prévoyez aussi environ ' + fmt(billes) + ' litres de billes d\'argile ou de graviers sur ' + drain + ' cm au fond du pot, pour le drainage.',
-          note: 'Calcul : volume du pot, moins ' + drain + ' cm de drainage et 2 cm sous le bord pour l\'arrosage, plus 10 % car le terreau se tasse. Le dernier sac peut rester entamé.' };
+          text: 'Facultatif : environ ' + fmt(billes) + ' litres de billes d\'argile ou de graviers sur ' + drain + ' cm au fond du pot. Ce qui compte surtout, ce sont les trous au fond ; sans billes, ajoutez ce volume en terreau.',
+          note: 'Calcul : volume du pot, moins ' + drain + ' cm de drainage et 2 cm sous le bord pour l\'arrosage, plus 10 % car le terreau se tasse. Pour un pot qui se rétrécit vers le bas, mesurez le diamètre moyen : le résultat sera plus juste. Le dernier sac peut rester entamé.' };
       } },
 
     { id: 'plants', tab: 'Plants', title: 'Nombre de plants',
@@ -95,8 +95,8 @@
       compute: function (v) {
         var n = FREQ[v.saison][v.expo], one = v.vol * WATER_SHARE;
         var hiver = v.saison === 'hiver' ? ' En hiver, arrosez seulement si la terre est sèche sur 3 cm et qu\'il ne gèle pas.' : '';
-        return { big: fmt(one * n) + ' litres par semaine', text: 'Environ ' + plural(n, 'arrosage', 'arrosages') + ' de ' + fmt(one) + ' litre' + (one >= 2 ? 's' : '') + ' chacun.' + hiver,
-          note: 'Un arrosage apporte à peu près un cinquième du volume du pot. C\'est une moyenne : enfoncez un doigt de 3 cm dans la terre et n\'arrosez que si elle est sèche. Par forte chaleur, il faut plus.' };
+        return { big: fmt(one * n) + ' litre' + (one * n >= 2 ? 's' : '') + ' par semaine', text: 'Environ ' + plural(n, 'arrosage', 'arrosages') + ' de ' + fmt(one) + ' litre' + (one >= 2 ? 's' : '') + ' chacun.' + hiver,
+          note: 'Un arrosage apporte à peu près un cinquième du volume du pot : c\'est un repère, pas une règle. Enfoncez un doigt de 3 cm dans la terre et n\'arrosez que si elle est sèche. Arrosez jusqu\'à ce que l\'eau sorte par les trous. Par forte chaleur, ou pour une grande plante (tomate), il faut plus.' };
       } },
 
     { id: 'engrais', tab: 'Engrais', title: 'Compost et engrais',
@@ -113,8 +113,8 @@
         function g(x) { return x >= 1000 ? fmt(x / 1000, 2) + ' kg' : fmt(x) + ' g'; }
         if (v.produit === 'compost') {
           var l = v.mode === 'pot' ? v.potl * 0.1 : v.surf * 3;
-          big = fmt(l) + ' litres de compost mûr';
-          text = v.mode === 'pot' ? 'Griffez-le en surface du pot (environ 1 litre pour 10 litres de terre), au printemps.' : 'Soit 3 litres par m², à étaler et griffer légèrement au printemps, une fois par an.';
+          big = fmt(l) + ' litre' + (l >= 2 ? 's' : '') + ' de compost mûr';
+          text = v.mode === 'pot' ? 'Griffez-le en surface du pot (environ 1 litre pour 10 litres de terre), au printemps.' : 'Soit 3 litres par m² (environ 2 kg), à étaler et griffer légèrement au printemps, une fois par an. C\'est une dose prudente : un sol pauvre peut en recevoir davantage.';
         } else {
           var gr = v.mode === 'pot' ? v.potl * 1.5 : v.surf * 80;
           big = g(gr) + ' d\'engrais en granulés';
@@ -136,12 +136,12 @@
         if (ph < t.min) {
           g = Math.round((t.min - ph) * 10) / 10; dose = Math.min(v.cible === 'myrtillier' ? 50 : 300, Math.round(g * 150 / 5) * 5);
           return { big: 'Sol trop acide : environ ' + dose + ' g de chaux par m²', warn: true,
-            text: 'Pour ' + t.nom + ' (pH idéal ' + range + '), la terre est trop acide. Apport indicatif : environ ' + dose + ' g par m² de chaux (carbonate de calcium), épandus en surface à l\'automne' + (dose > 150 ? ', en deux fois à trois mois d\'écart' : '') + '. Pour un pot, remplacez plutôt une partie de la terre par du terreau universel.',
-            note: 'Calcul : environ 150 g par m² pour remonter le pH de 1 point, sans dépasser 300 g par m² et par an. Refaites un test 3 mois après.', extraWarn: (v.cible === 'myrtillier' ? 'Le myrtillier supporte très mal la chaux : ne dépassez jamais cette dose. ' : '') + 'N\'appliquez jamais chaux et soufre ensemble, ni chaux et fumier le même jour.' };
+            text: 'Pour ' + t.nom + ' (pH idéal ' + range + '), la terre est trop acide. Apport indicatif (selon le sol, il faut parfois plus ou moins) : environ ' + dose + ' g par m² de chaux (carbonate de calcium), épandus en surface à l\'automne' + (dose > 150 ? ', en deux fois à trois mois d\'écart' : '') + '. Pour un pot, remplacez plutôt une partie de la terre par du terreau universel.',
+            note: 'Calcul : environ 150 g par m² pour remonter le pH de 1 point, sans dépasser 300 g par m² et par an. Refaites un test 3 mois après.', extraWarn: (v.cible === 'myrtillier' ? 'Le myrtillier supporte très mal la chaux : ne dépassez jamais cette dose. ' : '') + (v.cible === 'hortensia' ? 'Pour des fleurs bleues, une terre acide est justement voulue : ne chaulez pas dans ce cas. ' : '') + 'N\'appliquez jamais chaux et soufre ensemble, ni chaux et fumier le même jour.' };
         }
         g = Math.round((ph - t.max) * 10) / 10; dose = Math.min(100, Math.round(g * 50 / 5) * 5);
         return { big: 'Sol trop basique : environ ' + dose + ' g de soufre par m²', warn: true,
-          text: 'Pour ' + t.nom + ' (pH idéal ' + range + '), la terre est trop basique. Apport indicatif : environ ' + dose + ' g par m² de soufre en poudre, griffé en surface au printemps. Plus doux : paillis d\'aiguilles de pin ou de feuilles, compost de feuilles. En pot : utilisez de la terre de bruyère.',
+          text: 'Pour ' + t.nom + ' (pH idéal ' + range + '), la terre est trop basique. Apport indicatif : environ ' + dose + ' g par m² de soufre en poudre, griffé en surface au printemps (il agit lentement, en plusieurs mois). Plus doux : paillis d\'aiguilles de pin ou de feuilles, compost de feuilles. En pot : utilisez de la terre de bruyère.',
           note: 'Calcul : environ 50 g par m² pour baisser le pH de 1 point, sans dépasser 100 g par m² et par an. Si le sol est très calcaire (pH au-dessus de 8), préférez la culture en pot avec de la terre de bruyère.', extraWarn: 'N\'appliquez jamais chaux et soufre ensemble.' };
       } }
   ];

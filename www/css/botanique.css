@@ -83,3 +83,6 @@ body { background: var(--bg); }
 .big::after { width: 56px; height: 56px; right: -8px; top: -8px; opacity: .25; }
 .big.t5 { background: linear-gradient(145deg, #c99a2c, #9a6f12); }
 [data-theme="nuit"] #tabs button.on, [data-theme="nuit"] .btn.primary { background: #2f6b45; color: #fff; }
+.tagbtn { border: 0; cursor: pointer; min-height: 2.75rem; font-family: inherit; }
+.toxm h3 { margin: .8rem 0 .2rem; }
+.toxm ul { margin: .2rem 0 .2rem 1.1rem; padding: 0; }

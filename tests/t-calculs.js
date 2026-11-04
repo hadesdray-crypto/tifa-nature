@@ -70,7 +70,7 @@ module.exports = async function ({ L, browser, base }) {
   await pick(page, 'engrais');
   t('compost 4 m² = 12 L', await go(page), ['12 litres de compost mûr', 'étiquette']);
   await chip(page, 'mode', 'pot'); await fill(page, 'potl', '10');
-  t('compost pot 10 L = 1 L', await go(page), ['1 litres de compost mûr'.replace('1 litres', '1 litres')]);
+  t('compost pot 10 L = 1 L', await go(page), ['1 litre de compost mûr']);
   await chip(page, 'produit', 'granule');
   t('granulés pot 10 L = 15 g', await go(page), ['15 g d\'engrais', 'étiquette']);
   await chip(page, 'mode', 'm2'); await fill(page, 'surf', '4');

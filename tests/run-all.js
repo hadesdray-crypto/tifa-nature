@@ -14,6 +14,9 @@ const STEPS = [
   ['(h) gestes', './t-gestes', null],
   ['(h) musique', './t-musique', null],
   ['(h) labo', './t-labo', null],
+  ['(h) insectes', './t-insectes', null],
+  ['(h) assiette', './t-assiette', null],
+  ['(i) toxicité', './t-toxicite', null],
   ['(h) hasard et endurance', './t-stress', null],
   ['(h) mise à jour', './t-update', null],
 ];

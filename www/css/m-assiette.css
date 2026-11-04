@@ -1,0 +1,27 @@
+/* Tifa Nature - Dans l'assiette. Variables du thème existant uniquement. */
+.as-badge { display: inline-flex; align-items: center; gap: .45rem; min-height: var(--tap); max-width: 100%; box-sizing: border-box; padding: .35rem .95rem; border-radius: 999px; border: 2px solid currentColor; background: var(--card); font: inherit; font-weight: 800; line-height: 1.2; text-align: left; overflow-wrap: anywhere; cursor: pointer; }
+span.as-badge { cursor: default; }
+.as-ico { flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.as-ok { color: var(--ok); background: var(--ok-bg); }
+.as-part { color: var(--warn); background: var(--warn-bg); }
+.as-non { color: var(--text); background: var(--bg2); }
+.as-dan { color: var(--bad); background: var(--bad-bg); }
+.as-card h4, .as-res h3 { margin: .8rem 0 .3rem; }
+.as-head { margin-bottom: .3rem; }
+.as-list, .as-parts { padding-left: 1.2rem; margin: .3rem 0; } .as-list li, .as-parts li { margin-bottom: .45rem; overflow-wrap: anywhere; }
+.as-parts { list-style: disc; }
+.as-link { display: flex; width: 100%; box-sizing: border-box; margin: .3rem 0; white-space: normal; }
+.as-links { display: grid; gap: .3rem; }
+.as-recq { margin: .4rem 0; } .as-recq b { overflow-wrap: anywhere; }
+.as-q { box-sizing: border-box; margin: .2rem 0 .4rem; }
+.as-item { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; overflow-wrap: anywhere; }
+.as-name { flex: 1 1 8rem; min-width: 0; display: block; color: var(--text); text-decoration: none; min-height: var(--tap); }
+.as-name b, .as-name span { display: block; }
+.as-chip { display: inline-flex; align-items: center; min-height: var(--tap); text-decoration: none; overflow-wrap: anywhere; }
+.as-dan-chip { border-color: var(--bad); color: var(--bad); }
+.as-fchip { min-height: var(--tap); }
+.as-ideas { display: grid; gap: .45rem; }
+.as-idee { width: 100%; box-sizing: border-box; justify-content: flex-start; text-align: left; white-space: normal; }
+.as-clear { margin-top: .2rem; }
+.as-doute { overflow-wrap: anywhere; }
+.as-res { overflow-wrap: anywhere; }

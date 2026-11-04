@@ -49,3 +49,20 @@
 #lb-sides .chip, .lb-panel .chips .chip { min-height: 2.75rem; }
 #lb-sides { flex-wrap: wrap; }
 #lb-lmsg:empty, #lb-compmsg:empty, #lb-micmsg:empty, #lb-blemsg:empty { display: none; }
+/* Découvertes incroyables : étiquette de niveau de preuve (mot + forme, jamais la couleur seule) */
+.lb-lvl { display: inline-flex; align-items: center; gap: .4rem; padding: .2rem .7rem .2rem .55rem; margin: 0 0 .35rem; border-radius: 999px; font-size: .84rem; font-weight: 700; border: 2px solid currentColor; max-width: 100%; }
+.lb-lvl svg { flex: 0 0 auto; }
+.lb-lvl > span { min-width: 0; overflow-wrap: anywhere; }
+.lb-lvl-solide { color: var(--ok); background: var(--ok-bg); }
+.lb-lvl-discute { color: var(--warn); background: var(--warn-bg); }
+.lb-lvl-non { color: var(--bad); background: var(--bad-bg); }
+.item .lb-lvl { display: flex; width: fit-content; margin-bottom: .35rem; }
+.item.lb-star { border-width: 2px; border-color: var(--primary); }
+.lb-def { margin: .1rem 0 0; }
+.lb-legend { list-style: none; padding: 0; margin: .3rem 0 0; }
+.lb-legend li { display: flex; flex-direction: column; gap: .1rem; margin-bottom: .5rem; }
+.lb-srcs { padding-left: 1.1rem; overflow-wrap: anywhere; }
+.lb-srcs li { margin-bottom: .6rem; }
+.lb-open { display: inline-flex; align-items: center; min-height: 2.75rem; margin-top: .3rem; max-width: 100%; text-align: left; }
+#lb-dlist .item { overflow-wrap: anywhere; }
+.chips[aria-label] .chip { min-height: 2.75rem; }

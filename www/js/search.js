@@ -64,13 +64,14 @@
   S.conseils = function (q) { return textSearch(T.D.conseils, q, function (c) { return c.titre + ' ' + c.texte; }, 5); };
 
   /* ---------- Affichages ---------- */
-  function tagsFor(p) {
+  function tagsFor(p, live) {
     var h = '<div class="tags">';
     h += '<span class="tag">' + T.esc(T.CAT[p.categorie] || p.categorie) + '</span>';
     h += '<span class="tag">' + T.esc(T.SOLEIL[p.soleilIdeal] || '') + '</span>';
     if (p.pot && p.pot.possible) h += '<span class="tag ok">En pot possible</span>';
     if (p.difficulte === 'facile') h += '<span class="tag ok">Facile</span>';
-    if (p.toxique && p.toxique.chatChien) h += '<span class="tag bad">Toxique chats/chiens</span>';
+    if (p.toxique && p.toxique.chatChien) h += live ? '<button class="tag bad tagbtn" data-act="toxinfo" data-id="' + T.esc(p.id) + '" aria-label="Toxique : voir les explications">Toxique chats/chiens</button>' : '<span class="tag bad">Toxique chats/chiens</span>';
+    if (live && T.assiette && T.assiette.resume && T.assiette.edible && T.assiette.edible(p.id)) h += '<button class="tag ok tagbtn" data-act="edibleinfo" data-id="' + T.esc(p.id) + '" aria-label="Comestible : voir le résumé">Comestible</button>';
     return h + '</div>';
   }
   S.item = function (p) {
@@ -148,11 +149,12 @@
     var z = T.pots ? T.pots.zoneFor(p) : null;
     return p.nom + '. ' + p.description + ' Lumière : ' + p.heuresSoleil + '. ' + (z ? 'Meilleure place : ' + z.nom + '. ' : '') + 'Arrosage : ' + p.arrosage.conseil + ' Conseils : ' + T.plain(p.conseils);
   };
+  T.fichePlus = T.fichePlus || [];
   T.route(/^\/plante\/([^/]+)$/, 'trouver', function (m) {
     var p = T.plante(decodeURIComponent(m[1]));
     if (!p) return { title: 'Plante', html: '<div class="notice warn">Cette fiche n\'existe pas. <a href="#/trouver">Retour à la recherche</a></div>' };
     var z = T.pots ? T.pots.zoneFor(p) : null, h = '';
-    h += '<div class="card"><h2>' + T.esc(p.nom) + '</h2><p class="muted"><i>' + T.esc(p.latin) + '</i></p><p>' + T.esc(p.description) + '</p>' + tagsFor(p) +
+    h += '<div class="card"><h2>' + T.esc(p.nom) + '</h2><p class="muted"><i>' + T.esc(p.latin) + '</i></p><p>' + T.esc(p.description) + '</p>' + tagsFor(p, true) +
       '<div class="row">' + T.voice.button(S.speech(p), 'Écouter la fiche') + '<button class="btn primary" data-act="addpot" data-id="' + T.esc(p.id) + '">Ajouter à mes pots</button></div></div>';
     if (p.toxique && p.toxique.chatChien) h += '<div class="notice bad"><b>Attention : toxique pour les chats et les chiens.</b> ' + T.esc(p.toxique.note || '') + '</div>';
     h += '<div class="card"><h3>Où la placer</h3><dl class="kv"><dt>Lumière</dt><dd>' + T.esc(p.heuresSoleil) + '</dd>' +
@@ -165,6 +167,7 @@
     if (cal) h += '<div class="card"><h3>Calendrier</h3>' + cal + '</div>';
     h += '<div class="card"><h3>Conseils</h3><ul>' + T.list(p.conseils) + '</ul></div>';
     h += '<div class="card"><h3>Froid et hiver</h3><p><b>Résistance :</b> ' + T.esc(p.rusticite) + '</p><p>' + T.esc(p.hivernage) + '</p></div>';
+    (T.fichePlus || []).forEach(function (f) { try { var x = f(p); if (x) h += x; } catch (e) {} });
     if ((p.amies || []).length || (p.ennemies || []).length) {
       h += '<div class="card"><h3>Bons et mauvais voisins</h3>';
       if (p.amies.length) h += '<p class="muted small">À côté de :</p><div class="chips">' + p.amies.map(function (n) { return '<button class="chip" data-act="searchfor" data-q="' + T.esc(n) + '">' + T.esc(n) + '</button>'; }).join('') + '</div>';

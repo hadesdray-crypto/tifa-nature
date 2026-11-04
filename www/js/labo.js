@@ -1,5 +1,6 @@
 /* Tifa Nature - « Labo des plantes » : le téléphone comme instrument, sans rien promettre d'irréel.
-   Routes : #/labo (accueil) et #/labo/<outil> avec ecouter, lumiere, feuille, soleil, capteur, chant, science (+ science/<fiche>), enfant.
+   Routes : #/labo (accueil) et #/labo/<outil> avec decouvertes (+ decouvertes/<fiche>), ecouter, lumiere, feuille, soleil, capteur, chant, science (+ science/<fiche>), enfant.
+   Données des « Découvertes incroyables » : data/decouvertes.js (T.decouvertes).
    Données : T.store.s.labo = { perm: { mic, cam, bt, motion }, lastLight, lastMiflora, ... }
    API : T.labo.askAll(), T.labo.tools(). Tout accès au téléphone est demandé à l'ouverture d'un outil, jamais au chargement. */
 (function () {
@@ -17,6 +18,7 @@
     return s.labo;
   }
   function save() { try { T.store.save(); } catch (e) {} }
+  function att0(name, fn) { T.act[name] = function (el, ev) { try { return fn(el, ev); } catch (e) { if (window.console) console.error(e); T.toast("Une action n'a pas pu se faire. Réessayez."); } }; }
   function say(t, mood) { try { if (T.feuille && T.feuille.say) T.feuille.say(t, mood); } catch (e) {} }
   function speakBtn(text, label) { try { return T.voice.button(text, label || "Écouter l'explication"); } catch (e) { return ''; } }
   function $(id) { return document.getElementById(id); }
@@ -79,6 +81,7 @@
 
   /* ================== Liste des outils ================== */
   var TOOLS = [
+    { id: 'decouvertes', nom: 'Découvertes incroyables', court: 'Des découvertes vraies sur les plantes, avec leur niveau de preuve, et les mythes démêlés' },
     { id: 'ecouter', nom: 'Écouter le jardin', court: 'Le micro : niveau du son et sons ralentis' },
     { id: 'lumiere', nom: 'Mesurer la lumière', court: 'Plein soleil, mi-ombre ou ombre ?' },
     { id: 'feuille', nom: 'Santé de la feuille', court: 'Une photo, des couleurs, des pistes' },
@@ -400,9 +403,9 @@
   var SCI = [
     { id: 'electrique', titre: "Signaux électriques et ondes de calcium",
       resume: "Quand une feuille est blessée, un signal part dans toute la plante en quelques minutes.",
-      sait: ["Une blessure déclenche des signaux électriques et une onde de calcium qui se propagent vers les autres feuilles.", "Chez la petite plante de laboratoire Arabidopsis, ce signal passe par des récepteurs au glutamate, et prépare les feuilles lointaines à se défendre."],
-      saitpas: ["On ne sait pas encore tout de la façon dont le signal est lu et mélangé avec d'autres.", "Ce n'est pas un « cerveau » : les plantes n'ont pas de neurones."],
-      tel: "Non, pas avec le téléphone seul. Ces signaux font quelques millivolts : il faudrait des électrodes et un amplificateur spécial, un montage de bricolage utilisé en classe. Le Wi-Fi et le Bluetooth ne servent pas à les capter. Ne branchez jamais rien d'improvisé sur le secteur (la prise murale).",
+      sait: ["Une blessure déclenche des signaux électriques et une onde de calcium qui se propagent vers les autres feuilles.", "Chez la petite plante de laboratoire Arabidopsis, attaquée par des chenilles, ce signal passe par des canaux de type récepteurs au glutamate. Il prépare les feuilles lointaines à se défendre (hormone jasmonate)."],
+      saitpas: ["On ne sait pas encore tout de la façon dont le signal est lu et mélangé avec d'autres, ni si les résultats de cette plante modèle valent pour toutes les plantes.", "Ce n'est pas un « cerveau » : les plantes n'ont pas de neurones."],
+      tel: "Non, pas avec le téléphone seul. Ces signaux sont faibles (de l'ordre de quelques millivolts à quelques dizaines de millivolts, selon les mesures) : il faudrait des électrodes et un amplificateur spécial, un montage de bricolage utilisé en classe. Le Wi-Fi et le Bluetooth ne servent pas à les capter. Ne branchez jamais rien d'improvisé sur le secteur (la prise murale).",
       source: "Toyota et al., Science, 2018 : « Glutamate triggers long-distance, calcium-based plant defense signaling »." },
     { id: 'volatils', titre: "Les odeurs d'alerte (composés volatils)",
       resume: "Une plante attaquée par des chenilles libère des molécules odorantes dans l'air.",
@@ -412,28 +415,28 @@
       source: "Heil et Karban, Trends in Ecology and Evolution, 2010 : « Explaining evolution of plant communication by airborne signals »." },
     { id: 'mycorhizes', titre: "Le « réseau sous la forêt » (mycorhizes)",
       resume: "Des champignons vivent collés aux racines et relient parfois plusieurs arbres sous terre.",
-      sait: ["Les champignons mycorhiziens aident la plante à trouver l'eau et les minéraux, et reçoivent du sucre en échange.", "Des expériences ont montré un passage de carbone entre des arbres reliés par ces champignons."],
-      saitpas: ["L'idée d'« arbres-mères qui nourrissent leurs petits » est très répandue mais mal prouvée : des chercheurs ont montré que beaucoup d'affirmations vont plus loin que les résultats.", "On ne sait pas si ces échanges profitent vraiment aux arbres dans une forêt normale."],
+      sait: ["Les champignons mycorhiziens aident la plante à trouver l'eau et les minéraux, et reçoivent du sucre en échange.", "Des expériences en conditions contrôlées (Simard, 1997) ont mesuré du carbone passant d'un jeune arbre à un autre d'espèce différente, par un chemin où les champignons interviennent."],
+      saitpas: ["L'idée d'« arbres-mères qui nourrissent leurs petits » est très répandue, mais une revue de 2023 n'a trouvé aucune preuve publiée sur le terrain, et estime que beaucoup d'affirmations vont plus loin que les résultats. Cette revue est elle-même discutée par d'autres chercheurs.", "On ne sait pas si ces échanges profitent vraiment aux arbres dans une forêt normale."],
       tel: "Non. Tout se passe sous terre. Pour s'en approcher : un peu de terre de forêt, ou un produit mycorhizien du commerce, mis au rempotage.",
       source: "Simard et al., Nature, 1997 ; Karst et al., Nature Ecology and Evolution, 2023 (critique des conclusions trop fortes)." },
     { id: 'ultrasons', titre: "Les clics des plantes stressées",
       resume: "Des tomates et des tabacs manquant d'eau ou coupés produisent des petits clics trop aigus pour l'oreille.",
-      sait: ["Dans une étude de 2023, des micros spéciaux placés à environ 10 cm ont enregistré des clics entre 40 et 80 kHz sur des plantes sans eau ou coupées.", "Les plantes tranquilles en font très peu. Un programme informatique pouvait deviner le type de stress d'après les clics."],
-      saitpas: ["On ne sait pas pourquoi : une cause possible est la rupture de petites colonnes d'eau dans la tige, pas un « message ».", "On ne sait pas si d'autres êtres vivants les entendent vraiment, ni si cela marche au jardin avec le vent et les insectes."],
-      tel: "Non. Les micros de téléphone enregistrent au mieux jusqu'à 20 ou 24 kHz : les clics sont hors de portée. L'outil « Écouter le jardin » vous montre la limite exacte de VOTRE téléphone.",
+      sait: ["Dans une étude de 2023, des micros spéciaux placés à environ 10 cm ont enregistré des clics, surtout entre 20 et 100 kHz (pic moyen vers 50 à 58 kHz), sur des tomates et des tabacs privés d'eau ou coupés.", "Les plantes tranquilles en font très peu (moins d'un par heure). Un programme informatique pouvait deviner le type de stress d'après les clics."],
+      saitpas: ["On ne sait pas pourquoi : la piste principale est la formation de bulles d'air dans les petits tuyaux d'eau de la tige (cavitation), pas un « message » : les auteurs eux-mêmes disent que le mécanisme est mal compris.", "On ne sait pas si d'autres êtres vivants les entendent vraiment, ni si cela marche au jardin avec le vent et les insectes."],
+      tel: "Non. Les micros de téléphone enregistrent au mieux jusqu'à 20 ou 24 kHz : l'essentiel des clics est hors de portée. L'outil « Écouter le jardin » vous montre la limite exacte de VOTRE téléphone.",
       source: "Khait et al., Cell, 2023 : « Sounds emitted by plants under stress are airborne and informative »." },
     { id: 'heliotropisme', titre: "Le tournesol qui suit le soleil (héliotropisme)",
       resume: "Les jeunes tournesols tournent leur tête d'est en ouest pendant la journée, puis reviennent la nuit.",
-      sait: ["Le mouvement vient d'une croissance différente des deux côtés de la tige, réglée par l'horloge interne de la plante.", "Quand la fleur est adulte, elle s'arrête et regarde vers l'est, où elle se réchauffe tôt le matin et attire les abeilles."],
+      sait: ["Le mouvement vient d'une croissance différente des deux côtés de la tige, réglée par l'horloge interne de la plante.", "Quand la fleur est adulte, elle s'arrête et regarde vers l'est : dans l'étude, ces fleurs se réchauffaient plus vite le matin et recevaient environ cinq fois plus de visites d'insectes pollinisateurs."],
       saitpas: ["Les détails de l'horloge qui commande ce mouvement sont encore étudiés."],
       tel: "Oui, en photo : prenez la même plante chaque heure et comparez. Le téléphone sert alors d'appareil photo, pas de capteur.",
       source: "Atamian et al., Science, 2016 : « Circadian regulation of sunflower heliotropism, floral orientation, and pollinator visits »." },
     { id: 'nyctinastie', titre: "Les feuilles qui se couchent la nuit (nyctinastie)",
       resume: "Haricot, oxalis, trèfle : leurs feuilles se replient le soir et se rouvrent au matin.",
-      sait: ["Le mouvement vient de petits renflements à la base des feuilles qui gonflent ou se vident d'eau.", "Il continue un moment même dans le noir permanent : c'est l'horloge interne qui le commande."],
-      saitpas: ["À quoi ça sert exactement est discuté : garder la chaleur, éviter la rosée, ou limiter la lumière de la lune."],
+      sait: ["Le mouvement vient de petits renflements à la base des feuilles qui gonflent ou se vident d'eau.", "Il continue même dans une obscurité permanente pendant un temps : c'est l'horloge interne qui le commande, pas seulement la lumière."],
+      saitpas: ["À quoi ça sert exactement est discuté : plusieurs explications ont été proposées (par exemple limiter les pertes de chaleur la nuit), sans qu'une seule fasse l'unanimité."],
       tel: "Oui, avec patience : une photo à midi et une photo à la nuit tombée, avec la même lumière douce. Pas de flash fort.",
-      source: "Manuel de physiologie végétale : Taiz et Zeiger, Plant Physiology, chapitre sur les mouvements des feuilles." },
+      source: "Minorsky, Biological Reviews, 2019 : « The functions of foliar nyctinasty: a review and hypothesis » (revue des explications proposées)." },
     { id: 'phototropisme', titre: "Se pencher vers la lumière (phototropisme)",
       resume: "Une plante sur un rebord de fenêtre se penche vers le verre.",
       sait: ["Des récepteurs à la lumière bleue (les phototropines) déclenchent une répartition d'une hormone, l'auxine, plus abondante côté ombre.", "Le côté ombre pousse plus vite, donc la tige se courbe vers la lumière. Darwin l'a étudié dès 1880."],
@@ -443,7 +446,7 @@
     { id: 'sensitive', titre: "La sensitive qui se referme (Mimosa pudica)",
       resume: "Touchée, la sensitive replie ses feuilles en une ou deux secondes.",
       sait: ["Un signal électrique part du point touché, et de l'eau quitte vite des cellules à la base des petites feuilles : elles s'affaissent.", "Elle se rouvre au bout de quelques minutes."],
-      saitpas: ["Une étude dit que la plante « s'habitue » et ne se ferme plus si la secousse est répétée sans danger. Ce résultat est discuté : on ne sait pas s'il s'agit d'un apprentissage ou de fatigue."],
+      saitpas: ["Une étude de 2014 (Gagliano et collègues) dit que la plante « s'habitue » et ne se ferme plus quand on la fait tomber de façon répétée sans danger. Ce résultat est discuté : des chercheurs estiment que les preuves sont insuffisantes et parlent de fatigue plutôt que d'apprentissage. Voir la fiche « La sensitive apprend-elle ? » dans les Découvertes."],
       tel: "Oui, mais c'est l'œil le meilleur instrument. Le téléphone peut filmer : mettez-le en vidéo, touchez très doucement une feuille, regardez au ralenti.",
       source: "Volkov et al., Plant, Cell and Environment, 2010 : « Mimosa pudica: electrical and mechanical stimulation of plant movements »." },
     { id: 'toucher', titre: "Le toucher et le vent (thigmomorphogenèse)",
@@ -454,7 +457,7 @@
       source: "Jaffe, Planta, 1973 : « Thigmomorphogenesis: the response of plant growth and development to mechanical stimulation »." },
     { id: 'circadien', titre: "L'horloge interne des plantes (rythmes circadiens)",
       resume: "Les plantes ont une horloge d'environ 24 heures, même dans le noir.",
-      sait: ["Cette horloge règle l'ouverture des pores des feuilles, le mouvement des feuilles et la fabrication de la chlorophylle.", "Une plante dont l'horloge est accordée au jour et à la nuit pousse mieux et résiste mieux."],
+      sait: ["Cette horloge règle, entre autres, l'ouverture des pores des feuilles et le mouvement des feuilles.", "Chez la plante de laboratoire Arabidopsis, celles dont l'horloge est accordée à la durée du jour et de la nuit ont plus de chlorophylle, captent plus de carbone, poussent plus vite et survivent mieux (Dodd et collègues, 2005)."],
       saitpas: ["Les plantes n'ont pas qu'une horloge : plusieurs horloges, dans différents organes, se coordonnent de façon encore mal connue."],
       tel: "Oui, indirectement : la photo toutes les 3 heures montre les feuilles qui bougent. Évitez d'éclairer la plante la nuit.",
       source: "Dodd et al., Science, 2005 : « Plant circadian clocks increase photosynthesis, growth, survival, and competitive advantage »." }
@@ -480,8 +483,8 @@
     ecouter: {
       sert: "Voir en direct le niveau du son et ses aigus et graves, et enregistrer quelques secondes pour les réécouter au ralenti (insectes, pluie sur les feuilles).",
       etapes: ["Touchez « Commencer à écouter » et acceptez le micro.", "Approchez le téléphone d'un massif, d'une haie ou d'une feuille. Faites un bruit net (clés, papier froissé) pour voir la limite du micro.", "Touchez « Enregistrer 10 secondes », puis choisissez la vitesse de relecture."],
-      limites: ["Il n'entend pas les clics ultrasonores des plantes : ils sont à 40 à 80 kHz et un micro de téléphone s'arrête vers 20 kHz.", "Ce n'est pas un sonomètre : les niveaux sont indicatifs.", "Le ralenti ne crée pas de sons de plante : il rend plus graves les sons qui existent déjà."],
-      source: "Khait et al., Cell, 2023 (clics de plantes à 40-80 kHz mesurés avec du matériel ultrasonore spécialisé)." },
+      limites: ["Il n'entend pas les clics ultrasonores des plantes : ils sont surtout entre 20 et 100 kHz (pic vers 50 kHz) et un micro de téléphone s'arrête vers 20 à 24 kHz.", "Ce n'est pas un sonomètre : les niveaux sont indicatifs.", "Le ralenti ne crée pas de sons de plante : il rend plus graves les sons qui existent déjà."],
+      source: "Khait et al., Cell, 2023 (clics de plantes, surtout 20-100 kHz, mesurés à 10 cm avec du matériel ultrasonore spécialisé)." },
     lumiere: {
       sert: "Savoir si un emplacement est en plein soleil, lumineux, en mi-ombre ou à l'ombre, pour choisir la bonne plante.",
       etapes: ["Placez-vous à l'endroit de la plante, écran tourné vers le ciel (ou la lumière).", "Touchez « Mesurer maintenant ». Le téléphone utilise son capteur de lumière, sinon l'appareil photo, sinon vous choisissez vous-même.", "Lisez le verdict et touchez « Voir les plantes adaptées »."],
@@ -496,12 +499,12 @@
       sert: "Calculer combien d'heures de soleil direct reçoit un mur ou un coin de la cour, selon son orientation et la date.",
       etapes: ["Touchez « Utiliser la boussole » et posez le téléphone à plat, dos contre le mur, le haut du téléphone pointé vers l'extérieur. Ou choisissez la direction à la main.", "Touchez « Utiliser cette direction ».", "Lisez : « Ce coin reçoit environ X h de soleil ». Comparez été et hiver."],
       limites: ["Le calcul suppose un ciel sans nuage et aucun obstacle : arbres, toits voisins et murs réduisent les heures réelles.", "La position est approximative (région choisie, ou centre de la France) : l'écart sur les heures reste de quelques minutes à un quart d'heure.", "La boussole du téléphone est trompée par les aimants, les objets en fer et les coques magnétiques."],
-      source: "Formules astronomiques de la NOAA (déclinaison et équation du temps), vérifiées par des tests aux solstices de Paris." },
+      source: "Formules astronomiques de la NOAA (déclinaison et équation du temps). Comparées à l'algorithme complet de la NOAA pour Paris aux solstices et aux équinoxes : écart de 2,5 minutes au plus sur les heures de lever et de coucher." },
     capteur: {
       sert: "Lire une sonde Bluetooth Xiaomi Mi Flora (Flower Care) plantée dans le pot : humidité du sol, température, lumière, éléments nutritifs.",
       etapes: ["Plantez la sonde dans la terre et allumez le Bluetooth du téléphone.", "Touchez « Chercher ma sonde » et choisissez-la dans la liste (nom : Flower care).", "Lisez les jauges et les conseils. La dernière lecture est gardée."],
       limites: ["Seule la sonde Mi Flora / HHCC est prise en charge, pas les autres marques.", "Le Bluetooth sert à parler à la sonde, jamais à « capter la plante » : la sonde mesure, le téléphone lit.", "Cette partie n'a été testée qu'avec une fausse sonde : sur votre téléphone, elle peut échouer. Les conseils sont des repères, pas des règles."],
-      source: "Protocole public de la sonde (service GATT 00001204, activation par l'octet A0 1F, lecture sur 16 octets), décrit par les projets libres miflora et Flower Care." },
+      source: "Protocole public de la sonde (service Bluetooth 00001204, écriture des deux octets A0 1F pour activer la mesure, lecture de 16 octets), décrit par des projets libres de lecture de la sonde Flower Care." },
     chant: {
       sert: "Transformer VOS mesures (lumière, humidité, température) en une petite mélodie douce, pour le plaisir et pour les enfants.",
       etapes: ["Réglez les trois curseurs, ou touchez « Utiliser mes dernières mesures ».", "Touchez « Jouer la mélodie ».", "Changez un curseur et réécoutez : plus de lumière donne des notes plus aiguës, plus de chaleur donne un rythme plus rapide, plus d'humidité donne des notes plus longues."],
@@ -539,8 +542,8 @@
   L.capText = function (nyq, highest) {
     var k = function (v) { return fr(v / 1000, 1) + ' kHz'; };
     var t = 'Ce téléphone enregistre au mieux jusqu\'à ' + k(nyq) + (highest > 0 ? ' ; le plus haut son entendu jusqu\'ici : ' + k(highest) + '.' : '.');
-    if (nyq < 40000) return t + " Les clics de plantes stressées de l'étude (40 à 80 kHz) sont donc impossibles à capter avec ce téléphone.";
-    return t + " Le téléphone échantillonne assez vite, mais son micro est fait pour la voix : aucune preuve qu'il capte les 40 à 80 kHz des plantes. Il faudrait un micro à ultrasons.";
+    if (nyq < 40000) return t + " Les clics de plantes stressées de l'étude (surtout 20 à 100 kHz, pic vers 50 kHz) sont donc pour l'essentiel impossibles à capter avec ce téléphone.";
+    return t + " Le téléphone échantillonne assez vite, mais son micro est fait pour la voix : aucune preuve qu'il capte les 20 à 100 kHz des plantes. Il faudrait un micro à ultrasons.";
   };
   function levelWord(dbfs) { return dbfs < -62 ? 'Très calme' : dbfs < -48 ? 'Calme' : dbfs < -34 ? 'Présent' : dbfs < -20 ? 'Fort' : 'Très fort'; }
   function drawSpec(cv, db, nyq) {
@@ -619,7 +622,7 @@
       var g = $('lb-mic-go'), s = $('lb-mic-stop'), r = $('lb-rec-go'); if (g) g.hidden = true; if (s) s.hidden = false; if (r) r.disabled = false;
       frame1();
       say("Je t'écoute. Fais un petit bruit près de la feuille.", 'ecoute');
-      S.note = "Écoute du jardin : le téléphone enregistre jusqu'à environ " + fr(nyq / 1000, 0) + " kHz ; les clics de plantes (40 à 80 kHz) ne sont pas captables.";
+      S.note = "Écoute du jardin : le téléphone enregistre jusqu'à environ " + fr(nyq / 1000, 0) + " kHz ; les clics de plantes (surtout 20 à 100 kHz) ne sont pas captables.";
       permSet('mic', 'ok');
     }, function (e) {
       var s = gumState(e); permSet('mic', s);
@@ -957,6 +960,113 @@
     return frame('chant', h);
   }
 
+
+  /* ================== Découvertes incroyables ================== */
+  var DS = { q: '', cat: '', said: {} };
+  function DD() { try { var d = T.decouvertes; return d && d.items && d.items.length ? d : null; } catch (e) { return null; } }
+  function decCount() { var d = DD(); return d ? d.items.length : 0; }
+  L.decouvertes = function () { var d = DD(); return d ? d.items.slice() : []; };
+  L.decouvertesCats = function () { var d = DD(); return d ? d.cats.slice() : []; };
+  function decLevel(k) { var d = DD(); return (d && d.levels[k]) || { nom: 'Niveau inconnu', court: '?', def: '' }; }
+  function decCat(id) { var d = DD(), r = null; if (d) d.cats.forEach(function (c) { if (c.id === id) r = c; }); return r; }
+  function norm(x) {
+    x = String(x == null ? '' : x).toLowerCase();
+    try { x = x.normalize('NFD').replace(/[̀-ͯ]/g, ''); } catch (e) { x = x.replace(/[éèêë]/g, 'e').replace(/[àâä]/g, 'a').replace(/[îï]/g, 'i').replace(/[ôö]/g, 'o').replace(/[ùûü]/g, 'u').replace(/ç/g, 'c'); }
+    return x.replace(/[^a-z0-9]+/g, ' ').trim();
+  }
+  var LV_SVG = {
+    solide: "<svg viewBox='0 0 16 16' width='16' height='16' aria-hidden='true' focusable='false'><circle cx='8' cy='8' r='7' fill='currentColor'></circle><path d='M4.5 8.3l2.4 2.4 4.6-5' fill='none' stroke='var(--card)' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'></path></svg>",
+    discute: "<svg viewBox='0 0 16 16' width='16' height='16' aria-hidden='true' focusable='false'><circle cx='8' cy='8' r='6.2' fill='none' stroke='currentColor' stroke-width='1.7'></circle><path d='M8 1.8a6.2 6.2 0 0 0 0 12.4z' fill='currentColor'></path></svg>",
+    non: "<svg viewBox='0 0 16 16' width='16' height='16' aria-hidden='true' focusable='false'><circle cx='8' cy='8' r='6.2' fill='none' stroke='currentColor' stroke-width='1.7'></circle><path d='M3.9 12.1L12.1 3.9' stroke='currentColor' stroke-width='1.9' stroke-linecap='round'></path></svg>"
+  };
+  /* Étiquette de niveau de preuve : un mot ET une forme (jamais la couleur seule) */
+  function lvBadge(k) {
+    var l = decLevel(k);
+    return "<span class='lb-lvl lb-lvl-" + esc(k) + "'>" + (LV_SVG[k] || '') + '<span>' + esc(l.nom) + '</span></span>';
+  }
+  function decHay(f) { return norm([f.titre, f.accroche, f.quoi, f.mots || '', decLevel(f.niveau).nom, (decCat(f.cat) || {}).nom, (f.certain || []).join(' '), (f.discute || []).join(' ')].join(' ')); }
+  L.decSearch = function (q, cat) {
+    var d = DD(); if (!d) return [];
+    var toks = norm(q).split(' ').filter(Boolean);
+    return d.items.filter(function (f) {
+      if (cat && f.cat !== cat) return false;
+      if (!toks.length) return true;
+      var hay = f._hay || (f._hay = decHay(f));
+      return toks.every(function (t) { return hay.indexOf(t) >= 0; });
+    });
+  };
+  function decListHtml() {
+    var r = L.decSearch(DS.q, DS.cat), d = DD(), h = '';
+    var top = r.filter(function (f) { return f.une; }), rest = r.filter(function (f) { return !f.une; });
+    h += "<p class='small muted' role='status' aria-live='polite'>" + (r.length === d.items.length ? d.items.length + ' fiches.' : r.length + (r.length > 1 ? ' fiches trouvées' : ' fiche trouvée') + ' sur ' + d.items.length + '.') + '</p>';
+    if (!r.length) return h + "<div class='notice'><b>Aucune fiche ne correspond.</b> Essayez un mot plus court (par exemple « arbre » ou « son »).</div><button class='btn block' data-act='lb-dreset'>Tout afficher</button>";
+    top.concat(rest).forEach(function (f) {
+      h += "<a class='item" + (f.une ? ' lb-star' : '') + "' href='#/labo/decouvertes/" + esc(f.id) + "'>" + lvBadge(f.niveau) + '<b>' + esc(f.titre) + '</b><i>' + esc(f.accroche) + '</i></a>';
+    });
+    return h;
+  }
+  function decChips() {
+    var d = DD(), h = "<div class='chips' role='group' aria-label='Choisir un thème'>";
+    h += "<button class='chip" + (DS.cat ? '' : ' on') + "' data-act='lb-dcat' data-v='' aria-pressed='" + (DS.cat ? 'false' : 'true') + "'>Tout</button>";
+    d.cats.forEach(function (c) { h += "<button class='chip" + (DS.cat === c.id ? ' on' : '') + "' data-act='lb-dcat' data-v='" + esc(c.id) + "' aria-pressed='" + (DS.cat === c.id ? 'true' : 'false') + "'>" + esc(c.nom) + '</button>'; });
+    return h + '</div>';
+  }
+  function decLegend() {
+    var d = DD(), h = "<div class='card'><h3>Comment lire les étiquettes</h3><ul class='lb-legend'>";
+    ['solide', 'discute', 'non'].forEach(function (k) { h += '<li>' + lvBadge(k) + '<span class="small">' + esc(d.levels[k].def) + '</span></li>'; });
+    return h + '</ul></div>';
+  }
+  function decSpeech(f) {
+    var m = f.cat === 'mythe', t = f.titre + '. ' + f.accroche + ' Niveau de preuve : ' + decLevel(f.niveau).nom + '. ' + (m ? "Ce qu'on raconte. " : "Ce qu'on a découvert. ") + f.quoi + (m ? ' Ce que la science montre. ' : " Ce qui est certain. ") + (f.certain || []).join(' ') + (m ? ' Ce qui reste discuté. ' : ' Ce qui est discuté. ') + (f.discute || []).join(' ');
+    (f.sections || []).forEach(function (s) { t += ' ' + s.t + ' ' + s.p.join(' '); });
+    if (f.expe) t += ' À essayer. ' + f.expe;
+    return t.replace(/\s+/g, ' ');
+  }
+  function decOpenLink(u) { return u ? " <a class='btn lb-open' href='" + esc(u) + "' target='_blank' rel='noopener noreferrer' data-act='lb-dopen'>Ouvrir la page (connexion nécessaire)</a>" : ''; }
+  function decPage(f, d) {
+    var m = f.cat === 'mythe', i = d.items.indexOf(f), prev = d.items[i - 1], next = d.items[i + 1], c = decCat(f.cat), h = '';
+    h += "<div class='card'><div class='tags'><span class='tag'>" + esc(c ? c.nom : '') + '</span></div><h2>' + esc(f.titre) + '</h2><p>' + esc(f.accroche) + '</p>' + lvBadge(f.niveau) + "<p class='small muted lb-def'>" + esc(decLevel(f.niveau).def) + '</p></div>';
+    h += "<div class='card'><h3>" + (m ? "Ce qu'on raconte" : "Ce qu'on a découvert") + '</h3><p>' + esc(f.quoi) + '</p></div>';
+    h += "<div class='card'><h3>" + (m ? 'Ce que la science montre' : 'Ce qui est certain') + '</h3><ul>' + li(f.certain) + '</ul></div>';
+    h += "<div class='card'><h3>" + (m ? 'Ce qui reste discuté' : 'Ce qui est discuté') + '</h3><ul>' + li(f.discute) + '</ul></div>';
+    (f.sections || []).forEach(function (s) { h += "<div class='card'><h3>" + esc(s.t) + '</h3>' + s.p.map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('') + '</div>'; });
+    if (f.id === 'kirlian') h += "<div class='notice warn'><b>Sécurité.</b> Ne fabriquez ni n'utilisez jamais d'appareil à haute tension chez vous. Aucune expérience de cette page n'en a besoin.</div>";
+    if (f.expe) h += "<div class='card'><h3>À essayer, sans danger</h3><p>" + esc(f.expe) + '</p></div>';
+    h += "<div class='row lb-actions'>" + speakBtn(decSpeech(f), 'Écouter la fiche') + "<button class='btn' data-act='lb-dec-note' data-id='" + esc(f.id) + "'>Ajouter au carnet</button></div>";
+    h += "<div class='card'><h3>Sources</h3><ul class='lb-srcs'>" + (f.src || []).map(function (x) { return '<li>' + esc(x.t) + decOpenLink(x.u) + '</li>'; }).join('') + "</ul><p class='small muted'>Le texte de la fiche s'affiche sans connexion. Seuls les liens ont besoin d'internet.</p></div>";
+    h += "<div class='row'>" + (prev ? "<a class='btn grow' href='#/labo/decouvertes/" + esc(prev.id) + "'>Fiche précédente</a>" : '') + (next ? "<a class='btn grow' href='#/labo/decouvertes/" + esc(next.id) + "'>Fiche suivante</a>" : '') + "</div><a class='btn block' href='#/labo/decouvertes'>Toutes les découvertes</a>";
+    return h;
+  }
+  function pageDecouvertes(sub) {
+    var d = DD();
+    if (!d) return { title: 'Découvertes', html: "<div class='card'><h2>Les fiches ne sont pas disponibles</h2><p>Fermez puis rouvrez l'appli. Si le problème continue, les autres outils du Labo restent utilisables.</p></div><a class='btn primary block' href='#/labo'>Retour au Labo</a>" };
+    var f = null; d.items.forEach(function (x) { if (x.id === sub) f = x; });
+    if (f) {
+      if (!DS.said[f.id]) { DS.said[f.id] = 1; say(f.cat === 'mythe' ? 'Voyons ce que la science dit vraiment : ' + f.titre : 'Une découverte : ' + f.titre, f.cat === 'mythe' ? 'pense' : 'surprise'); }
+      return { title: 'Découvertes', html: decPage(f, d) };
+    }
+    var h = "<div class='hero'><h2>Découvertes incroyables</h2><p>Ce que les chercheurs ont vraiment trouvé sur les plantes et la nature. Chaque fiche dit ce qui est certain, ce qui est discuté, et ce qu'on n'a pas pu prouver.</p></div>";
+    h += decLegend();
+    h += "<div class='card'><label class='lbl' for='lb-dq'>Chercher une découverte</label><input id='lb-dq' class='field' type='search' inputmode='search' enterkeyhint='search' maxlength='60' autocomplete='off' placeholder='Par exemple : arbre, son, Kirlian' data-input='lb-dsearch' value='" + esc(DS.q) + "'>" + decChips() + '</div>';
+    h += "<div id='lb-dlist'>" + decListHtml() + '</div>';
+    h += "<a class='btn block' href='#/labo'>Tous les outils du Labo</a>";
+    return { title: 'Découvertes', html: h };
+  }
+  function decRefresh() { setHtml('lb-dlist', decListHtml()); }
+  att0('lb-dcat', function (el) { DS.cat = el.getAttribute('data-v') || ''; var cs = document.querySelectorAll('[data-act="lb-dcat"]'); Array.prototype.forEach.call(cs, function (b) { var on = (b.getAttribute('data-v') || '') === DS.cat; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); }); decRefresh(); });
+  att0('lb-dreset', function () { DS.q = ''; DS.cat = ''; var q = $('lb-dq'); if (q) q.value = ''; var cs = document.querySelectorAll('[data-act="lb-dcat"]'); Array.prototype.forEach.call(cs, function (b) { var on = !(b.getAttribute('data-v') || ''); b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); }); decRefresh(); });
+  att0('lb-dec-note', function (el) {
+    var d = DD(), f = null; if (d) d.items.forEach(function (x) { if (x.id === el.getAttribute('data-id')) f = x; });
+    if (f && toCarnet('Découverte lue : ' + f.titre + '. Niveau de preuve : ' + decLevel(f.niveau).nom + '. ' + f.accroche)) say('Je l\'ai noté dans ton carnet.', 'fier');
+  });
+  att0('lb-dopen', function (el, e) {
+    var offline = false;
+    try { offline = (navigator.onLine === false) || (T.native && T.native.online === false); } catch (x) { offline = false; }
+    if (offline) { if (e && e.preventDefault) e.preventDefault(); T.toast('Il faut internet pour ouvrir cette page.', 3200); return; }
+    try { var cap = window.Capacitor, B = cap && cap.Plugins && cap.Plugins.Browser; if (B && typeof B.open === 'function') { if (e && e.preventDefault) e.preventDefault(); B.open({ url: el.getAttribute('href') }); } } catch (x) { /* le lien normal prend le relais */ }
+  });
+  T.input['lb-dsearch'] = function (el) { DS.q = el.value || ''; decRefresh(); };
+
   /* ================== Pages ================== */
   T.route(/^\/labo(?:\/([a-z]+)(?:\/([a-z0-9_]+))?)?$/, 'plus', function (m) {
     stopAll();
@@ -964,11 +1074,12 @@
     try {
       if (!id) {
         h += '<div class="hero"><h2>Labo des plantes</h2><p>Votre téléphone devient un petit instrument pour mieux comprendre vos plantes. Ici, rien n\'est inventé : on dit toujours ce que le téléphone peut faire, et ce qu\'il ne peut pas.</p></div>';
-        h += TOOLS.map(function (t) { return '<a class="item" href="#/labo/' + t.id + '"><b>' + esc(t.nom) + '</b><i>' + esc(t.court) + '</i></a>'; }).join('');
+        h += TOOLS.map(function (t) { return '<a class="item' + (t.id === 'decouvertes' ? ' lb-star' : '') + '" href="#/labo/' + t.id + '"><b>' + esc(t.nom) + '</b><i>' + esc(t.court) + (t.id === 'decouvertes' ? ' (' + decCount() + ' fiches)' : '') + '</i></a>'; }).join('');
         h += '<div class="card"><h3>Préparer les accès</h3><p class="small">Micro, appareil photo, mouvement, Bluetooth : le téléphone vous pose les questions une seule fois, au lieu de les poser plus tard au milieu d\'un outil.</p><button class="btn block" data-act="lb-askall">Préparer les accès</button><div id="lb-askres" aria-live="polite"></div></div>';
         h += '<div class="notice"><b>Le saviez-vous ?</b> Le Wi-Fi et le Bluetooth ne servent pas à capter une plante : ce sont des radios pour parler à d\'autres appareils. Seule une sonde spéciale, plantée dans la terre, mesure quelque chose.</div>';
         return { title: 'Labo des plantes', html: h };
       }
+      if (id === 'decouvertes') return pageDecouvertes(sub);
       if (id === 'ecouter') return toolEcouter();
       if (id === 'lumiere') return toolLumiere();
       if (id === 'feuille') return toolFeuille();
@@ -989,8 +1100,9 @@
           }
         }
         h = '<div class="hero"><h2>Les plantes communiquent-elles ?</h2><p>Dix fiches courtes, avec ce que la science a prouvé et ce qu\'elle ne sait pas encore.</p></div>';
-        h += '<div class="notice"><b>Le Wi-Fi ou le Bluetooth peuvent-ils capter une plante ?</b> Non. Ce sont des radios qui servent à échanger des données entre appareils. Un signal électrique de plante est minuscule (quelques millivolts) : il faut des électrodes et un amplificateur, un montage de bricolage d\'école. Ne branchez jamais rien d\'improvisé sur la prise du mur.</div>';
+        h += '<div class="notice"><b>Le Wi-Fi ou le Bluetooth peuvent-ils capter une plante ?</b> Non. Ce sont des radios qui servent à échanger des données entre appareils. Un signal électrique de plante est minuscule (de l\'ordre du millivolt à quelques dizaines de millivolts) : il faut des électrodes et un amplificateur, un montage de bricolage d\'école. Ne branchez jamais rien d\'improvisé sur la prise du mur.</div>';
         h += SCI.map(function (x) { return '<a class="item" href="#/labo/science/' + x.id + '"><b>' + esc(x.titre) + '</b><i>' + esc(x.resume) + '</i></a>'; }).join('');
+        h += '<a class="item" href="#/labo/decouvertes"><b>Découvertes incroyables</b><i>Plus de fiches vérifiées, avec le niveau de preuve</i></a>';
         h += '<a class="item" href="#/labo/enfant"><b>Fais-le avec ton enfant</b><i>3 expériences sûres</i></a>';
         return { title: 'La science', html: h };
       }

@@ -148,7 +148,7 @@
       if (moy >= 10 && moy <= 25 && humide) { run.push(x); if (run.length > best.length) best = run.slice(); } else run = [];
     }
     if (best.length >= 3) out.push({ id: 'mildiou', level: 'warn', title: 'Alerte mildiou', when: names(best),
-      text: 'Temps doux et humide pendant ' + best.length + ' jours (' + names(best) + ') : risque de mildiou sur les tomates, les pommes de terre et la vigne.' });
+      text: 'Temps doux et humide pendant ' + best.length + ' jours (' + names(best) + ') : conditions favorables au mildiou sur les tomates, les pommes de terre et la vigne.' });
     return out;
   };
 
@@ -166,8 +166,8 @@
     gel: ['Rentrez les pots de plantes frileuses (tomates, basilic, géraniums, agrumes) dans une pièce lumineuse non chauffée, un garage vitré ou une véranda.',
       'Pour ce qui ne peut pas rentrer : voile d\'hivernage ou vieux drap sur la plante le soir, retiré le matin ; ne laissez pas de plastique collé aux feuilles.',
       'Serrez les pots contre un mur exposé au sud, surélevez-les sur des cales, entourez-les de carton ou de papier bulle.',
-      'Paillez la terre (feuilles sèches, paille). N\'arrosez pas juste avant une nuit de gel ; videz les soucoupes pour éviter la glace.'],
-    chaleur: ['Arrosez tôt le matin ou tard le soir, au pied, jamais en plein soleil.', 'Déplacez les pots à l\'ombre de l\'après-midi ou posez un voile d\'ombrage.', 'Paillez pour garder la fraîcheur et vérifiez la terre chaque jour avec le doigt.'],
+      'Paillez la terre (feuilles sèches, paille). Videz les soucoupes pour éviter que l\'eau gèle sous le pot, et évitez d\'arroser le soir d\'une nuit de gel.'],
+    chaleur: ['Arrosez tôt le matin ou tard le soir, au pied : l\'eau s\'évapore moins qu\'en plein soleil.', 'Déplacez les pots à l\'ombre de l\'après-midi ou posez un voile d\'ombrage.', 'Paillez pour garder la fraîcheur et vérifiez la terre chaque jour avec le doigt.'],
     pluie: ['Videz les soucoupes et vérifiez que les trous de drainage ne sont pas bouchés.', 'Inutile d\'arroser : laissez la terre ressuyer.', 'Abritez les pots de plantes sensibles à l\'humidité (lavande, plantes grasses).'],
     vent: ['Couchez ou calez les grands pots, rentrez les petits et les suspensions.', 'Vérifiez les tuteurs et les attaches des tomates et des plantes grimpantes.'],
     mildiou: ['Arrosez au pied, le matin, sans mouiller les feuilles.', 'Aérez : espacez les plants, enlevez les feuilles du bas, retirez et jetez (pas au compost) les feuilles tachées.', 'Si besoin, un traitement préventif à base de cuivre existe : suivez strictement l\'étiquette du produit.']
@@ -188,9 +188,9 @@
   function seasonTips() {
     var m = T.monthNow();
     if (m >= 11 || m <= 2) return { t: 'En hiver', items: ['Le gel est possible toutes les nuits : rentrez les plantes frileuses (géraniums, agrumes, plantes grasses, aromatiques fragiles).', 'Protégez les pots : papier bulle, voile d\'hivernage, pots surélevés contre un mur.', 'Arrosez très peu, par temps doux, en milieu de journée.'] };
-    if (m === 3 || m === 4 || m === 5) return { t: 'Au printemps', items: ['Un gel tardif reste possible jusqu\'à la mi-mai (Saints de glace, du 11 au 13 mai) : attendez avant de sortir tomates, basilic et courgettes.', 'Gardez un voile d\'hivernage à portée de main pour les nuits claires et froides.', 'Rentrez le soir les jeunes plants sortis dans la journée.'] };
-    if (m === 9 || m === 10) return { t: 'En automne', items: ['Les premières gelées arrivent souvent fin octobre : récoltez les dernières tomates et courgettes.', 'Préparez la rentrée des plantes frileuses avant les nuits sous 5 °C.', 'Gardez un voile d\'hivernage prêt.'] };
-    return { t: 'En été', items: ['Le gel est très peu probable. Pensez plutôt à l\'arrosage et à l\'ombre en cas de forte chaleur.', 'Gardez ces conseils pour l\'automne : premières gelées souvent fin octobre.'] };
+    if (m === 3 || m === 4 || m === 5) return { t: 'Au printemps', items: ['Un gel tardif reste possible en avril et parfois début mai ; après la mi-mai le risque est très limité en plaine (saints de glace : repère traditionnel du 11 au 13 mai). Attendez avant de sortir tomates, basilic et courgettes.', 'Gardez un voile d\'hivernage à portée de main pour les nuits claires et froides.', 'Rentrez le soir les jeunes plants sortis dans la journée.'] };
+    if (m === 9 || m === 10) return { t: 'En automne', items: ['Les premières gelées arrivent en général entre octobre et novembre selon la région : récoltez les dernières tomates et courgettes.', 'Préparez la rentrée des plantes frileuses avant les nuits sous 5 °C.', 'Gardez un voile d\'hivernage prêt.'] };
+    return { t: 'En été', items: ['Le gel est très peu probable. Pensez plutôt à l\'arrosage et à l\'ombre en cas de forte chaleur.', 'Gardez ces conseils pour l\'automne : premières gelées en général entre octobre et novembre.'] };
   }
 
   /* ---------- Affichage ---------- */

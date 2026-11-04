@@ -223,7 +223,7 @@
   function ansWater(p, n) {
     var fq = p.arrosage.frequence, every = EVERY[fq] || 5, m = T.monthNow(), paras = [];
     paras.push(firstSentences(p.arrosage.conseil, 2));
-    paras.push('Repère : ' + (T.ARROS[fq] || 'arrosage moyen').toLowerCase() + ', environ tous les ' + every + ' jours. Vérifiez toujours la terre avec le doigt.');
+    paras.push('Repère : ' + (T.ARROS[fq] || 'arrosage moyen').toLowerCase() + ', en moyenne tous les ' + every + ' jours (cela varie avec la chaleur, le pot et la météo). Vérifiez toujours la terre avec le doigt.');
     if (m >= 6 && m <= 8) paras.push('En été, surveillez plus souvent, surtout en pot.'); else if (m === 11 || m === 12 || m <= 2) paras.push('En hiver, arrosez moins : la terre sèche plus lentement.');
     return { intent: 'water', title: 'Arroser : ' + p.nom, paras: paras, links: add([plantLink(p)], conseil('test-du-doigt'), guide('bien-arroser')), plantId: p.id };
   }
@@ -249,7 +249,7 @@
   function ansToxic(p) {
     var t = p.toxique || {}, paras = [];
     if (t.chatChien) { paras.push('Attention : ' + lc(p.nom) + ' est toxique pour les chats et les chiens.'); if (t.note) paras.push(t.note); paras.push('Placez-la hors de portée des animaux et des jeunes enfants.'); }
-    else { paras.push(p.nom + ' n\'est pas signalée comme toxique pour les chats et les chiens dans l\'application.'); if (t.note) paras.push(t.note); paras.push('Par prudence, empêchez les animaux de la grignoter en grande quantité.'); }
+    else { paras.push(p.nom + ' n\'est pas signalée comme toxique pour les chats et les chiens dans l\'application.'); if (t.note) paras.push(t.note); paras.push('Cela ne veut pas dire qu\'elle est sans risque : en cas de doute, ou si un animal ou un enfant en a mangé, appelez un centre antipoison ou un vétérinaire.'); }
     return { intent: 'toxic', title: 'Toxicité : ' + p.nom, paras: paras, links: [plantLink(p)], plantId: p.id };
   }
   function ansWinter(p) {

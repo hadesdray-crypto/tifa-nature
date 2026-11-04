@@ -7,12 +7,12 @@
   /* Décalage en mois du printemps/été par rapport à un climat « centre » (valeur positive = plus tard).
      Le sud-ouest (-0,5 mois) est arrondi à 0 : le calendrier ne gère pas les demi-mois. */
   R.LIST = [
-    { id: 'mediterranee', nom: 'Méditerranée', villes: 'Marseille, Nice, Montpellier, Perpignan, Ajaccio', shift: -1, derniere: 'fin février à mi-mars (rare sur la côte)', premiere: 'décembre, parfois pas du tout', note: 'Printemps précoce, été chaud et sec : on sème plus tôt et on arrose davantage.' },
-    { id: 'sudouest', nom: 'Sud-Ouest', villes: 'Bordeaux, Toulouse, Pau, Biarritz, Agen', shift: 0, derniere: 'fin mars à début avril', premiere: 'début novembre', note: 'Climat doux et assez humide, proche du calendrier de base.' },
-    { id: 'ouest', nom: 'Ouest et côte atlantique', villes: 'Nantes, Rennes, Brest, La Rochelle, Angers', shift: 0, derniere: 'mi-mars à début avril (plus tôt près de la mer)', premiere: 'fin novembre', note: 'Hivers doux, étés tempérés : le calendrier de base convient bien.' },
-    { id: 'centre', nom: 'Centre et région parisienne', villes: 'Paris, Orléans, Tours, Lyon, Dijon', shift: 0, derniere: 'mi-avril (Saints de glace à la mi-mai pour les plantes frileuses)', premiere: 'mi-octobre à début novembre', note: 'C\'est le calendrier de base de l\'application.' },
-    { id: 'nord', nom: 'Nord', villes: 'Lille, Amiens, Rouen, Caen, Calais', shift: 1, derniere: 'mi à fin avril', premiere: 'fin octobre', note: 'Printemps plus tardif : on attend un mois de plus, et on plante les arbustes plus tôt à l\'automne.' },
-    { id: 'est', nom: 'Est', villes: 'Strasbourg, Metz, Nancy, Mulhouse, Reims', shift: 1, derniere: 'fin avril à début mai', premiere: 'mi-octobre', note: 'Hivers froids, étés chauds : on attend un mois de plus au printemps.' },
+    { id: 'mediterranee', nom: 'Méditerranée', villes: 'Marseille, Nice, Montpellier, Perpignan, Ajaccio', shift: -1, derniere: 'février à mars sur la côte (jusqu\'en avril un peu à l\'intérieur)', premiere: 'fin novembre à décembre, parfois pas du tout sur la côte', note: 'Printemps précoce, été chaud et sec : on sème plus tôt et on arrose davantage.' },
+    { id: 'sudouest', nom: 'Sud-Ouest', villes: 'Bordeaux, Toulouse, Pau, Biarritz, Agen', shift: 0, derniere: 'fin mars à avril', premiere: 'mi-novembre', note: 'Climat doux et assez humide, proche du calendrier de base.' },
+    { id: 'ouest', nom: 'Ouest et côte atlantique', villes: 'Nantes, Rennes, Brest, La Rochelle, Angers', shift: 0, derniere: 'mars près de la mer, jusqu\'en avril à l\'intérieur des terres', premiere: 'début à mi-novembre (plus tard près de la mer)', note: 'Hivers doux, étés tempérés : le calendrier de base convient bien.' },
+    { id: 'centre', nom: 'Centre et région parisienne', villes: 'Paris, Orléans, Tours, Lyon, Dijon', shift: 0, derniere: 'fin mars à avril, parfois début mai à l\'intérieur (au-delà de la mi-mai, le risque est très limité)', premiere: 'fin octobre à mi-novembre', note: 'C\'est le calendrier de base de l\'application.' },
+    { id: 'nord', nom: 'Nord', villes: 'Lille, Amiens, Rouen, Caen, Calais', shift: 1, derniere: 'avril, parfois début mai', premiere: 'fin octobre à début novembre', note: 'Printemps plus tardif : on attend un mois de plus, et on plante les arbustes plus tôt à l\'automne.' },
+    { id: 'est', nom: 'Est', villes: 'Strasbourg, Metz, Nancy, Mulhouse, Reims', shift: 1, derniere: 'avril, parfois début mai', premiere: 'début à fin octobre', note: 'Hivers froids, étés chauds : on attend un mois de plus au printemps.' },
     { id: 'montagne', nom: 'Montagne', villes: 'Alpes, Pyrénées, Massif central, Jura, Vosges (au-dessus de 800 m)', shift: 2, derniere: 'mi-mai à juin', premiere: 'septembre à début octobre', note: 'Saison courte : deux mois de décalage, protégez les pots dès septembre.' }
   ];
 
@@ -72,7 +72,7 @@
     var r = R.current();
     if (!r) return '<div class="notice" id="region-note"><b>Région non choisie.</b> Choisissez-la pour adapter le calendrier à votre climat. Rien n\'est demandé à votre téléphone.</div>';
     var sh = r.shift === 0 ? 'Calendrier de base, sans décalage.' : (r.shift < 0 ? 'Semis et plantations de printemps ' + Math.abs(r.shift) + ' mois plus tôt.' : 'Semis et plantations de printemps ' + r.shift + ' mois plus tard.');
-    return '<div class="notice ok" id="region-note"><b>Ma région : ' + T.esc(r.nom) + '</b><br>' + T.esc(sh) + '<br><span class="small">Dernière gelée en moyenne : ' + T.esc(r.derniere) + '.<br>Première gelée en moyenne : ' + T.esc(r.premiere) + '.</span></div>';
+    return '<div class="notice ok" id="region-note"><b>Ma région : ' + T.esc(r.nom) + '</b><br>' + T.esc(sh) + '<br><span class="small">Dernière gelée en moyenne : ' + T.esc(r.derniere) + '.<br>Première gelée en moyenne : ' + T.esc(r.premiere) + '.<br>Ce sont des ordres de grandeur : cela varie selon l\'altitude, la proximité de la mer et les années. Les saints de glace (11 au 13 mai) sont un repère traditionnel, pas une règle.</span></div>';
   };
 
   /* Sélecteur : une grosse touche par région, avec des exemples de villes. */
