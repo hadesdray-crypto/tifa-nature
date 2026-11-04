@@ -13,15 +13,26 @@ jobs:
         with: { node-version: 22 }
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: 21 }
-      - name: Vérifier les clés de signature
+      - name: Clés de signature (secret unique TIFA_KEYS)
         env:
-          KS: ${{ secrets.TIFA_KEYSTORE_B64 }}
-          KP: ${{ secrets.TIFA_KEYSTORE_PASSWORD }}
-          KA: ${{ secrets.TIFA_KEY_ALIAS }}
+          TIFA_KEYS: ${{ secrets.TIFA_KEYS }}
+          KS4: ${{ secrets.TIFA_KEYSTORE_B64 }}
+          KP4: ${{ secrets.TIFA_KEYSTORE_PASSWORD }}
+          KA4: ${{ secrets.TIFA_KEY_ALIAS }}
+          KK4: ${{ secrets.TIFA_KEY_PASSWORD }}
         run: |
-          if [ -z "$KS" ] || [ -z "$KP" ] || [ -z "$KA" ]; then
-            echo "::error::Les clés de signature (secrets TIFA_*) sont absentes. L'APK ne peut pas être signée."; exit 1
+          if [ -n "$TIFA_KEYS" ]; then
+            PW=$(printf '%s\n' "$TIFA_KEYS" | sed -n 1p | tr -d '\r'); B64=$(printf '%s\n' "$TIFA_KEYS" | sed -n 2p | tr -d '\r')
+            AL=tifa; KPW="$PW"
+          else
+            PW="$KP4"; B64="$KS4"; AL="$KA4"; KPW="${KK4:-$KP4}"
           fi
+          if [ -z "$PW" ] || [ -z "$B64" ] || [ -z "$AL" ]; then
+            echo "::error::Les clés de signature sont absentes : ajoutez le secret TIFA_KEYS (voir la marche à suivre). L'APK ne peut pas être signée."; exit 1
+          fi
+          echo "::add-mask::$PW"; echo "::add-mask::$B64"; echo "::add-mask::$KPW"
+          printf '%s' "$B64" | base64 -d > "$RUNNER_TEMP/tifa.keystore"
+          { echo "TIFA_KEYSTORE=$RUNNER_TEMP/tifa.keystore"; echo "TIFA_KEYSTORE_PASSWORD=$PW"; echo "TIFA_KEY_ALIAS=$AL"; echo "TIFA_KEY_PASSWORD=$KPW"; } >> "$GITHUB_ENV"
       - run: npm ci
       - run: node scripts/copy-vendor.js
       - name: Adresse des mises à jour sur place
@@ -32,16 +43,8 @@ jobs:
           echo "code=$(grep -oP 'VERSION_CODE:\s*\K[0-9]+' www/js/config.js)" >> "$GITHUB_OUTPUT"
           echo "name=$(grep -oP "VERSION_WEB:\s*'\K[^']+" www/js/config.js)" >> "$GITHUB_OUTPUT"
       - run: npx cap sync android
-      - name: Clé de signature
-        env: { KS: "${{ secrets.TIFA_KEYSTORE_B64 }}" }
-        run: echo "$KS" | base64 -d > "$RUNNER_TEMP/tifa.keystore"
       - name: Compiler l'APK
         working-directory: android
-        env:
-          TIFA_KEYSTORE: ${{ runner.temp }}/tifa.keystore
-          TIFA_KEYSTORE_PASSWORD: ${{ secrets.TIFA_KEYSTORE_PASSWORD }}
-          TIFA_KEY_ALIAS: ${{ secrets.TIFA_KEY_ALIAS }}
-          TIFA_KEY_PASSWORD: ${{ secrets.TIFA_KEY_PASSWORD }}
         run: |
           chmod +x gradlew
           ./gradlew assembleRelease --no-daemon -PtifaVersionCode=${{ steps.v.outputs.code }} -PtifaVersionName=${{ steps.v.outputs.name }}
