@@ -1,0 +1,39 @@
+/* Tifa Nature - « Mon jardin » (dossier). Réutilise les couleurs et boutons du thème botanique. */
+.ds-today { border-left: 5px solid var(--leaf); }
+.ds-today h3 { margin: 0 0 .4rem; }
+.ds-today a.ds-line { display: block; min-height: 2.75rem; padding: .5rem .2rem; color: var(--text); text-decoration: none; border-top: 1px solid var(--line); overflow-wrap: anywhere; }
+.ds-today a.ds-line:first-of-type { border-top: 0; }
+.ds-today a.ds-line.late b { color: var(--bad, #b3432f); }
+.ds-cards { display: grid; grid-template-columns: 1fr; gap: .7rem; margin-bottom: .8rem; }
+@media (min-width: 560px) { .ds-cards { grid-template-columns: 1fr 1fr; } }
+a.ds-card { display: block; min-height: 6.2rem; padding: .95rem; border-radius: var(--radius); border: 1px solid var(--line); background: var(--card); box-shadow: var(--shadow); color: var(--text); text-decoration: none; }
+a.ds-card h3 { margin: 0 0 .25rem; color: var(--primary-d); font-family: var(--serif); overflow-wrap: anywhere; }
+a.ds-card p { margin: 0 0 .5rem; overflow-wrap: anywhere; }
+a.ds-card .ds-go { display: inline-flex; align-items: center; min-height: 2.75rem; padding: .3rem 1rem; border-radius: 999px; background: var(--primary); color: var(--primary-t); font-weight: 700; }
+.ds-head { display: flex; gap: .8rem; align-items: center; margin-bottom: .5rem; }
+.ds-head > div { min-width: 0; flex: 1 1 8rem; }
+.ds-head h3, .ds-head p { margin: 0; overflow-wrap: anywhere; }
+.ds-thumb { width: 3.6rem; height: 3.6rem; flex: 0 0 3.6rem; border-radius: .9rem; object-fit: cover; background: var(--soft); display: flex; align-items: center; justify-content: center; color: var(--primary); }
+.ds-thumb svg { width: 60%; height: 60%; }
+.ds-photo { display: block; width: 100%; max-height: 15rem; object-fit: cover; border-radius: var(--radius); margin-bottom: .6rem; }
+.ds-facts { margin: .3rem 0 0; padding: 0; list-style: none; }
+.ds-facts li { padding: .45rem 0; border-top: 1px solid var(--line); overflow-wrap: anywhere; }
+.ds-facts li:first-child { border-top: 0; }
+.ds-facts b { display: block; color: var(--primary-d); }
+.ds-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin: .6rem 0; }
+.ds-actions > .btn { flex: 1 1 9rem; min-width: 0; }
+.ds-actions > .btn.primary { flex: 1 1 100%; }
+details.ds-more { border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); margin-bottom: .8rem; box-shadow: var(--shadow); }
+details.ds-more > summary { min-height: 3rem; padding: .7rem .95rem; cursor: pointer; font-weight: 700; color: var(--primary-d); display: flex; align-items: center; }
+details.ds-more > div { padding: 0 .95rem .8rem; overflow-wrap: anywhere; }
+.ds-hist { margin: 0; padding: 0; list-style: none; }
+.ds-hist li { padding: .5rem 0; border-top: 1px solid var(--line); overflow-wrap: anywhere; }
+.ds-hist li:first-child { border-top: 0; }
+.ds-hist small { color: var(--muted); display: block; }
+.ds-empty { text-align: center; }
+.ds-empty svg { width: 4rem; height: 4rem; color: var(--primary); }
+.ds-note { white-space: pre-wrap; overflow-wrap: anywhere; }
+.ds-links { display: flex; flex-direction: column; gap: .5rem; margin-bottom: .8rem; }
+.ds-links .btn { width: 100%; }
+.ds-plist .btn { flex: 1 1 8rem; min-width: 0; }
+.ds-pbox img.photo { max-height: 12rem; object-fit: cover; }

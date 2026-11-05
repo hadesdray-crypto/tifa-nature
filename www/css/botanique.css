@@ -86,3 +86,10 @@ body { background: var(--bg); }
 .tagbtn { border: 0; cursor: pointer; min-height: 2.75rem; font-family: inherit; }
 .toxm h3 { margin: .8rem 0 .2rem; }
 .toxm ul { margin: .2rem 0 .2rem 1.1rem; padding: 0; }
+
+.fold-head { display: flex; align-items: center; justify-content: space-between; gap: .5rem; width: 100%; min-height: 2.75rem; padding: .2rem 0; background: none; border: 0; color: inherit; font: inherit; font-size: 1.05rem; font-weight: 800; text-align: left; cursor: pointer; }
+.fold-head span { overflow-wrap: anywhere; }
+.fold-ch { flex: 0 0 auto; transition: transform .15s; }
+.card.fold.open .fold-ch { transform: rotate(180deg); }
+.fold-body { margin-top: .4rem; }
+h2.sect { margin: 1.1rem 0 .5rem; font-size: 1.1rem; }

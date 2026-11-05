@@ -1,6 +1,6 @@
 {
   "name": "tifa-nature",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "private": true,
   "description": "Tifa Nature - application de jardinage (Capacitor, Android)",
   "scripts": {

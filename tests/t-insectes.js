@@ -115,6 +115,7 @@ module.exports = async function ({ L, browser, base }) {
   /* =============== CARTE SUR LA FICHE PLANTE =============== */
   await go(p, '#/plante/tomate');
   L.check('fiche plante : carte « Insectes de cette plante » avec liens', await p.evaluate(() => /Insectes de cette plante/.test(document.getElementById('view').innerText) && !!document.querySelector('.in-card a[href^="#/insecte/"]')));
+  await tap(p, '.fold-head[aria-expanded="false"]'); await p.evaluate(() => document.querySelectorAll('#view .card.fold').forEach((c) => c.querySelector('.fold-head').getAttribute('aria-expanded') === 'false' && c.querySelector('.fold-head').click())); await L.sleep(200);
   await tap(p, '.in-card a[href^="#/insecte/"]'); await L.sleep(250);
   L.check('fiche plante : le lien ouvre la fiche insecte', await p.evaluate(() => /^#\/insecte\//.test(location.hash)));
   const no = await (async () => { const id = await p.evaluate(() => { const used = {}; T.insectes.all().forEach((e) => e.plantes.forEach((x) => { used[x] = 1; })); const q = T.D.plantes.filter((x) => !used[x.id])[0]; return q && q.id; }); if (!id) return 'ok'; await go(p, '#/plante/' + id); return p.evaluate(() => !/Insectes de cette plante/.test(document.getElementById('view').innerText)) ? 'ok' : 'carte inutile'; })();

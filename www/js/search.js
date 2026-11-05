@@ -176,6 +176,36 @@
     }
     var pb = (p.problemes || []).map(T.maladie).filter(Boolean);
     if (pb.length) h += '<div class="card"><h3>Problèmes fréquents</h3>' + pb.map(function (d) { return '<a class="item" href="#/maladie/' + T.esc(d.id) + '"><b>' + T.esc(d.nom) + '</b><i>' + T.esc(d.resume) + '</i></a>'; }).join('') + '<a class="btn block" href="#/maladie?plante=' + T.esc(p.id) + '">Ma plante est malade : diagnostic</a></div>';
-    return { title: p.nom, html: h };
+    return { title: p.nom, html: h, after: function () { foldCards(p.id); } };
   });
+
+  /* Fiche allégée : seules l'identité et « Où la placer » sont ouvertes ; les autres cartes se déplient au toucher. */
+  var FOLD = {};
+  function foldKey(pid, i) { return pid + '|' + i; }
+  function foldCards(pid) {
+    var view = document.getElementById('view'); if (!view) return;
+    var cards = view.querySelectorAll(':scope > .card'), n = 0;
+    Array.prototype.forEach.call(cards, function (c, i) {
+      var hd = c.firstElementChild;
+      if (i < 2 || !hd || !/^H[23]$/.test(hd.tagName) || c.querySelector('[data-act="foldtoggle"]') || c.querySelector('.as-badge')) return;
+      var key = foldKey(pid, hd.textContent), open = !!FOLD[key], body = document.createElement('div');
+      body.className = 'fold-body'; body.hidden = !open;
+      while (hd.nextSibling) body.appendChild(hd.nextSibling);
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'fold-head'; b.setAttribute('data-act', 'foldtoggle'); b.setAttribute('data-key', key); b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      b.innerHTML = '<span>' + T.esc(hd.textContent) + '</span><svg class="fold-ch" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      c.replaceChild(b, hd); c.appendChild(body); c.classList.add('fold');
+      if (open) c.classList.add('open');
+      n++;
+    });
+    if (n > 1 && !view.querySelector('[data-act="foldall"]')) {
+      var first = cards[1]; if (first && first.parentNode) { var r = document.createElement('div'); r.className = 'row'; r.innerHTML = '<button class="btn grow" data-act="foldall" data-open="1">Tout déplier</button><button class="btn grow" data-act="foldall" data-open="0">Tout replier</button>'; first.parentNode.insertBefore(r, first.nextSibling); }
+    }
+  }
+  function setFold(c, open) {
+    var b = c.querySelector('.fold-head'), body = c.querySelector('.fold-body'); if (!b || !body) return;
+    body.hidden = !open; b.setAttribute('aria-expanded', open ? 'true' : 'false'); c.classList.toggle('open', open); FOLD[b.getAttribute('data-key')] = open;
+  }
+  T.act.foldtoggle = function (el) { var c = el.closest('.card'); if (c) setFold(c, el.getAttribute('aria-expanded') !== 'true'); };
+  T.act.foldall = function (el) { var o = el.getAttribute('data-open') === '1'; Array.prototype.forEach.call(document.querySelectorAll('#view .card.fold'), function (c) { setFold(c, o); }); };
 })();
