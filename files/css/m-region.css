@@ -1,0 +1,8 @@
+/* styles module region : sélecteur de région et bandeau du calendrier */
+.region-list { display: flex; flex-direction: column; gap: .5rem; margin-top: .4rem; }
+.region-btn { display: block; width: 100%; min-height: 3rem; text-align: left; padding: .7rem .9rem; border-radius: 1rem; border: 2px solid var(--line); background: var(--card); color: var(--text); font: inherit; cursor: pointer; overflow-wrap: anywhere; }
+.region-btn b { display: block; color: var(--primary-d); font-family: var(--serif); }
+.region-btn span { display: block; color: var(--muted); font-size: .88rem; }
+.region-btn.on { border-color: var(--primary); background: var(--soft); }
+.region-btn:active { transform: scale(.99); }
+#region-note { overflow-wrap: anywhere; }

@@ -1,0 +1,398 @@
+{
+ "version": "1.4.1",
+ "versionCode": 8,
+ "date": "2026-11-05",
+ "minNative": 1,
+ "changes": [
+  "Nouveau : un petit bouton « ? » en haut à droite de chaque page. Il permet de signaler un problème ou une information fausse, en indiquant automatiquement la page où vous êtes.",
+  "Le signalement se prépare dans votre application de mail, ou se copie. Vous retrouvez vos signalements dans Plus, « Mes signalements ».",
+  "Dossier « Mon jardin » et « Engrais et astuces maison » : voir la mise à jour précédente."
+ ],
+ "files": [
+  {
+   "path": "css/botanique.css",
+   "sha256": "40b82af434002a502f8ffd9befd23d2502d19f43b9d1eea0c5a457ff95b46dbe",
+   "size": 9058
+  },
+  {
+   "path": "css/m-assiette.css",
+   "sha256": "41a2d29de6d300137433fa4f251f94a87271b141f909798e1328fc4066d4857a",
+   "size": 2154
+  },
+  {
+   "path": "css/m-assistant.css",
+   "sha256": "e540ab3a568b9911e20efff3bee613509a09df06aa0a7a1f583db323a6900658",
+   "size": 510
+  },
+  {
+   "path": "css/m-calculs.css",
+   "sha256": "744885e5cafbd85c3d8f04f4cc0973f0d4e82836b078315760a716c3406b1923",
+   "size": 588
+  },
+  {
+   "path": "css/m-carnet.css",
+   "sha256": "a2fbc84e74d23c3b861820a5ec87e72b5f3c077e4a5ee11327431be36d534728",
+   "size": 476
+  },
+  {
+   "path": "css/m-dossier.css",
+   "sha256": "d341aa6b78c1eddff6a009e4381c3f8f9a14c3b93f109fc55cf35f91f57a7004",
+   "size": 3310
+  },
+  {
+   "path": "css/m-engrais.css",
+   "sha256": "b14e4d91e90f3d5a6eeb997167c4fbacb6daa25b145dfafbc63258ee301f8b41",
+   "size": 2855
+  },
+  {
+   "path": "css/m-feuille.css",
+   "sha256": "16c99c18df6412d0dcc22472a8dc1d1f30d72a3c720d9a2b1b3b62cdd73950a4",
+   "size": 5454
+  },
+  {
+   "path": "css/m-gestes.css",
+   "sha256": "0eef98ce01b2131a04161d96853572bf716f85f0d90e10964736fe1c1929ce57",
+   "size": 6319
+  },
+  {
+   "path": "css/m-insectes.css",
+   "sha256": "53875b0d045ea54500d0c2da0fe3c595d5ca87a3287bfefd166d69bb54ca46cf",
+   "size": 2996
+  },
+  {
+   "path": "css/m-jardin.css",
+   "sha256": "37960c0c239c97a2030c008a4b6ce7e0370a3a8b449fe403b14b3e144612f78e",
+   "size": 3517
+  },
+  {
+   "path": "css/m-labo.css",
+   "sha256": "61fade3222641a2365af24e46062cd4fe62f274d39cbdf0dca5d761a93035216",
+   "size": 4871
+  },
+  {
+   "path": "css/m-meteo.css",
+   "sha256": "7ca94ef55d218178ab9d43391dd4bd4ed28b9d5d71b5c3a39b34ac2e930b5876",
+   "size": 628
+  },
+  {
+   "path": "css/m-musique.css",
+   "sha256": "3e8faa63c7b08c6066f554c78363e051e35fa896a0507f213635e2d4950fc505",
+   "size": 2605
+  },
+  {
+   "path": "css/m-planning.css",
+   "sha256": "1885e7952b750fd3d482ccfa1ce9cdf6b1cd6a756e0569104650454276790410",
+   "size": 449
+  },
+  {
+   "path": "css/m-region.css",
+   "sha256": "2b3f6c01e52a7d74be8bc9efacf67cce872e16fe839f0105bab4488ae9f498c9",
+   "size": 745
+  },
+  {
+   "path": "css/style.css",
+   "sha256": "257e4c28eb48ab38a9cdb1108d8fd6e86a7976d32d5d43597a0f303110ab39cf",
+   "size": 14476
+  },
+  {
+   "path": "data/comestibles.js",
+   "sha256": "d81fb29bd756aaf1b96de7843603513f91d685fa7fe50f4bcb1383d8b32a8b66",
+   "size": 50583
+  },
+  {
+   "path": "data/conseils.js",
+   "sha256": "0e09bd5b87ee719c147cd5dd2e82ddd447b35fe0814f6e84ef456b0a17dadd6a",
+   "size": 42459
+  },
+  {
+   "path": "data/decouvertes.js",
+   "sha256": "ad984f06d1a087fdfcae6ee29d62cef3fc7389edec4a381b6f069a2202693fcc",
+   "size": 56963
+  },
+  {
+   "path": "data/engrais.js",
+   "sha256": "e2016142c3322fb5535b96db4b8df8dad73ac40cad18ac6cbd6b10b648258087",
+   "size": 54915
+  },
+  {
+   "path": "data/gestes.js",
+   "sha256": "8c13147d36de86e4a937d81c1a73cc16c4913b13015fc0ea0d3abab53a81c452",
+   "size": 98159
+  },
+  {
+   "path": "data/insectes.js",
+   "sha256": "d94446f1864856e77091bbf0ce41dc15b97f8e8561f30e1047da79e25470dee7",
+   "size": 58232
+  },
+  {
+   "path": "data/maladies.js",
+   "sha256": "7f501cba7197602f606659a8bd165e6084550200107627442e8c3e3acc2af16f",
+   "size": 40432
+  },
+  {
+   "path": "data/plantes-deco.js",
+   "sha256": "5ca703b39869ef8b2d502cd547685e6a50b9ca8e366954a4b7b52369464eef4e",
+   "size": 56127
+  },
+  {
+   "path": "data/plantes-plus.js",
+   "sha256": "117a53be3baa0741c06d60eda446567d093ffe88a5de4c8b81d280ad4cc72cb4",
+   "size": 88102
+  },
+  {
+   "path": "data/plantes-potager.js",
+   "sha256": "e44e613cef471b76a8f216edd29b594a0ad835e610c81c2bdd77b2058979e45e",
+   "size": 43506
+  },
+  {
+   "path": "data/toxicite-1.js",
+   "sha256": "8c98f59599090b1fef04d90839ee760e8c22c6fa724309c3a5dbb1593c11dfb1",
+   "size": 98078
+  },
+  {
+   "path": "data/toxicite-2.js",
+   "sha256": "22e6ab285b2014c07137af123236229833b6e0bb1adc009eae2ed33317131036",
+   "size": 76747
+  },
+  {
+   "path": "data/toxicite-3.js",
+   "sha256": "cd0f80e66f8d68b61b6530d19429f6017d868780279f67f3fd514b3d251f8a95",
+   "size": 64000
+  },
+  {
+   "path": "data/toxicite-4.js",
+   "sha256": "41016a8e1c09c1fa4f55e15f958c1be28b7e250c8ab922a6868f93d38b79f1f5",
+   "size": 60229
+  },
+  {
+   "path": "index.html",
+   "sha256": "8a35bea2c74ec98585b424fa5a5d31450d1d85581137b5ecf3751aa5a4cce5b9",
+   "size": 5554
+  },
+  {
+   "path": "js/app.js",
+   "sha256": "938fc226d9ccbbeaaa3130f1e9a2ceb18527e3cf4cd95920ad73ab656c183edd",
+   "size": 7955
+  },
+  {
+   "path": "js/assiette.js",
+   "sha256": "49e1326dcbaefd82541759de1c55bd1d328d79d6af54da85fd328a6714382e7b",
+   "size": 30867
+  },
+  {
+   "path": "js/assistant.js",
+   "sha256": "321dda343ee971e099f1998aebe8a261e126ffe5b46adc300e79aba0a5fa63e6",
+   "size": 46518
+  },
+  {
+   "path": "js/calculs.js",
+   "sha256": "af8f3bfb9787de846cef935abf20dd7621b63a11eff9bd84baa62770924a226a",
+   "size": 19643
+  },
+  {
+   "path": "js/carnet.js",
+   "sha256": "86592e08a51689601a57fbac57e18417e0d799bf19bb34d363a187bea773abd8",
+   "size": 13548
+  },
+  {
+   "path": "js/config.js",
+   "sha256": "73ffed2495aac62232b38f313bef03808871c4377632a575b4a8229b7c2ed536",
+   "size": 1334
+  },
+  {
+   "path": "js/core.js",
+   "sha256": "7e2ac1a942de09b867a8545c4578f8df6540538f1e6aef1d1b090e31013d2dbf",
+   "size": 11759
+  },
+  {
+   "path": "js/diag.js",
+   "sha256": "c0398baec1b13ea51fa904a8e748668042d49a46a7b408df1b7c7e14383c85eb",
+   "size": 16998
+  },
+  {
+   "path": "js/dossier.js",
+   "sha256": "9a5b8f6b2cbe1afaee8ef18d3c713e7df31cab8cbf85170b882f587357217a6b",
+   "size": 46699
+  },
+  {
+   "path": "js/engrais.js",
+   "sha256": "9f82a0d269117d5b7dbeed2438f0c50934907d9c55ddb8ea5219caf7714598dd",
+   "size": 18096
+  },
+  {
+   "path": "js/feedback-config.js",
+   "sha256": "512e51c67c73f4668f4351566494e2a07dc48929cbd8c5c514ccf2d6795bda1b",
+   "size": 538
+  },
+  {
+   "path": "js/feuille.js",
+   "sha256": "7dee3abd289bbde163cef7d981e6867c2f5db2b700a0ae59a0f3fe73e79f6883",
+   "size": 52054
+  },
+  {
+   "path": "js/gestes.js",
+   "sha256": "5e51848b7294948a8d144e7e8ad1269beb1e2b2a2111f3c19d8f615a8fa6983b",
+   "size": 35374
+  },
+  {
+   "path": "js/identify.js",
+   "sha256": "6478541322bd604430217a1b3e6aec0150f3a4eee9b123a762c196fc351359a1",
+   "size": 11550
+  },
+  {
+   "path": "js/insectes.js",
+   "sha256": "5fbba0e4bcad565575fb41dfc0cc28a355bdbc8d00f0552662b0f4398b770f61",
+   "size": 26629
+  },
+  {
+   "path": "js/jardin.js",
+   "sha256": "357f4924d91053068ed3ee9c04d4e0004c6af189674c1161f9bcd688ef919a1a",
+   "size": 24424
+  },
+  {
+   "path": "js/labo.js",
+   "sha256": "164d3a6efaf4c40b3fc6947c0449ec4cf15f6ab53f79bd10480ba4f1a4780390",
+   "size": 110107
+  },
+  {
+   "path": "js/learn.js",
+   "sha256": "ec55dfca60104fbe4332db31fea6329b3697e5f5792faa8d693ab8b10e6c9f86",
+   "size": 6131
+  },
+  {
+   "path": "js/legal-config.js",
+   "sha256": "ad6640b0f16aa0d779963520a1c81a2ce0b98c6698e7b9a265653f9e0f5edc8f",
+   "size": 1031
+  },
+  {
+   "path": "js/licence.js",
+   "sha256": "8608f034872f26d629826af73270dc66a025b11f4d27550bd04cdf68e8f089af",
+   "size": 6491
+  },
+  {
+   "path": "js/meteo.js",
+   "sha256": "6d707987d1f27a52d703e370f6a73baececc85f57939dbc33428a9b9d77728e5",
+   "size": 23661
+  },
+  {
+   "path": "js/musique.js",
+   "sha256": "974155b5ef8b446140ab693a2f585b99c3fc677d3ec8433bbaca548a3a7393a8",
+   "size": 58411
+  },
+  {
+   "path": "js/native.js",
+   "sha256": "d2dca37f1d0b2db1ff2f523c1725a7a953449108d1c3e13e3225309518695e24",
+   "size": 4538
+  },
+  {
+   "path": "js/pages.js",
+   "sha256": "48c6a8da01d18dba1c16b07078804eb2901dee81ddd51286a38af2939c4407a5",
+   "size": 22324
+  },
+  {
+   "path": "js/planning.js",
+   "sha256": "73004e0b71de7a60ff1673f30e260f078cc529b79fc7d097d0c521e156819623",
+   "size": 14651
+  },
+  {
+   "path": "js/plantnet-cle.js",
+   "sha256": "719a7a11f429dbfffad3975caf5ee98cb10a26fe7b45a242c11f1cfebdb51c00",
+   "size": 7310
+  },
+  {
+   "path": "js/pots.js",
+   "sha256": "49a0134a1571c69adeca168ecd248168a18d696742ea7ea1da3991917a935bff",
+   "size": 13466
+  },
+  {
+   "path": "js/region.js",
+   "sha256": "5c2ff956104c64e01b7e59e13ac2933635d138916d41e048b55322208ca4b5cc",
+   "size": 7456
+  },
+  {
+   "path": "js/search.js",
+   "sha256": "f116d6e53ec86853924bdd2eb02f593783d97b3c946dfa9312ce32bc0d714105",
+   "size": 16216
+  },
+  {
+   "path": "js/signaler.js",
+   "sha256": "e70f8efd4082a72cf6715fc37f7f749ecda411135d760a461ddf933d1434abf2",
+   "size": 12943
+  },
+  {
+   "path": "js/toxicite.js",
+   "sha256": "9ccf32dc1416755a6c9b96596dd391d71f92aa25bf904088d9c08c2e16574d1e",
+   "size": 4339
+  },
+  {
+   "path": "js/updater.js",
+   "sha256": "2ae860f4ea7f9169dda26e323c026c70e7acc9814d6e0fd41f6f93b0235fd83f",
+   "size": 16364
+  },
+  {
+   "path": "js/voice.js",
+   "sha256": "ebc6b55caaab30c46ab28d674c93806d39ae6e9bd00d8348fe618c31d4acf4f5",
+   "size": 6312
+  },
+  {
+   "path": "js/voicewheel.js",
+   "sha256": "dc4a6ec807a75f6579effa061409016fe4f83b119598b1158bd6ef0eee66c96e",
+   "size": 6999
+  },
+  {
+   "path": "vendor/cap-app.js",
+   "sha256": "e86ea6cda4792b7cc4e535a4a7166ed1ec7666f71001226b596c309a2fd31970",
+   "size": 1808
+  },
+  {
+   "path": "vendor/cap-ble.js",
+   "sha256": "53f2052afcbc7ccb6d35dcaee0a5202ec52cc5693c723de627ac581a668b0624",
+   "size": 44544
+  },
+  {
+   "path": "vendor/cap-camera.js",
+   "sha256": "d91dd8a00431595cd02f2821be2743ede48e2055ead500723dc0a52b0f9e7910",
+   "size": 28973
+  },
+  {
+   "path": "vendor/cap-core.js",
+   "sha256": "3333389c8cccd266c26399aaf7fc2a695c110684dd6340aea47935416be86a0c",
+   "size": 8726
+  },
+  {
+   "path": "vendor/cap-filesystem.js",
+   "sha256": "73714b0ea208bb7ae18cb2f95e58f0637ec5c9ba6e270a71fb29473a11432dcb",
+   "size": 30907
+  },
+  {
+   "path": "vendor/cap-network.js",
+   "sha256": "b928886329504e1c7d66cf35055ce94389126fc80262dacbdadb24bf31123ecc",
+   "size": 3105
+  },
+  {
+   "path": "vendor/cap-preferences.js",
+   "sha256": "cc74e113c9d9d038667886b673c1c6753a4b04276e8b410d518350c03c5f3125",
+   "size": 2929
+  },
+  {
+   "path": "vendor/cap-splash.js",
+   "sha256": "0d7641324c594f616f191ea5ecbbc6ce01c4c255abbb72c3672927d159ff7201",
+   "size": 698
+  },
+  {
+   "path": "vendor/cap-statusbar.js",
+   "sha256": "63eecd5fd0aeaa43e0228b197e31d6dbc5eb231398750645ceb05214aa6355bc",
+   "size": 1957
+  },
+  {
+   "path": "vendor/cap-synapse.js",
+   "sha256": "e8fe545e0ac53808ee62911925a683585935be76568405a5885b81947b4f71f8",
+   "size": 1028
+  },
+  {
+   "path": "vendor/cap-tts.js",
+   "sha256": "31eb4d5825efa2a428a43bd0d4d196e4cde4bee383c5a5ae68f2bad40013edc8",
+   "size": 4572
+  }
+ ]
+}

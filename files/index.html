@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#3a6b32">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: blob: 'unsafe-inline'; script-src 'self' 'unsafe-inline'; img-src 'self' https: data: blob:; connect-src 'self' https: http://localhost data: blob:">
+<title>Tifa Nature</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/botanique.css">
+<link rel="stylesheet" href="css/m-jardin.css">
+<link rel="stylesheet" href="css/m-carnet.css">
+<link rel="stylesheet" href="css/m-dossier.css">
+<link rel="stylesheet" href="css/m-engrais.css">
+<link rel="stylesheet" href="css/m-planning.css">
+<link rel="stylesheet" href="css/m-assistant.css">
+<link rel="stylesheet" href="css/m-calculs.css">
+<link rel="stylesheet" href="css/m-meteo.css">
+<link rel="stylesheet" href="css/m-region.css">
+<link rel="stylesheet" href="css/m-feuille.css">
+<link rel="stylesheet" href="css/m-gestes.css">
+<link rel="stylesheet" href="css/m-musique.css">
+<link rel="stylesheet" href="css/m-labo.css">
+<link rel="stylesheet" href="css/m-insectes.css">
+<link rel="stylesheet" href="css/m-assiette.css">
+<script>
+/* Vérification de compatibilité (écrite en ancien JavaScript pour tourner partout). */
+(function () {
+  var ok = true;
+  try {
+    ok = !!(window.Promise && window.fetch && Array.prototype.includes && Object.assign &&
+      window.CSS && CSS.supports && CSS.supports('color', 'var(--a)') && window.localStorage !== undefined &&
+      String.prototype.normalize && window.URLSearchParams && window.Symbol && Array.from && window.Map);
+  } catch (e) { ok = false; }
+  window.__TIFA_INCOMPAT = !ok;
+})();
+</script>
+</head>
+<body>
+<div id="incompat" hidden>
+  <div class="incompat-card">
+    <h1>Appareil non compatible</h1>
+    <p>Cet appareil est trop ancien pour faire tourner Tifa Nature correctement.</p>
+    <p>Mettez à jour « Android System WebView » et « Google Chrome » depuis le Play Store, puis rouvrez l'application.</p>
+    <p>Si le message revient, l'application demande un téléphone plus récent (Android 7 ou plus).</p>
+  </div>
+</div>
+
+<div id="app" hidden>
+  <header id="topbar">
+    <button id="btn-back" class="top-btn" data-act="back" aria-label="Retour" hidden>Retour</button>
+    <h1 id="title">Tifa Nature</h1>
+  </header>
+  <main id="view" tabindex="-1" aria-live="polite"></main>
+  <nav id="tabs" aria-label="Menu principal">
+    <button data-tab="accueil" data-act="tab">Accueil</button>
+    <button data-tab="trouver" data-act="tab">Trouver</button>
+    <button data-tab="pots" data-act="tab">Mes pots</button>
+    <button data-tab="conseils" data-act="tab">Conseils</button>
+    <button data-tab="plus" data-act="tab">Plus</button>
+  </nav>
+</div>
+
+<div id="modal-root"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="file-input" accept="image/*" hidden>
+
+<script src="vendor/cap-core.js"></script>
+<script src="vendor/cap-app.js"></script>
+<script src="vendor/cap-camera.js"></script>
+<script src="vendor/cap-synapse.js"></script>
+<script src="vendor/cap-filesystem.js"></script>
+<script src="vendor/cap-preferences.js"></script>
+<script src="vendor/cap-network.js"></script>
+<script src="vendor/cap-splash.js"></script>
+<script src="vendor/cap-statusbar.js"></script>
+<script src="vendor/cap-tts.js"></script>
+<script src="vendor/cap-ble.js"></script>
+<script src="js/config.js"></script>
+<script src="js/legal-config.js"></script>
+<script src="js/feedback-config.js"></script>
+<script src="data/plantes-potager.js"></script>
+<script src="data/plantes-deco.js"></script>
+<script src="data/plantes-plus.js"></script>
+<script src="data/maladies.js"></script>
+<script src="data/conseils.js"></script>
+<script src="js/core.js"></script>
+<script src="js/native.js"></script>
+<script src="js/voice.js"></script>
+<script src="js/voicewheel.js"></script>
+<script src="js/search.js"></script>
+<script src="js/identify.js"></script>
+<script src="js/plantnet-cle.js"></script>
+<script src="js/signaler.js"></script>
+<script src="js/diag.js"></script>
+<script src="js/pots.js"></script>
+<script src="js/learn.js"></script>
+<script src="js/region.js"></script>
+<script src="js/jardin.js"></script>
+<script src="js/carnet.js"></script>
+<script src="js/planning.js"></script>
+<script src="js/dossier.js"></script>
+<script src="js/assistant.js"></script>
+<script src="js/calculs.js"></script>
+<script src="js/meteo.js"></script>
+<script src="data/gestes.js"></script>
+<script src="js/gestes.js"></script>
+<script src="js/musique.js"></script>
+<script src="data/insectes.js"></script>
+<script src="data/toxicite-1.js"></script>
+<script src="data/toxicite-2.js"></script>
+<script src="data/toxicite-3.js"></script>
+<script src="data/toxicite-4.js"></script>
+<script src="js/toxicite.js"></script>
+<script src="data/comestibles.js"></script>
+<script src="data/decouvertes.js"></script>
+<script src="js/insectes.js"></script>
+<script src="data/engrais.js"></script>
+<script src="js/engrais.js"></script>
+<script src="js/assiette.js"></script>
+<script src="js/labo.js"></script>
+<script src="js/feuille.js"></script>
+<script src="js/licence.js"></script>
+<script src="js/updater.js"></script>
+<script src="js/pages.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+/* Tifa Nature - « Mon jardin » : plan SVG, zones de soleil, éléments. Reprend les variables du thème botanique. */
+.jd-wrap { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: .4rem; margin-bottom: .6rem; overflow: hidden; }
+.jd-box { position: relative; line-height: 0; }
+.jd-ov { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }
+.jd-hd { position: absolute; pointer-events: auto; touch-action: none; cursor: grab; box-sizing: border-box; }
+.jd-svg { display: block; width: 100%; height: auto; user-select: none; -webkit-user-select: none; }
+.jd-b1, .jd-sw.jd-b1 { fill: #f6e3a1; background: #f6e3a1; }
+.jd-b2, .jd-sw.jd-b2 { fill: #dfe6b8; background: #dfe6b8; }
+.jd-b3, .jd-sw.jd-b3 { fill: #b9cfc2; background: #b9cfc2; }
+[data-theme="nuit"] .jd-b1, [data-theme="nuit"] .jd-sw.jd-b1 { fill: #6b5c25; background: #6b5c25; }
+[data-theme="nuit"] .jd-b2, [data-theme="nuit"] .jd-sw.jd-b2 { fill: #4b5a2f; background: #4b5a2f; }
+[data-theme="nuit"] .jd-b3, [data-theme="nuit"] .jd-sw.jd-b3 { fill: #2e4a42; background: #2e4a42; }
+.jd-bt { fill: var(--text); opacity: .55; font-weight: 700; letter-spacing: .04em; pointer-events: none; font-family: var(--sans); }
+.jd-grid { stroke: var(--text); stroke-opacity: .12; stroke-width: 1; pointer-events: none; }
+.jd-frame { fill: none; stroke: var(--primary-d); stroke-width: 2; pointer-events: none; }
+.jd-south { fill: var(--primary-d); font-weight: 800; letter-spacing: .12em; pointer-events: none; font-family: var(--sans); }
+.jd-it { pointer-events: none; }
+.jd-shape { fill: #c9a56f; stroke: #7b5a2e; stroke-width: 3; }
+.jd-t-planche .jd-shape { fill: #b98b5a; }
+.jd-t-bac .jd-shape { fill: #cf9a6b; }
+.jd-t-pot .jd-shape { fill: #d7926b; }
+.jd-t-allee .jd-shape { fill: #cfcabb; stroke: #8a8574; stroke-dasharray: 10 6; }
+.jd-t-composteur .jd-shape { fill: #8a6a45; }
+.jd-t-recup .jd-shape { fill: #8fb4c4; stroke: #46788c; }
+.jd-t-mur .jd-shape { fill: #6f6a63; stroke: #3d3a36; }
+.jd-t-composteur .jd-lab, .jd-t-mur .jd-lab { fill: #fff; }
+.jd-lab { fill: #26332b; font-weight: 700; pointer-events: none; font-family: var(--sans); }
+.jd-v-bien .jd-shape { stroke: #2f7a3d; stroke-width: 5; }
+.jd-v-moyen .jd-shape { stroke: #c27a1c; stroke-width: 5; stroke-dasharray: 14 7; }
+.jd-v-non .jd-shape { stroke: #b0332a; stroke-width: 6; stroke-dasharray: 5 5; }
+.jd-sel .jd-shape { filter: drop-shadow(0 0 6px rgba(0, 0, 0, .55)); }
+.jd-sel .jd-lab { text-decoration: underline; }
+.jd-legend { display: flex; flex-wrap: wrap; gap: .3rem .9rem; font-size: .86rem; margin: .2rem 0 .5rem; }
+.jd-sw { display: inline-block; width: 1rem; height: 1rem; border-radius: .25rem; border: 1px solid var(--line); vertical-align: -2px; margin-right: .35rem; }
+.jd-add { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .6rem; }
+.jd-add .btn { flex: 1 1 8.5rem; max-width: 100%; min-height: 3rem; padding: .4rem .6rem; }
+.jd-fs { display: flex; flex-wrap: wrap; gap: .6rem; }
+.jd-fs > .jd-f { flex: 1 1 7.5rem; max-width: 100%; }
+.jd-f .lbl { margin-top: .4rem; }
+.jd-row { border-left: 5px solid var(--leaf); }
+.jd-row.jd-v-moyen { border-left-color: #c27a1c; }
+.jd-row.jd-v-non { border-left-color: #b0332a; }
+.jd-rsel { outline: 2px solid var(--primary); }
+.jd-edit { margin-top: .7rem; padding-top: .5rem; border-top: 1px solid var(--line); }
+.jd-pad { display: flex; flex-wrap: wrap; gap: .5rem; }
+.jd-pad .btn { flex: 1 1 6rem; max-width: 100%; }
+.jd-end { margin: 1rem 0 .5rem; }

@@ -1,0 +1,32 @@
+/* Tifa Nature - Insectes du jardin. Variables du thème existant uniquement. */
+.in-q { box-sizing: border-box; min-height: var(--tap); width: 100%; padding: .5rem .9rem; border-radius: 999px; border: 2px solid var(--line); background: var(--bg); color: var(--text); font: inherit; min-width: 0; }
+.in-q:focus, .in-sel:focus { outline: 3px solid var(--primary); outline-offset: 1px; }
+.in-sel { box-sizing: border-box; max-width: 100%; }
+.in-lbl { margin-top: 0; }
+.search .row, .in-search .row { flex-wrap: wrap; }
+.in-two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr)); gap: .6rem; margin: .6rem 0; }
+.in-big { display: block; box-sizing: border-box; width: 100%; min-height: 5rem; text-align: left; border: 3px solid transparent; font: inherit; cursor: pointer; overflow-wrap: anywhere; }
+.in-big.on { border-color: var(--primary-d); }
+.in-ans { min-height: 4rem; font-size: 1.1rem; }
+.in-item { overflow-wrap: anywhere; }
+.in-sum { display: block; margin-top: .3rem; color: var(--text); font-size: .93rem; }
+.in-tag { display: inline-block; margin-top: .25rem; padding: .15rem .6rem; border-radius: 999px; background: var(--warn-bg); color: var(--warn); font-size: .8rem; font-weight: 700; }
+.in-tag.ok { background: var(--ok-bg); color: var(--ok); }
+.in-count { margin: .5rem 0 .3rem; }
+.in-chip { min-height: var(--tap); display: inline-flex; align-items: center; text-decoration: none; }
+.in-list { padding-left: 1.2rem; margin: .3rem 0; } .in-list li { margin-bottom: .45rem; overflow-wrap: anywhere; }
+.in-game { display: block; margin: .6rem 0; text-decoration: none; overflow-wrap: anywhere; }
+.in-head, .in-q-card, .in-card, .in-score { overflow-wrap: anywhere; }
+.in-fig { margin: .3rem auto .6rem; padding: .4rem; border-radius: .9rem; background: var(--card); border: 1px solid var(--line); max-width: 15rem; box-sizing: border-box; }
+.in-fig figcaption { font-size: .8rem; color: var(--muted); padding-top: .2rem; }
+.in-svg { display: block; width: 100%; height: auto; }
+.in-svg .in-l { fill: none; stroke: var(--primary-d); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.in-svg .in-l2 { fill: none; stroke: var(--primary-d); stroke-width: 8; stroke-linecap: round; }
+.in-svg .in-f { fill: var(--soft); stroke: var(--primary-d); stroke-width: 2.4; stroke-linejoin: round; }
+.in-svg .in-w { fill: var(--primary); fill-opacity: .22; stroke: var(--primary-d); stroke-width: 1.8; }
+.in-svg .in-a { fill: var(--accent); stroke: var(--primary-d); stroke-width: 1.6; }
+.in-svg path.in-a { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; }
+.in-bar { height: .7rem; border-radius: 999px; background: var(--soft); overflow: hidden; margin-bottom: .6rem; }
+.in-bar i { display: block; height: 100%; background: var(--primary); transition: width .25s; }
+.in-q-card .in-fig { max-width: 9rem; }
+.in-stick { position: sticky; bottom: 0; z-index: 2; background: var(--card); padding: .4rem 0 .2rem; }

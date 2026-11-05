@@ -1,0 +1,43 @@
+/* Feuille : personnage compagnon. z-index : bouton 39, personnage 40, bulle 42, voile 44, menu 46, fenêtres de l'appli 50 (Feuille se masque alors). */
+.fe { position: fixed; left: 0; top: 0; z-index: 40; touch-action: none; user-select: none; -webkit-user-select: none; cursor: pointer; border-radius: 1rem; }
+.fe:focus-visible, .fe-pill:focus-visible { outline: 3px solid var(--primary-d); outline-offset: 2px; }
+.fe-body { position: relative; width: 100%; height: 100%; animation: fe-float 4.5s ease-in-out infinite; transform-origin: 50% 90%; filter: drop-shadow(0 3px 4px rgba(0, 0, 0, .25)); }
+.fe.hop .fe-body { animation: fe-hop .5s ease-out 1, fe-float 4.5s ease-in-out .5s infinite; }
+@keyframes fe-float { 0%, 100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-3px) rotate(1.5deg); } }
+@keyframes fe-hop { 0% { transform: translateY(0) scale(1); } 35% { transform: translateY(-10px) scale(1.06, .96); } 70% { transform: translateY(0) scale(.97, 1.04); } 100% { transform: translateY(0) scale(1); } }
+.fe-svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.fe-pu { transform: translate(calc(var(--lx, 0) * 1px), calc(var(--ly, 0) * 1px)); transition: transform .12s ease-out; }
+.fe-eo { transform-box: fill-box; transform-origin: center; transition: transform .08s; }
+.fe-svg.blink .fe-eo { transform: scaleY(.1); }
+.fe-ea { display: none; }
+.fe-svg:not([data-eyes="open"]) .fe-eo { display: none; }
+.fe-svg:not([data-eyes="open"]) .fe-ea { display: inline; }
+.fe-svg:not([data-eyes="open"]) .fe-lash { display: none; }
+.fe-z { display: none; }
+.fe-svg[data-mood="dort"] .fe-z { display: inline; }
+.fe-off, .fe-away { visibility: hidden !important; pointer-events: none !important; }
+.fe-badge { position: absolute; top: -4px; right: -4px; min-width: 22px; height: 22px; padding: 0 5px; border-radius: 11px; background: var(--bad); color: var(--bg); font: 700 13px/22px var(--sans); text-align: center; box-shadow: 0 1px 3px rgba(0, 0, 0, .35); }
+.fe-bub { position: fixed; z-index: 42; display: flex; flex-direction: column; background: var(--card); color: var(--text); border: 2px solid var(--primary); border-radius: 1.1rem; box-shadow: 0 6px 20px rgba(0, 0, 0, .28); padding: .7rem .8rem; font-size: 1rem; line-height: 1.4; }
+.fe-bt { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; min-height: 1.5rem; }
+.fe-br { flex: 0 0 auto; display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .55rem; }
+.fe-bb { flex: 1 1 6rem; min-height: 2.75rem; padding: .3rem .8rem; border-radius: 999px; border: 2px solid var(--primary); background: var(--card); color: var(--primary-d); font: inherit; font-weight: 700; }
+.fe-bb.main { background: var(--primary); color: var(--primary-t); }
+.fe-back { position: fixed; inset: 0; z-index: 44; background: rgba(20, 30, 24, .35); }
+.fe-menu { position: fixed; z-index: 46; left: 50%; transform: translateX(-50%); width: min(30rem, calc(100vw - 16px)); display: flex; flex-direction: column; background: var(--card); border: 2px solid var(--primary); border-radius: 1.2rem 1.2rem .8rem .8rem; box-shadow: 0 -4px 24px rgba(0, 0, 0, .3); overflow: hidden; margin-bottom: 6px; }
+.fe-mh { flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: .6rem .8rem; border-bottom: 1px solid var(--line); background: var(--soft); }
+.fe-mh b { font-family: var(--serif); color: var(--primary-d); }
+.fe-x { min-height: 2.75rem; padding: 0 1rem; border-radius: 999px; border: 2px solid var(--primary); background: var(--card); color: var(--primary-d); font: inherit; font-weight: 700; }
+.fe-ml { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: .6rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr)); gap: .5rem; }
+.fe-it { min-height: 3.1rem; padding: .45rem .8rem; text-align: left; border-radius: .9rem; border: 2px solid var(--line); border-left: 6px solid var(--primary); background: var(--card); color: var(--text); font: inherit; font-weight: 600; }
+.fe-it:active, .fe-it:focus-visible { background: var(--soft); }
+.fe-pill { position: fixed; right: 8px; z-index: 39; display: inline-flex; align-items: center; gap: .35rem; min-height: 44px; padding: 0 .8rem 0 .5rem; border-radius: 999px; border: 2px solid var(--primary); background: var(--card); color: var(--primary-d); font: 700 15px/1 var(--sans); box-shadow: 0 2px 8px rgba(0, 0, 0, .25); }
+.fe-pl { display: inline-block; width: 28px; height: 28px; flex: 0 0 auto; } .fe-pl svg { width: 100%; height: 100%; display: block; }
+.fe-pill .fe-badge { top: -6px; right: -4px; }
+.fe-hl { outline: 4px solid var(--accent); outline-offset: -4px; border-radius: .6rem; }
+.fe-prev { width: min(11rem, 60%); aspect-ratio: 116 / 128; margin: .2rem auto .6rem; }
+.fe-sw { display: inline-block; width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 2px solid; margin-right: .4rem; vertical-align: -.2rem; }
+.fe-times { display: flex; flex-wrap: wrap; gap: .6rem; } .fe-times > div { flex: 1 1 8rem; }
+@media (prefers-reduced-motion: reduce) { .fe-body, .fe.hop .fe-body { animation: none !important; } .fe-pu, .fe-eo { transition: none !important; } }
+@media print { .fe, .fe-bub, .fe-menu, .fe-back, .fe-pill { display: none !important; } }
+/* une bulle sans bouton se range seule : elle laisse passer les touchers vers l'écran */
+.fe-bub[data-btns="0"] { pointer-events: none; }

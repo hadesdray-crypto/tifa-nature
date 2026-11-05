@@ -1,0 +1,10 @@
+/* Tifa Nature - Calculs du jardinier (réutilise .card .btn .chip .notice .field du style botanique) */
+.cl-tabs { margin-bottom: .6rem; }
+.cl-unit { display: flex; align-items: center; gap: .5rem; }
+.cl-unit .field { flex: 1 1 auto; }
+.cl-unit span { flex: 0 0 auto; min-width: 3.2rem; color: var(--muted); font-weight: 600; }
+select.field { appearance: auto; }
+.cl-go { margin-top: .8rem; }
+.cl-res { margin-top: .8rem; }
+.cl-res .big-num { font-family: var(--serif); font-size: 1.25rem; color: var(--primary-d); font-weight: 700; margin: 0 0 .35rem; }
+.cl-warn { margin-top: .8rem; }

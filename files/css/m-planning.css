@@ -1,0 +1,8 @@
+/* styles module planning */
+.plan-h { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.card.task h3 { overflow-wrap: anywhere; }
+.card.task.late { border-left: 5px solid var(--bad, #b3432f); }
+.card.task.is-done { opacity: .78; }
+.card.task .task-meta { margin: 0 0 .4rem; overflow-wrap: anywhere; }
+.task-actions > .btn { flex: 1 1 8rem; min-width: 0; overflow-wrap: anywhere; }
+.task-actions > .btn.primary { flex: 1 1 100%; }

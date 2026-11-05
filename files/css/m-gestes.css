@@ -1,0 +1,65 @@
+/* Tifa Nature - Gestes du jardinier. Variables du thème existant uniquement (aucune couleur en dur). */
+.gz-search .row { flex-wrap: wrap; }
+.gz-q { box-sizing: border-box; min-height: var(--tap); width: 100%; padding: .5rem .9rem; border-radius: 999px; border: 2px solid var(--line); background: var(--bg); color: var(--text); font: inherit; min-width: 0; }
+.gz-q:focus { outline: 3px solid var(--primary); outline-offset: 1px; }
+.gz-chip { min-height: var(--tap); display: inline-flex; align-items: center; text-decoration: none; }
+.gz-item { overflow-wrap: anywhere; }
+.gz-but { display: block; margin: .2rem 0; color: var(--text); font-size: .93rem; }
+.gz-tag { display: inline-block; margin-top: .3rem; padding: .15rem .6rem; border-radius: 999px; background: var(--warn-bg); color: var(--warn); font-size: .8rem; font-weight: 700; }
+.gz-tag.ok { background: var(--ok-bg); color: var(--ok); }
+.gz-count { margin: .5rem 0 .3rem; }
+
+/* Page d'un geste */
+.gz-purpose { font-size: 1.05rem; margin: .2rem 0 .7rem; }
+.gz-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr)); gap: .5rem; margin-bottom: .4rem; }
+.gz-facts span { display: block; padding: .5rem .7rem; border-radius: .8rem; background: var(--soft); overflow-wrap: anywhere; }
+.gz-facts b { display: block; font-size: .78rem; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .03em; }
+.gz-start { margin: .4rem 0 .6rem; min-height: 3.4rem; font-size: 1.08rem; }
+.gz-two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: .5rem; margin-bottom: .7rem; }
+.gz-mats { display: grid; gap: .4rem; }
+.gz-steps { list-style: none; counter-reset: gz; padding: 0; margin: 0; }
+.gz-steps li { counter-increment: gz; position: relative; padding: .1rem 0 .2rem 2.5rem; margin-bottom: .9rem; overflow-wrap: anywhere; }
+.gz-steps li::before { content: counter(gz); position: absolute; left: 0; top: 0; width: 1.9rem; height: 1.9rem; border-radius: 50%; background: var(--primary); color: var(--primary-t); font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: .92rem; }
+.gz-list { padding-left: 1.2rem; margin: .3rem 0; } .gz-list li { margin-bottom: .35rem; overflow-wrap: anywhere; }
+
+/* Case à cocher grande (matériel, étape finie) */
+.gz-chk { display: flex; align-items: center; gap: .7rem; width: 100%; min-height: var(--tap); padding: .45rem .8rem; border-radius: .9rem; border: 2px solid var(--line); background: var(--card); color: var(--text); font: inherit; text-align: left; cursor: pointer; box-sizing: border-box; }
+.gz-chk.on { border-color: var(--primary); background: var(--soft); }
+.gz-box { flex: 0 0 auto; position: relative; width: 1.7rem; height: 1.7rem; border-radius: .4rem; border: 2px solid var(--primary-d); background: var(--bg); box-sizing: border-box; }
+.gz-chk.on .gz-box { background: var(--primary); border-color: var(--primary); }
+.gz-chk.on .gz-box::after { content: ""; position: absolute; left: .5rem; top: .15rem; width: .4rem; height: .8rem; border: solid var(--primary-t); border-width: 0 3px 3px 0; transform: rotate(45deg); }
+.gz-lbl { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+
+/* Schémas */
+.gz-fig { margin: .5rem 0; padding: .4rem; border-radius: .9rem; background: var(--card); border: 1px solid var(--line); max-width: 17rem; box-sizing: border-box; }
+.gz-fig.big { max-width: 22rem; margin-left: auto; margin-right: auto; }
+.gz-fig figcaption { font-size: .8rem; color: var(--muted); padding-top: .2rem; }
+.gz-svg { display: block; width: 100%; height: auto; }
+.gz-svg .gz-l { fill: none; stroke: var(--primary-d); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.gz-svg .gz-f { fill: var(--soft); }
+.gz-svg .gz-f.gz-l, .gz-svg .gz-w.gz-l, .gz-svg .gz-t.gz-l { }
+.gz-svg .gz-t { fill: var(--accent); fill-opacity: .4; }
+.gz-svg .gz-w { fill: var(--primary); fill-opacity: .25; }
+.gz-svg .gz-m { fill: var(--accent); fill-opacity: .65; }
+.gz-svg .gz-card { fill: var(--card); }
+.gz-svg .gz-k { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linecap: round; }
+.gz-svg .gz-d { stroke-dasharray: 5 4; }
+.gz-svg .gz-tx { fill: var(--text); font-family: var(--sans); font-size: 9.5px; stroke: none; }
+.gz-svg g.gz-f.gz-l, .gz-svg g.gz-f { stroke: var(--primary-d); stroke-width: 2.4; }
+.gz-svg .gz-f.gz-l, .gz-svg .gz-w.gz-l, .gz-svg .gz-t.gz-l { stroke: var(--primary-d); stroke-width: 2.4; stroke-linejoin: round; }
+
+/* Plein écran du pas à pas */
+.gz-ov { position: fixed; left: 0; top: 0; right: 0; bottom: 0; z-index: 45; display: flex; flex-direction: column; background: var(--bg); color: var(--text); max-width: 100vw; overflow: hidden; }
+.gz-ov-head { flex: 0 0 auto; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; justify-content: space-between; padding: calc(.5rem + var(--sat)) .9rem .5rem; border-bottom: 1px solid var(--line); background: var(--bg2); }
+.gz-ov-t { flex: 1 1 8rem; min-width: 0; } .gz-ov-t b { display: block; font-family: var(--serif); color: var(--primary-d); overflow-wrap: anywhere; line-height: 1.2; } .gz-ov-t span { font-size: .9rem; color: var(--muted); font-weight: 700; }
+.gz-bar { flex: 0 0 auto; height: .7rem; background: var(--bg2); }
+.gz-bar i { display: block; height: 100%; width: 0; background: var(--primary); transition: width .25s; }
+.gz-ov-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; padding: .9rem .9rem 1rem; -webkit-overflow-scrolling: touch; }
+.gz-st { font-family: var(--serif); font-size: 1.35rem; margin: .3rem 0 .5rem; color: var(--primary-d); overflow-wrap: anywhere; }
+.gz-c { font-size: 1.15rem; line-height: 1.5; margin: 0 0 .8rem; overflow-wrap: anywhere; }
+.gz-ov-foot { flex: 0 0 auto; display: grid; gap: .5rem; padding: .6rem .9rem calc(.6rem + var(--sab)); border-top: 1px solid var(--line); background: var(--bg2); max-height: 45vh; overflow-y: auto; }
+.gz-nav { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr)); gap: .5rem; }
+.gz-ov-head, .gz-ov-foot { font-size: min(1rem, 6vw); }
+.gz-ov-foot .btn, .gz-ov-head .btn { min-height: 2.9em; font-size: 1em; padding: .4em .8em; }
+.gz-nav { grid-template-columns: 1fr 1fr; }
+.gz-ov .notice { overflow-wrap: anywhere; }

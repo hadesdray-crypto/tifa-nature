@@ -1,0 +1,9 @@
+/* styles module assistant */
+#ass-form .field { margin-bottom: 0; }
+.ass-answer h3 { overflow-wrap: anywhere; }
+.ass-answer p, .ass-answer li { overflow-wrap: anywhere; }
+.ass-answer.none { border-left: 5px solid var(--accent, #c9803f); }
+.ass-actions > .btn { flex: 1 1 9rem; min-width: 0; overflow-wrap: anywhere; }
+.ass-src { margin-top: 1rem; }
+#ass-ex .chip, #ass-hist .chip { max-width: 100%; white-space: normal; text-align: left; overflow-wrap: anywhere; }
+#ass-out .item { overflow-wrap: anywhere; }

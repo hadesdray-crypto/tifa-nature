@@ -1,0 +1,68 @@
+/* Tifa Nature - Labo des plantes (réutilise .card .item .btn .chip .notice .steps du style de base ; couleurs par variables du thème) */
+.lb-panel h2:first-child, .lb-panel h3:first-child { margin-top: 0; }
+.lb-panel, .lb-res, .lb-src, .lb-actions, .lb-verdict { overflow-wrap: anywhere; }
+.lb-actions { margin-bottom: .8rem; }
+.lb-actions .btn { flex: 1 1 10rem; }
+.lb-src { margin: .6rem 0 .8rem; }
+.lb-res { margin-top: .8rem; }
+.lb-res:empty { display: none; }
+.lb-res .row { margin-top: .6rem; }
+.lb-res .row .btn, .lb-panel .row .btn { flex: 1 1 9rem; min-width: 0; }
+.lb-big { font-family: var(--serif); font-size: 2.1rem; line-height: 1.15; color: var(--primary-d); font-weight: 700; margin: .2rem 0; }
+.lb-big small { font-size: 1rem; font-weight: 600; color: var(--muted); }
+.lb-meter, .lb-gauge { height: .8rem; border-radius: 999px; background: var(--bg2); overflow: hidden; border: 1px solid var(--line); }
+.lb-meter i, .lb-gauge i { display: block; height: 100%; border-radius: 999px; background: var(--primary); transition: width .25s ease; }
+.lb-gauge.warn i { background: var(--warn); }
+.lb-gauge.bad i { background: var(--bad); }
+.lb-gauge.ok i { background: var(--ok); }
+.lb-gauge.pale i { background: var(--accent); }
+.lb-g { margin: .6rem 0; }
+.lb-g-top { display: flex; justify-content: space-between; gap: .6rem; flex-wrap: wrap; margin-bottom: .2rem; }
+.lb-g-top b { font-family: var(--serif); color: var(--primary-d); }
+.lb-g p { margin: .25rem 0 0; }
+.lb-spec { display: block; width: 100%; height: auto; max-height: 9rem; margin: .6rem 0 .2rem; border-radius: .7rem; background: var(--bg2); border: 1px solid var(--line); }
+.lb-axis { display: flex; justify-content: space-between; gap: .4rem; flex-wrap: wrap; margin-bottom: .4rem; }
+.lb-rec { margin-top: .7rem; }
+#lb-play { margin-top: .6rem; }
+.lb-verdict { border-radius: var(--radius); padding: .8rem .9rem; margin: .5rem 0; border-left: 6px solid var(--primary); background: var(--soft); }
+.lb-verdict h3 { margin: 0 0 .2rem; }
+.lb-verdict.plein { border-left-color: var(--accent); }
+.lb-verdict.lumineux { border-left-color: var(--ok); }
+.lb-verdict.mi { border-left-color: var(--primary); }
+.lb-verdict.ombre { border-left-color: var(--muted); }
+.lb-compass { display: flex; align-items: center; gap: .9rem; flex-wrap: wrap; margin-bottom: .5rem; }
+.lb-compass svg { width: min(9rem, 100%); height: auto; flex: 0 0 auto; }
+.lb-compass > div { flex: 1 1 8rem; min-width: 0; }
+.lb-ring { fill: var(--card); stroke: var(--line); stroke-width: 3; }
+.lb-n { fill: var(--muted); font: 700 11px var(--sans); }
+.lb-nn { fill: var(--bad); } .lb-ns { fill: var(--primary); }
+.lb-kv { margin: .5rem 0; }
+.lb-bars { display: flex; flex-direction: column; gap: .35rem; margin-bottom: .6rem; }
+.lb-bar { display: grid; grid-template-columns: minmax(5.5rem, 7rem) 1fr auto; gap: .5rem; align-items: center; }
+.lb-bar span { font-size: .86rem; }
+@media (max-width: 21rem) { .lb-bar { grid-template-columns: 1fr; gap: .15rem; } }
+.lb-range { width: 100%; min-height: 2.75rem; accent-color: var(--primary); margin: .2rem 0; }
+.lb-ends { display: flex; justify-content: space-between; gap: .5rem; flex-wrap: wrap; }
+.lb-melody { display: block; width: 100%; height: 5rem; margin: .7rem 0; border-radius: .7rem; background: var(--bg2); border: 1px solid var(--line); }
+.lb-melody rect { fill: var(--primary); }
+.lb-pistes { padding-left: 1.2rem; }
+#lb-sides .chip, .lb-panel .chips .chip { min-height: 2.75rem; }
+#lb-sides { flex-wrap: wrap; }
+#lb-lmsg:empty, #lb-compmsg:empty, #lb-micmsg:empty, #lb-blemsg:empty { display: none; }
+/* Découvertes incroyables : étiquette de niveau de preuve (mot + forme, jamais la couleur seule) */
+.lb-lvl { display: inline-flex; align-items: center; gap: .4rem; padding: .2rem .7rem .2rem .55rem; margin: 0 0 .35rem; border-radius: 999px; font-size: .84rem; font-weight: 700; border: 2px solid currentColor; max-width: 100%; }
+.lb-lvl svg { flex: 0 0 auto; }
+.lb-lvl > span { min-width: 0; overflow-wrap: anywhere; }
+.lb-lvl-solide { color: var(--ok); background: var(--ok-bg); }
+.lb-lvl-discute { color: var(--warn); background: var(--warn-bg); }
+.lb-lvl-non { color: var(--bad); background: var(--bad-bg); }
+.item .lb-lvl { display: flex; width: fit-content; margin-bottom: .35rem; }
+.item.lb-star { border-width: 2px; border-color: var(--primary); }
+.lb-def { margin: .1rem 0 0; }
+.lb-legend { list-style: none; padding: 0; margin: .3rem 0 0; }
+.lb-legend li { display: flex; flex-direction: column; gap: .1rem; margin-bottom: .5rem; }
+.lb-srcs { padding-left: 1.1rem; overflow-wrap: anywhere; }
+.lb-srcs li { margin-bottom: .6rem; }
+.lb-open { display: inline-flex; align-items: center; min-height: 2.75rem; margin-top: .3rem; max-width: 100%; text-align: left; }
+#lb-dlist .item { overflow-wrap: anywhere; }
+.chips[aria-label] .chip { min-height: 2.75rem; }
