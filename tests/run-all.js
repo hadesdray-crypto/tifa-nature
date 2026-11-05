@@ -20,6 +20,7 @@ const STEPS = [
   ['(h) assiette', './t-assiette', null],
   ['(i) toxicité', './t-toxicite', null],
   ['(j) reconnaissance précise', './t-precise', null],
+  ['(k) signalements', './t-signaler', null],
   ['(h) hasard et endurance', './t-stress', null],
   ['(h) mise à jour', './t-update', null],
 ];

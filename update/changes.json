@@ -1,6 +1,5 @@
 { "changes": [
- "Nouveau : « Mon jardin », un dossier complet avec vos plantes, vos pots, vos soins et votre carnet, que vous pouvez enregistrer et retrouver.",
- "Nouveau : « Engrais et astuces maison » : marc de café, purin, compost, astuces à fabriquer, et les idées reçues à éviter, avec le niveau de preuve.",
- "Accueil plus clair, regroupé par thèmes. Les fiches de plantes montrent l'essentiel et se déplient pour le reste.",
- "Photo précise présentée comme une option facultative. Toxique et Comestible expliqués au toucher."
+ "Nouveau : un petit bouton « ? » en haut à droite de chaque page. Il permet de signaler un problème ou une information fausse, en indiquant automatiquement la page où vous êtes.",
+ "Le signalement se prépare dans votre application de mail, ou se copie. Vous retrouvez vos signalements dans Plus, « Mes signalements ».",
+ "Dossier « Mon jardin » et « Engrais et astuces maison » : voir la mise à jour précédente."
 ] }

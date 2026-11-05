@@ -93,3 +93,11 @@ body { background: var(--bg); }
 .card.fold.open .fold-ch { transform: rotate(180deg); }
 .fold-body { margin-top: .4rem; }
 h2.sect { margin: 1.1rem 0 .5rem; font-size: 1.1rem; }
+#topbar { position: relative; padding-right: 3.2rem; }
+#sg-btn { position: absolute; right: .25rem; top: calc(.1rem + var(--sat, 0px)); width: 44px; height: 44px; padding: 0; border: 0; background: none; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2; }
+#sg-btn span { width: 28px; height: 28px; border-radius: 50%; background: var(--card); color: var(--primary-d); border: 2px solid var(--primary-d); font-weight: 800; font-size: 1rem; line-height: 1; display: flex; align-items: center; justify-content: center; }
+.sg-types { display: flex; flex-wrap: wrap; gap: .4rem; margin: .4rem 0 .6rem; }
+.sg-types .chip { min-height: 2.75rem; }
+.sg-tech { display: flex; gap: .5rem; align-items: flex-start; margin-top: .6rem; font-size: .9rem; }
+.sg-tech input { margin-top: .2rem; min-width: 1.4rem; min-height: 1.4rem; }
+@media print { #sg-btn { display: none !important; } }
