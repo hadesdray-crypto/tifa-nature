@@ -46,28 +46,31 @@
     requetes: ['fleurs de bourrache décoration', 'glaçons fleurs bourrache']
   });
   part('souci', {
+    sourcesComestible: [{ titre: 'Université d\'Arizona (extension) — Edible flowers', url: 'https://extension.arizona.edu/sites/extension.arizona.edu/files/attachment/edibleflowers.pdf' }, { titre: 'K-State Research and Extension — Edible flowers', url: 'https://johnson.ksu.edu/docs/lawn-and-garden/in-house-publications/perennials/Edible%20Flowers%20REV%202022.pdf' }, { titre: 'NC State Extension (HIL-8513) — Edible flowers', url: 'https://webarchive.library.unt.edu/eot2008/20090109151731/http://www.ces.ncsu.edu/depts/hort/hil/hil-8513.html' }, { titre: 'Université du Missouri (extension) — Edible flowers', url: 'https://extension.missouri.edu/news/edible-flowers-beauty-you-can-eat' }, { titre: 'Université du Minnesota (extension) — Edible flowers', url: 'https://ocean.njaes.rutgers.edu/wp-content/uploads/2022/11/Edible-flowers-_-UMN-Extension.pdf' }, { titre: 'RHS — Edible flowers', url: 'https://www.rhs.org.uk/education-learning/school-gardening/resources/food-growing/edible-flowers' }],
     parties: [pt('fleur', 'Les pétales', 'Effeuillés, crus, dans une salade, du riz, un gâteau ou un fromage frais.', 'Pendant la floraison')],
     saveur: 'Douce, légèrement poivrée, parfois un peu amère. Elle colore en jaune orangé, comme le safran.',
     usages: ['Riz coloré', 'Salade', 'Beurre ou fromage frais', 'Biscuits'],
-    precautions: FL.concat(['Ne mangez que les pétales, pas le cœur de la fleur ni les feuilles.']),
+    precautions: FL.concat(['Ne mangez que les pétales, pas le cœur de la fleur ni les feuilles.', 'Plante achetée en jardinerie : la RHS conseille d\'attendre environ 3 mois avant d\'en manger les fleurs, à cause des traitements.']),
     confusions: ['Ne la confondez pas avec l\'œillet d\'Inde (tagète), dont la fleur est plus grosse et l\'odeur forte : il n\'est pas confirmé ici.'],
     quantite: 'En petite quantité : une cuillère de pétales par plat.',
     requetes: ['pétales de souci recette', 'souci calendula cuisine']
   });
   part('pensee', {
+    sourcesComestible: [{ titre: 'Université d\'Arizona (extension) — Edible flowers', url: 'https://extension.arizona.edu/sites/extension.arizona.edu/files/attachment/edibleflowers.pdf' }, { titre: 'K-State Research and Extension — Edible flowers', url: 'https://johnson.ksu.edu/docs/lawn-and-garden/in-house-publications/perennials/Edible%20Flowers%20REV%202022.pdf' }, { titre: 'NC State Extension (HIL-8513) — Edible flowers', url: 'https://webarchive.library.unt.edu/eot2008/20090109151731/http://www.ces.ncsu.edu/depts/hort/hil/hil-8513.html' }, { titre: 'Université du Missouri (extension) — Edible flowers', url: 'https://extension.missouri.edu/news/edible-flowers-beauty-you-can-eat' }, { titre: 'Université du Minnesota (extension) — Edible flowers', url: 'https://ocean.njaes.rutgers.edu/wp-content/uploads/2022/11/Edible-flowers-_-UMN-Extension.pdf' }],
     parties: [pt('fleur', 'Les fleurs', 'Entières, crues, en décoration dans une salade, un dessert ou des glaçons.', 'Pendant la floraison')],
     saveur: 'Très douce, légèrement sucrée, discrète.',
     usages: ['Salade de fleurs', 'Gâteaux décorés', 'Glaçons aux fleurs', 'Fromage frais'],
-    precautions: FL.concat(['Ne mangez que la fleur, pas les feuilles ni les tiges.']),
+    precautions: FL.concat(['Ne mangez que la fleur, pas les feuilles ni les tiges.', 'Plante achetée en jardinerie : la RHS conseille d\'attendre environ 3 mois avant d\'en manger les fleurs, à cause des traitements.']),
     confusions: [],
     quantite: 'En petite quantité, surtout pour décorer.',
     requetes: ['fleurs de pensée salade', 'pensées comestibles dessert']
   });
   part('primevere', {
+    sourcesComestible: [{ titre: 'Université d\'Arizona (extension) — Edible flowers', url: 'https://extension.arizona.edu/sites/extension.arizona.edu/files/attachment/edibleflowers.pdf' }, { titre: 'RHS — Edible flowers', url: 'https://www.rhs.org.uk/education-learning/school-gardening/resources/food-growing/edible-flowers' }, { titre: 'PFAF — Primulaceae comestibles', url: 'https://pfaf.org/plants/edible-and-useful-plants-in-the-primulaceae-family/' }, { titre: 'EMA — Primula flower (résumé public)', url: 'https://ema.europa.eu/fr/documents/herbal-summary/primula-flower-summary-public_fr.pdf' }],
     parties: [pt('fleur', 'Les fleurs', 'Crues, en décoration dans une salade ou un dessert.', 'Fin d\'hiver et printemps')],
     saveur: 'Douce et discrète.',
     usages: ['Salade de fleurs', 'Décoration de gâteaux'],
-    precautions: FL.concat(['La plante peut irriter l\'estomac si on en mange beaucoup : ne mangez que quelques fleurs, jamais les feuilles ni les racines.']),
+    precautions: FL.concat(['La plante peut irriter l\'estomac si on en mange beaucoup : ne mangez que quelques fleurs, jamais les feuilles ni les racines.', 'Il s\'agit de la primevère commune (Primula vulgaris). D\'autres primevères, comme le coucou, peuvent donner une réaction chez les personnes sensibles : une allergie est possible chez les personnes allergiques aux primulacées.', 'Plante achetée en jardinerie : la RHS conseille d\'attendre environ 3 mois avant d\'en manger les fleurs, à cause des traitements.']),
     confusions: [],
     quantite: 'En très petite quantité, pour décorer.',
     requetes: ['fleurs de primevère recette']
@@ -82,37 +85,41 @@
     requetes: ['sirop de violette', 'fleurs de violette dessert']
   });
   part('bleuet', {
+    sourcesComestible: [{ titre: 'NC State Extension (HIL-8513) — Edible flowers', url: 'https://webarchive.library.unt.edu/eot2008/20090109151731/http://www.ces.ncsu.edu/depts/hort/hil/hil-8513.html' }, { titre: 'Université du Minnesota (extension) — Edible flowers', url: 'https://ocean.njaes.rutgers.edu/wp-content/uploads/2022/11/Edible-flowers-_-UMN-Extension.pdf' }, { titre: 'Auckland Botanic Gardens — Cornflower', url: 'https://aucklandbotanicgardens.co.nz/guide-to-edible-flowers/cornflower/' }],
     parties: [pt('fleur', 'Les pétales', 'Crus, éparpillés sur une salade, un fromage frais ou un dessert.', 'Pendant la floraison')],
     saveur: 'Douce, légèrement épicée et sucrée.',
     usages: ['Salade colorée', 'Fromage frais', 'Décoration de desserts'],
-    precautions: FL.concat(['Ne mangez que les pétales.']),
+    precautions: FL.concat(['Ne mangez que les pétales.', 'La base du calice est amère : ne mangez que les pétales.']),
     confusions: [],
     quantite: 'En petite quantité, pour décorer.',
     requetes: ['pétales de bleuet salade', 'bleuet comestible recette']
   });
   part('rosier-pot', {
+    sourcesComestible: [{ titre: 'Université d\'Arizona (extension) — Edible flowers', url: 'https://extension.arizona.edu/sites/extension.arizona.edu/files/attachment/edibleflowers.pdf' }, { titre: 'K-State Research and Extension — Edible flowers', url: 'https://johnson.ksu.edu/docs/lawn-and-garden/in-house-publications/perennials/Edible%20Flowers%20REV%202022.pdf' }, { titre: 'Université du Minnesota (extension) — Edible flowers', url: 'https://ocean.njaes.rutgers.edu/wp-content/uploads/2022/11/Edible-flowers-_-UMN-Extension.pdf' }, { titre: 'NC State Extension (HIL-8513) — Edible flowers', url: 'https://webarchive.library.unt.edu/eot2008/20090109151731/http://www.ces.ncsu.edu/depts/hort/hil/hil-8513.html' }, { titre: 'RHS — Edible flowers (conseils)', url: 'https://www.rhs.org.uk/advice/profile?PID=764' }],
     parties: [pt('fleur', 'Les pétales', 'Crus ou en sirop. Coupez la base blanche du pétale, elle est amère.', 'Pendant la floraison')],
     saveur: 'Parfumée, douce ; les roses foncées sont souvent plus parfumées.',
     usages: ['Sirop de pétales de rose', 'Sucre parfumé', 'Confiture', 'Salade'],
-    precautions: FL.concat(['Les épines blessent : cueillez avec des gants.']),
+    precautions: FL.concat(['Les épines blessent : cueillez avec des gants.', 'Enlevez la base blanche du pétale, qui est amère.', 'Plante achetée en jardinerie : la RHS conseille d\'attendre environ 3 mois avant d\'en manger les fleurs, à cause des traitements.']),
     confusions: [],
     quantite: 'En petite quantité : quelques pétales.',
     requetes: ['pétales de rose recette', 'sirop de rose maison']
   });
   part('rosier-grimpant', {
+    sourcesComestible: [{ titre: 'Université d\'Arizona (extension) — Edible flowers', url: 'https://extension.arizona.edu/sites/extension.arizona.edu/files/attachment/edibleflowers.pdf' }, { titre: 'K-State Research and Extension — Edible flowers', url: 'https://johnson.ksu.edu/docs/lawn-and-garden/in-house-publications/perennials/Edible%20Flowers%20REV%202022.pdf' }, { titre: 'Université du Minnesota (extension) — Edible flowers', url: 'https://ocean.njaes.rutgers.edu/wp-content/uploads/2022/11/Edible-flowers-_-UMN-Extension.pdf' }, { titre: 'NC State Extension (HIL-8513) — Edible flowers', url: 'https://webarchive.library.unt.edu/eot2008/20090109151731/http://www.ces.ncsu.edu/depts/hort/hil/hil-8513.html' }, { titre: 'RHS — Edible flowers (conseils)', url: 'https://www.rhs.org.uk/advice/profile?PID=764' }],
     parties: [pt('fleur', 'Les pétales', 'Crus ou en sirop. Coupez la base blanche du pétale, elle est amère.', 'Pendant la floraison')],
     saveur: 'Parfumée, douce ; les roses foncées sont souvent plus parfumées.',
     usages: ['Sirop de pétales de rose', 'Sucre parfumé', 'Salade'],
-    precautions: FL.concat(['Les épines blessent : cueillez avec des gants.']),
+    precautions: FL.concat(['Les épines blessent : cueillez avec des gants.', 'Enlevez la base blanche du pétale, qui est amère.', 'Plante achetée en jardinerie : la RHS conseille d\'attendre environ 3 mois avant d\'en manger les fleurs, à cause des traitements.']),
     confusions: [],
     quantite: 'En petite quantité : quelques pétales.',
     requetes: ['pétales de rose recette', 'sirop de rose maison']
   });
   part('lavande', {
+    sourcesComestible: [{ titre: 'Université d\'Arizona (extension) — Edible flowers', url: 'https://extension.arizona.edu/sites/extension.arizona.edu/files/attachment/edibleflowers.pdf' }, { titre: 'NC State Extension (HIL-8513) — Edible flowers', url: 'https://webarchive.library.unt.edu/eot2008/20090109151731/http://www.ces.ncsu.edu/depts/hort/hil/hil-8513.html' }, { titre: 'Université du Minnesota (extension) — Edible flowers', url: 'https://ocean.njaes.rutgers.edu/wp-content/uploads/2022/11/Edible-flowers-_-UMN-Extension.pdf' }, { titre: 'Université du Missouri (extension) — Edible flowers', url: 'https://extension.missouri.edu/news/edible-flowers-beauty-you-can-eat' }, { titre: 'RHS — Edible flowers', url: 'https://www.rhs.org.uk/education-learning/school-gardening/resources/food-growing/edible-flowers' }],
     parties: [pt('fleur', 'Les fleurs', 'En très petite quantité, dans un gâteau, un sirop, une infusion ou un sucre parfumé. Ne la mangez pas crue en grande quantité.', 'Juin à août')],
     saveur: 'Très forte et parfumée, « le goût de son odeur ».',
     usages: ['Biscuits', 'Sirop', 'Infusion légère', 'Sucre parfumé'],
-    precautions: FL.concat(['Utilisez la lavande vraie de votre fiche, pas une autre lavande ni l\'huile essentielle.', 'Ne mangez ni les tiges ni les feuilles.']),
+    precautions: FL.concat(['Utilisez la lavande vraie de votre fiche, pas une autre lavande ni l\'huile essentielle.', 'Ne mangez ni les tiges ni les feuilles.', 'Lavande vraie (Lavandula angustifolia) seulement, en petite quantité. Ne mangez jamais l\'huile essentielle de lavande.', 'Plante achetée en jardinerie : la RHS conseille d\'attendre environ 3 mois avant d\'en manger les fleurs, à cause des traitements.']),
     confusions: [],
     quantite: 'À toute petite dose : une pincée de fleurs pour un gâteau.',
     requetes: ['biscuits à la lavande', 'sirop de lavande']
@@ -136,10 +143,11 @@
     requetes: ['fleurs de ciboulette recette', 'beurre à la ciboulette']
   });
   part('camomille-romaine', {
+    sourcesComestible: [{ titre: 'Université du Minnesota (extension) — Edible flowers', url: 'https://ocean.njaes.rutgers.edu/wp-content/uploads/2022/11/Edible-flowers-_-UMN-Extension.pdf' }, { titre: 'EMA — Chamaemelum nobile, rapport d\'évaluation', url: 'https://ema.europa.eu/documents/herbal-report/final-assessment-report-chamaemelum-nobile-l-all-flos_en.pdf' }, { titre: 'NC State Extension Plant Toolbox — Chamaemelum nobile', url: 'https://plants.ces.ncsu.edu/plants/chamaemelum-nobile' }],
     parties: [pt('fleur', 'Les fleurs séchées', 'En infusion : un peu de fleurs dans de l\'eau chaude.', 'Juin à août')],
     saveur: 'Douce mais un peu amère.',
     usages: ['Infusion'],
-    precautions: FL.concat(['Ne la confondez pas avec la camomille allemande : leur goût est différent.', 'Ne mangez pas les feuilles ni les tiges.']),
+    precautions: FL.concat(['Ne la confondez pas avec la camomille allemande : leur goût est différent.', 'Ne mangez pas les feuilles ni les tiges.', 'Déconseillée pendant la grossesse. Pas de données pour les jeunes enfants : réservée aux adultes. Allergie possible si vous êtes sensible aux astéracées (famille de la marguerite).', 'Plante achetée en jardinerie : la RHS conseille d\'attendre environ 3 mois avant d\'en manger les fleurs, à cause des traitements.']),
     confusions: ['Camomille romaine et camomille allemande : deux plantes différentes, au goût différent.'],
     quantite: 'En petite quantité : une tasse d\'infusion de temps en temps. Statut à confirmer par une seconde source.',
     requetes: ['infusion camomille romaine']
@@ -155,19 +163,21 @@
     requetes: ['fleurs d\'hémérocalle recette']
   });
   part('dahlia', {
+    sourcesComestible: [{ titre: 'Auckland Botanic Gardens — Dahlia', url: 'https://aucklandbotanicgardens.co.nz/guide-to-edible-flowers/dahlia/' }, { titre: 'SciELO (étude 2022) — fleurs de dahlia', url: 'https://www.scielo.br/j/bjft/a/rfDHpcsyhRPwPZZbDBtMt8G/?lang=en' }, { titre: 'NC State Extension Plant Toolbox — Dahlia', url: 'https://plants.ces.ncsu.edu/plants/dahlia-spp/' }],
     parties: [pt('fleur', 'Les pétales', 'Crus, en petite quantité, dans une salade.', 'Juillet à octobre')],
     saveur: 'Variable selon les variétés : goûtez un seul pétale.',
     usages: ['Salade de fleurs'],
-    precautions: FL.concat(['Ne mangez ni les feuilles, ni les tiges, ni les tubercules.']),
+    precautions: FL.concat(['Ne mangez ni les feuilles, ni les tiges, ni les tubercules.', 'Précision ajoutée (novembre 2026) : les sources ne sont pas d\'accord. Les pétales se mangent au Mexique, mais l\'université NC State classe le dahlia parmi les plantes toxiques. Par prudence, réservez-le aux adultes, en très petite quantité, et ne le donnez ni aux enfants ni aux animaux.', 'Plante achetée en jardinerie : la RHS conseille d\'attendre environ 3 mois avant d\'en manger les fleurs, à cause des traitements.']),
     confusions: [],
     quantite: 'En très petite quantité.',
     requetes: ['pétales de dahlia salade']
   });
   part('begonia', {
+    sourcesComestible: [{ titre: 'Université du Minnesota (extension) — Edible flowers', url: 'https://ocean.njaes.rutgers.edu/wp-content/uploads/2022/11/Edible-flowers-_-UMN-Extension.pdf' }, { titre: 'Suttons — bégonias tubéreux comestibles (source commerciale)', url: 'https://hub.suttons.co.uk/blog/planting-flowers/edible-tuberous-begonias' }, { titre: 'IVIS — Begonia, guide des plantes toxiques', url: 'https://www.ivis.org/library/guide-to-poisonous-house-and-garden-plants/begonia-species-begonia' }],
     parties: [pt('fleur', 'Les fleurs', 'Crues, en petite quantité, en décoration.', 'Juin à octobre')],
     saveur: 'Acidulée.',
     usages: ['Décoration de salade'],
-    precautions: FL.concat(['Ne mangez pas les feuilles, les tiges ni les tubercules : ils sont toxiques.']),
+    precautions: FL.concat(['Ne mangez pas les feuilles, les tiges ni les tubercules : ils sont toxiques.', 'Précision ajoutée (novembre 2026) : une seule source sérieuse confirme les fleurs du bégonia tubéreux. Elles contiennent de l\'acide oxalique : à éviter en cas de goutte, de calculs rénaux ou de rhumatismes, et pour les enfants.', 'Plante achetée en jardinerie : la RHS conseille d\'attendre environ 3 mois avant d\'en manger les fleurs, à cause des traitements.']),
     confusions: [],
     quantite: 'En très petite quantité.',
     animaux: 'Pas pour les animaux : cette plante est signalée toxique pour les chats et les chiens, surtout les tubercules.',
@@ -254,9 +264,10 @@
     confusions: [], quantite: Q + ' Seulement les tiges.', requetes: ['compote de rhubarbe', 'tarte à la rhubarbe']
   });
   part('asperge', {
+    sourcesComestible: [{ titre: 'NC State Extension Plant Toolbox — Asparagus officinalis', url: 'https://plants.ces.ncsu.edu/plants/asparagus-officinalis/common-name/asparagus/' }, { titre: 'IVIS — Asparagus, guide des plantes toxiques', url: 'https://www.ivis.org/library/guide-to-poisonous-house-and-garden-plants/asparagus-sprengeri-asparagus' }],
     parties: [pt('legume', 'Les jeunes pousses (turions)', 'Cuites à l\'eau ou à la vapeur.', 'Avril à juin')],
     saveur: 'Fine, un peu sucrée.', usages: ['Asperges vinaigrette', 'Poêlée', 'Velouté'],
-    precautions: ['Ne mangez pas les baies rouges ni les tiges devenues grandes : elles sont toxiques.', 'Mangez seulement les pousses.'],
+    precautions: ['Ne mangez pas les baies rouges ni les tiges devenues grandes : elles sont toxiques.', 'Mangez seulement les pousses.', 'Précision ajoutée (novembre 2026) : ne mangez pas les pousses crues (la peau peut réagir). Les baies rouges donnent des maux de ventre : surveillez les enfants et les animaux. Ces points viennent de deux sources seulement, par prudence.'],
     confusions: [], quantite: Q, requetes: ['asperges vinaigrette', 'velouté d\'asperges']
   });
   ok('artichaut', { parties: [pt('legume', 'Le cœur et la base des feuilles', 'Cuits à l\'eau.', 'Juin à août')], saveur: 'Douce, légèrement noisette.', usages: ['Artichauts vinaigrette', 'Cœurs poêlés'], precautions: ['Retirez le foin (les poils) au centre avant de manger.'], confusions: [], quantite: Q, requetes: ['artichauts vinaigrette'] });
@@ -310,8 +321,8 @@
   ok('canneberge', { parties: [pt('fruit', 'Les baies', 'Cuites avec du sucre, ou en jus.', 'Octobre à novembre')], saveur: 'Très acide.', usages: ['Compote', 'Sauce', 'Jus'], precautions: [GENV], confusions: [], quantite: FQ, requetes: ['compote de canneberges'] });
   part('goji', { parties: [pt('fruit', 'Les baies', 'Fraîches ou séchées.', 'Août à octobre')], saveur: 'Légèrement sucrée.', usages: ['Fruits secs', 'Salade de fruits'], precautions: ['Ne mangez que les baies, pas les feuilles ni les tiges.', 'Commencez par peu.'], confusions: ['Ne les confondez pas avec les baies d\'autres plantes de la même famille, dont certaines sont toxiques (morelle).'], quantite: 'En petite quantité au début.', requetes: ['baies de goji recette'] });
   part('citronnier', { parties: [pt('fruit', 'Le fruit', 'Le jus, et le zeste seulement si l\'arbre n\'est pas traité.', 'Novembre à mars')], saveur: 'Acide.', usages: ['Citronnade', 'Gâteau au citron', 'Vinaigrette'], precautions: ['Ne mangez ni les feuilles ni l\'écorce.', 'Lavez bien avant d\'utiliser le zeste.'], confusions: [], quantite: FQ, requetes: ['gâteau au citron', 'citronnade maison'] });
-  part('figuier', { parties: [pt('fruit', 'La figue mûre', 'Crue ou cuite.', 'Août à octobre')], saveur: 'Très sucrée.', usages: ['Confiture', 'Tarte', 'Fromage'], precautions: ['La sève blanche irrite la peau et la bouche : touchez peu les feuilles et les tiges, lavez-vous les mains.', 'Ne mangez que la figue mûre.'], confusions: [], quantite: FQ, requetes: ['confiture de figues', 'tarte aux figues'] });
-  part('pommier-colonnaire', { parties: [pt('fruit', 'La pomme mûre', 'Crue ou cuite. Ne croquez pas les pépins.', 'Août à octobre')], saveur: 'Sucrée à acidulée.', usages: ['Compote', 'Tarte', 'Crumble'], precautions: ['Ne croquez pas les pépins en grande quantité, et ne mangez pas les feuilles.'], confusions: [], quantite: FQ, requetes: ['compote de pommes', 'tarte aux pommes'] });
+  part('figuier', { sourcesComestible: [{ titre: 'NC State Extension Plant Toolbox — Ficus carica', url: 'https://plants.ces.ncsu.edu/plants/ficus-carica/' }, { titre: 'RHS — Ficus carica', url: 'https://www.rhs.org.uk/plants/7199/ficus-carica/details' }, { titre: 'eScholarship (Université de Californie) — figuier et phototoxicité', url: 'https://escholarship.org/uc/item/046507z8' }], parties: [pt('fruit', 'La figue mûre', 'Crue ou cuite.', 'Août à octobre')], saveur: 'Très sucrée.', usages: ['Confiture', 'Tarte', 'Fromage'], precautions: ['La sève blanche irrite la peau et la bouche : touchez peu les feuilles et les tiges, lavez-vous les mains.', 'Ne mangez que la figue mûre.', 'Précision ajoutée (novembre 2026) : la sève blanche rend la peau sensible au soleil (brûlures possibles). Après un contact, lavez la peau et évitez le soleil. Une source (NC State) signale aussi un problème pour les chiens, les chats et les chevaux : par prudence, ne les laissez pas en manger.'], confusions: [], quantite: FQ, requetes: ['confiture de figues', 'tarte aux figues'] });
+  part('pommier-colonnaire', { sourcesComestible: [{ titre: 'Poison Control — pépins de pomme', url: 'https://www.poison.org/articles/an-apple-a-day-keeps-the-doctor-away-but-what-about-the-seeds?viewas=age' }, { titre: 'ASPCA — Apple', url: 'https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/apple' }], parties: [pt('fruit', 'La pomme mûre', 'Crue ou cuite. Ne croquez pas les pépins.', 'Août à octobre')], saveur: 'Sucrée à acidulée.', usages: ['Compote', 'Tarte', 'Crumble'], precautions: ['Ne croquez pas les pépins en grande quantité, et ne mangez pas les feuilles.', 'Précision ajoutée (novembre 2026) : pour les jeunes enfants, retirez les pépins (conseil de Poison Control). Quelques pépins avalés entiers sont généralement sans conséquence.'], confusions: [], quantite: FQ, requetes: ['compote de pommes', 'tarte aux pommes'] });
   ok('mandarinier', { parties: [pt('fruit', 'Le fruit', 'Épluché, cru.', 'Novembre à février')], saveur: 'Sucrée.', usages: ['Salade de fruits', 'Confiture'], precautions: ['Épluchez et lavez-vous les mains.'], confusions: [], quantite: FQ, requetes: ['salade de mandarines'] });
   ok('kumquat', { parties: [pt('fruit', 'Le fruit entier', 'Cru avec la peau ou confit.', 'Novembre à mars')], saveur: 'Peau sucrée, chair acide.', usages: ['Confiture', 'Fruits confits'], precautions: ['Lavez bien : on mange la peau.'], confusions: [], quantite: FQ, requetes: ['confiture de kumquats'] });
   part('cerisier-nain', { parties: [pt('fruit', 'La cerise mûre', 'Crue ou cuite. Ne croquez pas le noyau.', 'Juin à juillet')], saveur: 'Sucrée à acide.', usages: ['Clafoutis', 'Confiture'], precautions: ['Ne croquez pas le noyau, et ne mangez pas les feuilles ni les tiges.', 'Pour les petits, enlevez les noyaux.'], confusions: [], quantite: FQ, requetes: ['clafoutis aux cerises'] });
